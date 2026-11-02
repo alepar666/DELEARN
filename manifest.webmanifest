@@ -1,0 +1,18 @@
+{
+  "id": "./",
+  "name": "DELEARN — vocabolario tedesco",
+  "short_name": "DELEARN",
+  "description": "Impara e ripassa il vocabolario tedesco, anche offline.",
+  "lang": "it",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090a0b",
+  "theme_color": "#090a0b",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "apple-touch-icon.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

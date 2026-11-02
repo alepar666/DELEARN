@@ -1,0 +1,23 @@
+# DELEARN
+
+Una PWA italiana per imparare e ripassare il vocabolario tedesco. L'app funziona senza account e salva le risposte nel browser del dispositivo. L'interfaccia usa un tema scuro con i colori della bandiera tedesca.
+
+## Pubblicazione su GitHub Pages
+
+Questa è una PWA statica: non richiede compilazione né dipendenze.
+
+1. Carica questi file nella cartella principale del repository GitHub `de.learn` e fai il push del branch che userai per pubblicare (per esempio `main` o `master`).
+2. Nel repository, apri **Settings → Pages**.
+3. In **Build and deployment**, scegli **Deploy from a branch**, poi lo stesso branch e la cartella `/(root)`, quindi salva.
+4. Quando la pubblicazione è pronta, apri l'indirizzo indicato nella stessa pagina **Pages**. Per un repository di progetto avrà in genere la forma `https://<nome-utente>.github.io/de.learn/`.
+5. Su iPhone, apri quell'indirizzo in Safari, premi **Condividi → Aggiungi alla schermata Home** e avvia l'app dalla nuova icona.
+
+La PWA deve essere aperta almeno una volta online per scaricare i file necessari all'uso offline. Il service worker funziona solo da un sito HTTPS o da un server locale, non aprendo `index.html` direttamente come file.
+
+Per provarla sul computer, puoi servirla con un server web locale, per esempio l'estensione Live Server di Visual Studio Code.
+
+## Ripetizione
+
+La logica è una variante binaria ispirata a SM-2: dopo una risposta corretta la prossima ripetizione è tra 1 giorno, poi 3 giorni e in seguito l'intervallo cresce in base al fattore facilità della parola. Una risposta errata abbassa quel fattore, riporta la parola a intervallo zero e la programma dopo 10 minuti; nell'esercizio corrente ricompare anche dopo le altre schede. Per limitare il carico, il mazzo propone fino a 15 parole nuove al giorno, oltre a quelle già dovute.
+
+Le parole, gli intervalli e i progressi sono definiti in `vocab.js` e salvati localmente con `localStorage`.

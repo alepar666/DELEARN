@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#090a0b" />
+    <meta name="description" content="Una piccola app per imparare e ripassare il vocabolario tedesco, anche offline." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="DELEARN" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>DELEARN — tedesco, una parola alla volta</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#ripasso" aria-label="DELEARN, ripasso">
+          <span class="brand-mark" aria-label="Bandiera tedesca"><span class="flag-stripe flag-black"></span><span class="flag-stripe flag-red"></span><span class="flag-stripe flag-gold"></span></span>
+          <span>DELEARN</span>
+        </a>
+        <button id="install-button" class="install-button" hidden type="button">Installa app</button>
+      </header>
+
+      <section id="review-view" class="view active" aria-labelledby="page-title">
+        <div class="intro-row">
+          <div>
+            <p class="eyebrow">IL TUO TEDESCO, UN GIORNO ALLA VOLTA</p>
+            <h1 id="page-title">Fai spazio<br /><span>a nuove parole.</span></h1>
+          </div>
+          <div class="streak" aria-label="Giornata di ripasso">
+            <span class="streak-icon" aria-hidden="true">✳</span>
+            <span id="streak-label">pronto?</span>
+          </div>
+        </div>
+
+        <div class="stats-row" aria-label="I tuoi progressi">
+          <div class="stat"><strong id="due-count">0</strong><span>parole per oggi</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><strong id="learned-count">0</strong><span>imparate</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><strong id="total-count">0</strong><span>nel mazzo</span></div>
+        </div>
+
+        <section id="study-panel" class="study-panel" aria-live="polite">
+          <div id="card-meta" class="card-meta">
+            <span id="card-category" class="category-pill">PRONTO</span>
+            <span id="card-counter" class="card-counter"></span>
+          </div>
+
+          <button id="flashcard" class="flashcard" type="button" aria-label="Mostra la traduzione">
+            <span id="card-face" class="card-face">
+              <span class="card-direction">COME SI DICE IN TEDESCO?</span>
+              <span id="card-italian" class="card-word">Ciao!</span>
+              <span class="card-hint">Pensa alla risposta, poi tocca la scheda</span>
+            </span>
+            <span id="card-back" class="card-back" hidden>
+              <span class="card-direction">IN TEDESCO</span>
+              <span id="card-german" class="card-word german-word"></span>
+              <span id="card-extra" class="card-extra"></span>
+            </span>
+            <span class="flip-cue" aria-hidden="true">↻</span>
+          </button>
+
+          <div id="answer-prompt" class="answer-prompt" hidden>
+            <p>Te lo ricordavi?</p>
+            <div class="answer-buttons">
+              <button id="no-button" class="answer-button answer-no" type="button"><span aria-hidden="true">↻</span> No</button>
+              <button id="yes-button" class="answer-button answer-yes" type="button"><span aria-hidden="true">✓</span> Sì</button>
+            </div>
+          </div>
+          <div id="empty-state" class="empty-state" hidden>
+            <span class="empty-icon" aria-hidden="true">✓</span>
+            <h2>Per oggi, fatto.</h2>
+            <p id="empty-message">Hai completato il ripasso. Le parole torneranno al momento giusto.</p>
+            <button id="practice-all-button" class="text-button" type="button">Ripassa comunque</button>
+          </div>
+        </section>
+
+        <div class="below-card">
+          <p class="daily-note"><span class="note-dot"></span><span id="daily-note-text">Un piccolo passo ogni giorno fa la differenza.</span></p>
+          <button id="browse-link" class="browse-link" type="button">Sfoglia il vocabolario <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+
+      <section id="vocabulary-view" class="view vocabulary-view" aria-labelledby="vocab-title" hidden>
+        <button id="back-to-review" class="back-link" type="button"><span aria-hidden="true">←</span> Torna al ripasso</button>
+        <p class="eyebrow">TUTTE LE PAROLE</p>
+        <h1 id="vocab-title">Il vocabolario.</h1>
+        <div class="search-wrap"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Cerca in italiano o tedesco" autocomplete="off" /></div>
+        <div id="category-filters" class="category-filters" aria-label="Filtra per argomento"></div>
+        <p id="vocab-result-count" class="result-count"></p>
+        <div id="vocab-list" class="vocab-list"></div>
+      </section>
+
+      <footer class="footer"><span>DELEARN</span><span>Creato per imparare con calma.</span></footer>
+    </main>
+    <script src="vocab.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
