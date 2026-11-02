@@ -71,8 +71,8 @@
     $("#due-count").textContent = String(availableTodayCount());
     $("#learned-count").textContent = String(learned);
     $("#total-count").textContent = String(VOCABULARY.length);
-    $("#streak-label").textContent = progress.stats.streak ? `${progress.stats.streak} ${progress.stats.streak === 1 ? "giorno" : "giorni"} di fila` : "ogni giorno conta";
-    const dueLabel = due ? `${due} ${due === 1 ? "ripasso" : "ripassi"} in attesa` : "Un piccolo passo ogni giorno fa la differenza.";
+    $("#streak-label").textContent = `${progress.stats.streak} ${progress.stats.streak === 1 ? "giorno" : "giorni"} di fila`;
+    const dueLabel = due ? `${due} ${due === 1 ? "ripasso" : "ripassi"} in attesa` : "Nessun ripasso in attesa";
     setDailyNote(dueLabel);
   }
 
