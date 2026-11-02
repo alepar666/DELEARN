@@ -30,10 +30,10 @@ Il testo completo viene salvato in un file temporaneo e il percorso viene mostra
 ./scripts/import-lesson.sh "/percorso/della/lezione" "/percorso/testo-estratto.txt"
 ```
 
-Quando aggiungi una lezione, puoi indicarmi la sua cartella: estrarrò i testi con questo script, confronterò le parole con `vocab.js`, aggiungerò quelle nuove in fondo alle categorie e aggiornerò la cache della PWA.
+Quando aggiungi una lezione, puoi indicarmi la sua cartella: estrarrò i testi con questo script, confronterò le parole con `vocab.js`, aggiungerò quelle nuove in fondo alle categorie, aggiornerò `VOCABULARY_UPDATED_AT` in `vocab.js` e rinnoverò la cache della PWA.
 
 ## Ripetizione
 
-La logica è una variante binaria ispirata a SM-2: dopo una risposta corretta la prossima ripetizione è tra 1 giorno, poi 3 giorni e in seguito l'intervallo cresce in base al fattore facilità della parola. Una risposta errata abbassa quel fattore, riporta la parola a intervallo zero e la programma dopo 10 minuti; nell'esercizio corrente ricompare anche dopo le altre schede. Per limitare il carico, il mazzo propone fino a 15 parole nuove al giorno, oltre a quelle già dovute.
+La logica è una variante binaria ispirata a SM-2: dopo una risposta corretta la prossima ripetizione è tra 1 giorno, poi 3 giorni e in seguito l'intervallo cresce in base al fattore facilità della parola. Una risposta errata abbassa quel fattore, riporta la parola a intervallo zero e la programma dopo 10 minuti; nell'esercizio corrente ricompare anche dopo le altre schede. Non c'è un limite giornaliero: tutte le parole nuove e i ripassi dovuti sono disponibili in ogni sessione.
 
 Le parole, gli intervalli e i progressi sono definiti in `vocab.js` e salvati localmente con `localStorage`.

@@ -1,4 +1,5 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
+window.VOCABULARY_UPDATED_AT = "2026-11-02";
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {

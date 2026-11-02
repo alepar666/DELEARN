@@ -2,7 +2,6 @@
   "use strict";
 
   const STORAGE_KEY = "wortschatz-progress-v1";
-  const DAILY_NEW_LIMIT = 15;
   const MINUTE = 60 * 1000;
   const DAY = 24 * 60 * MINUTE;
   const $ = (selector) => document.querySelector(selector);
@@ -10,18 +9,23 @@
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   };
-  const dayDifference = (a, b) => Math.round((Date.parse(`${b}T12:00:00`) - Date.parse(`${a}T12:00:00`)) / DAY);
-  const defaultState = () => ({ cards: {}, stats: { date: todayKey(), newSeenToday: 0, reviewedToday: 0, knownToday: 0, streak: 0, lastStudyDate: "" } });
+  const defaultState = () => ({ cards: {}, stats: { date: todayKey(), reviewedToday: 0, knownToday: 0 } });
 
   let progress = loadProgress();
   let session = null;
   let selectedCategory = "Tutte";
   let deferredInstallPrompt = null;
+  let feedbackAudioContext = null;
 
   function loadProgress() {
     try {
       const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if (stored && stored.cards && stored.stats) return stored;
+      if (stored && stored.cards && stored.stats) {
+        delete stored.stats.streak;
+        delete stored.stats.lastStudyDate;
+        delete stored.stats.newSeenToday;
+        return stored;
+      }
     } catch (_) { /* A fresh local profile is created if storage is unavailable or unreadable. */ }
     return defaultState();
   }
@@ -41,7 +45,6 @@
   function resetDailyStatsIfNeeded() {
     if (progress.stats.date !== todayKey()) {
       progress.stats.date = todayKey();
-      progress.stats.newSeenToday = 0;
       progress.stats.reviewedToday = 0;
       progress.stats.knownToday = 0;
     }
@@ -59,21 +62,17 @@
     return VOCABULARY.filter((word) => !cardState(word.id).seen);
   }
 
-  function availableTodayCount() {
-    resetDailyStatsIfNeeded();
-    return dueCards().length + Math.min(Math.max(0, DAILY_NEW_LIMIT - progress.stats.newSeenToday), unseenCards().length);
+  function availableCount() {
+    return dueCards().length + unseenCards().length;
   }
 
   function updateDashboard() {
     resetDailyStatsIfNeeded();
-    const due = dueCards().length;
     const learned = VOCABULARY.reduce((sum, word) => sum + (cardState(word.id).repetitions > 0 ? 1 : 0), 0);
-    $("#due-count").textContent = String(availableTodayCount());
+    $("#due-count").textContent = String(availableCount());
     $("#learned-count").textContent = String(learned);
     $("#total-count").textContent = String(VOCABULARY.length);
-    $("#streak-label").textContent = `${progress.stats.streak} ${progress.stats.streak === 1 ? "giorno" : "giorni"} di fila`;
-    const dueLabel = due ? `${due} ${due === 1 ? "ripasso" : "ripassi"} in attesa` : "Nessun ripasso in attesa";
-    setDailyNote(dueLabel);
+    setDailyNote(vocabularyUpdatedLabel);
   }
 
   function setDailyNote(message) { $("#daily-note-text").textContent = message; }
@@ -94,8 +93,7 @@
       selected = words;
     } else {
       const due = dueCards();
-      const newCount = Math.max(0, DAILY_NEW_LIMIT - progress.stats.newSeenToday);
-      const fresh = shuffle(unseenCards()).slice(0, newCount);
+      const fresh = shuffle(unseenCards());
       selected = [...due, ...fresh];
     }
     session = { queue: selected.map((word) => ({ id: word.id, retry: false })), position: 0, revealed: false, retried: new Set() };
@@ -149,15 +147,9 @@
     const state = cardState(item.id);
     if (!state.seen) {
       state.seen = true;
-      progress.stats.newSeenToday += 1;
     }
     state.lastReviewed = now;
     progress.stats.reviewedToday += 1;
-    const today = todayKey();
-    if (progress.stats.lastStudyDate !== today) {
-      progress.stats.streak = progress.stats.lastStudyDate && dayDifference(progress.stats.lastStudyDate, today) === 1 ? progress.stats.streak + 1 : 1;
-      progress.stats.lastStudyDate = today;
-    }
     if (remembered) {
       state.interval = state.repetitions === 0 ? 1 : state.repetitions === 1 ? 3 : Math.max(1, Math.round(state.interval * state.ease));
       state.repetitions += 1;
@@ -227,9 +219,53 @@
 
   function practiceAll() { beginSession(shuffle(VOCABULARY)); }
 
+  function playAnswerSound(correct) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return;
+
+    try {
+      if (!feedbackAudioContext) feedbackAudioContext = new AudioContextClass();
+      const context = feedbackAudioContext;
+      const playNotes = () => {
+        if (context.state !== "running") return;
+        const notes = correct ? [659.25, 880] : [330, 246.94];
+        notes.forEach((frequency, index) => {
+          const start = context.currentTime + index * 0.11;
+          const oscillator = context.createOscillator();
+          const volume = context.createGain();
+          oscillator.type = "sine";
+          oscillator.frequency.setValueAtTime(frequency, start);
+          volume.gain.setValueAtTime(0.0001, start);
+          volume.gain.exponentialRampToValueAtTime(0.035, start + 0.012);
+          volume.gain.exponentialRampToValueAtTime(0.0001, start + 0.12);
+          oscillator.connect(volume);
+          volume.connect(context.destination);
+          oscillator.start(start);
+          oscillator.stop(start + 0.13);
+        });
+      };
+
+      if (context.state === "suspended") context.resume().then(playNotes).catch(() => {});
+      else playNotes();
+    } catch (_) { /* Audio feedback is optional; answering must always work. */ }
+  }
+
+  const [year, month, day] = VOCABULARY_UPDATED_AT.split("-").map(Number);
+  const vocabDate = new Date(year, month - 1, day, 12);
+  const formattedVocabDate = new Intl.DateTimeFormat("it-IT", {
+    day: "numeric", month: "long", year: "numeric"
+  }).format(vocabDate);
+  const vocabularyUpdatedLabel = `Vocabolario aggiornato il ${formattedVocabDate}`;
+
   $("#flashcard").addEventListener("click", revealCard);
-  $("#no-button").addEventListener("click", () => recordAnswer(false));
-  $("#yes-button").addEventListener("click", () => recordAnswer(true));
+  $("#no-button").addEventListener("click", () => {
+    playAnswerSound(false);
+    recordAnswer(false);
+  });
+  $("#yes-button").addEventListener("click", () => {
+    playAnswerSound(true);
+    recordAnswer(true);
+  });
   $("#practice-all-button").addEventListener("click", practiceAll);
   $("#browse-link").addEventListener("click", showVocabulary);
   $("#back-to-review").addEventListener("click", showReview);
