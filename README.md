@@ -16,6 +16,22 @@ La PWA deve essere aperta almeno una volta online per scaricare i file necessari
 
 Per provarla sul computer, puoi servirla con un server web locale, per esempio l'estensione Live Server di Visual Studio Code.
 
+## Importare una lezione B1
+
+Lo script `scripts/import-lesson.sh` raccoglie ricorsivamente i PDF di una cartella, estrae il testo incorporato e usa l'OCR di macOS sulle pagine che contengono poco testo leggibile. Non richiede pacchetti aggiuntivi; richiede macOS con Swift disponibile.
+
+```sh
+./scripts/import-lesson.sh "/Users/alepar/Documents/corso tedesco/B1/Nome lezione"
+```
+
+Il testo completo viene salvato in un file temporaneo e il percorso viene mostrato al termine. Per scegliere un file di destinazione, aggiungilo come secondo argomento:
+
+```sh
+./scripts/import-lesson.sh "/percorso/della/lezione" "/percorso/testo-estratto.txt"
+```
+
+Quando aggiungi una lezione, puoi indicarmi la sua cartella: estrarrò i testi con questo script, confronterò le parole con `vocab.js`, aggiungerò quelle nuove in fondo alle categorie e aggiornerò la cache della PWA.
+
 ## Ripetizione
 
 La logica è una variante binaria ispirata a SM-2: dopo una risposta corretta la prossima ripetizione è tra 1 giorno, poi 3 giorni e in seguito l'intervallo cresce in base al fattore facilità della parola. Una risposta errata abbassa quel fattore, riporta la parola a intervallo zero e la programma dopo 10 minuti; nell'esercizio corrente ricompare anche dopo le altre schede. Per limitare il carico, il mazzo propone fino a 15 parole nuove al giorno, oltre a quelle già dovute.
