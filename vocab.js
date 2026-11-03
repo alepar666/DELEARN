@@ -1,5 +1,5 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-02";
+window.VOCABULARY_UPDATED_AT = "2026-11-03";
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -562,3 +562,75 @@ addWords("Scuola e formazione", [
   ["il musicista", "der Musiker", "die Musiker"], ["gli studi universitari", "das Studium", "die Studien"],
   ["la penna", "der Kugelschreiber", "die Kugelschreiber"], ["la pagella / il certificato", "das Zeugnis", "die Zeugnisse"]
 ]);
+
+// Forme irregolari del participio passato tratte dalla tabella dei verbi B1.
+const irregularParticiplePairs = `
+abfahren|abgefahren abfliegen|abgeflogen abgeben|abgegeben abheben|abgehoben abhängen|abgehangen ablesen|abgelesen abnehmen|abgenommen abraten|abgeraten abschließen|abgeschlossen abziehen|abgezogen
+anbieten|angeboten anfangen|angefangen angehen|angegangen anhaben|angehabt ankommen|angekommen anlassen|angelassen annehmen|angenommen anrufen|angerufen anschließen|angeschlossen ansehen|angesehen ansprechen|angesprochen anstehen|angestanden anziehen|angezogen
+auffallen|aufgefallen aufgeben|aufgegeben aufhalten|aufgehalten aufhängen|aufgehängt aufladen|aufgeladen aufschlagen|aufgeschlagen aufschreiben|aufgeschrieben aufstehen|aufgestanden auftreten|aufgetreten aufwachsen|aufgewachsen
+ausdenken|ausgedacht ausgeben|ausgegeben ausgehen|ausgegangen ausgleichen|ausgeglichen aushalten|ausgehalten auskennen|ausgekannt ausladen|ausgeladen ausleihen|ausgeliehen ausschlafen|ausgeschlafen aussehen|ausgesehen aussprechen|ausgesprochen aussteigen|ausgestiegen aussterben|ausgestorben ausziehen|ausgezogen
+backen|gebacken bedenken|bedacht begeben|begeben beginnen|begonnen behalten|behalten bekommen|bekommen benehmen|benommen beraten|beraten beschreiben|beschrieben besitzen|besessen bestehen|bestanden betragen|betragen betreiben|betrieben betrügen|betrogen beweisen|bewiesen bewerben|beworben beziehen|bezogen bieten|geboten binden|gebunden bitten|gebeten bleiben|geblieben brechen|gebrochen brennen|gebrannt bringen|gebracht
+denken|gedacht drankommen|drangekommen einbringen|eingebracht einfallen|eingefallen eingeben|eingegeben eingehen|eingegangen einhalten|eingehalten einladen|eingeladen einnehmen|eingenommen einschlafen|eingeschlafen einschlagen|eingeschlagen einsteigen|eingestiegen eintragen|eingetragen einwerfen|eingeworfen einziehen|eingezogen
+empfangen|empfangen empfehlen|empfohlen entlanggehen|entlanggegangen entnehmen|entnommen entscheiden|entschieden entsprechen|entsprochen entstehen|entstanden entwerfen|entworfen erfahren|erfahren erfinden|erfunden erhalten|erhalten erkennen|erkannt erraten|erraten erscheinen|erschienen erschießen|erschossen erschließen|erschlossen erschrecken|erschrocken essen|gegessen fahren|gefahren fallen|gefallen fernsehen|ferngesehen finden|gefunden fliegen|geflogen fliehen|geflohen fressen|gefressen
+geben|gegeben gefallen|gefallen gehen|gegangen gelingen|gelungen gelten|gegolten genießen|genossen geraten|geraten geschehen|geschehen gewinnen|gewonnen gießen|gegossen greifen|gegriffen gutschreiben|gutgeschrieben halten|gehalten heben|gehoben heimkommen|heimgekommen heißen|geheißen helfen|geholfen herankommen|herangekommen herausfinden|herausgefunden herausnehmen|herausgenommen herunterladen|heruntergeladen hierherkommen|hierhergekommen hinaufgehen|hinaufgegangen hineingehen|hineingegangen hinfahren|hingefahren hingehen|hingegangen hinsehen|hingesehen hinterlassen|hinterlassen hochladen|hochgeladen hochziehen|hochgezogen hängen|gehangen kennen|gekannt klarkommen|klargekommen klingen|geklungen kommen|gekommen laden|geladen lassen|gelassen laufen|gelaufen leihen|geliehen lesen|gelesen liegen|gelegen losfahren|losgefahren losgehen|losgegangen lügen|gelogen melken|gemolken messen|gemessen mitbringen|mitgebracht mithelfen|mitgeholfen mitlesen|mitgelesen mitnehmen|mitgenommen mitsingen|mitgesungen mögen|gemocht nachdenken|nachgedacht nachgeben|nachgegeben nehmen|genommen nennen|genannt raten|geraten rausgehen|rausgegangen reiten|geritten rennen|gerannt riechen|gerochen rufen|gerufen scheinen|geschienen schiefgehen|schiefgegangen schießen|geschossen schlafen|geschlafen schlagen|geschlagen schließen|geschlossen schmelzen|geschmolzen schneiden|geschnitten schreiben|geschrieben schweigen|geschwiegen schwimmen|geschwommen sehen|gesehen sein|gewesen singen|gesungen sitzen|gesessen sprechen|gesprochen springen|gesprungen stattfinden|stattgefunden stechen|gestochen stehen|gestanden stehlen|gestohlen steigen|gestiegen sterben|gestorben stinken|gestunken streiten|gestritten teilnehmen|teilgenommen tragen|getragen treffen|getroffen trinken|getrunken umsehen|umgesehen umsteigen|umgestiegen umziehen|umgezogen unterhalten|unterhalten unternehmen|unternommen unterschreiben|unterschrieben unterstreichen|unterstrichen verbinden|verbunden verbringen|verbracht vergehen|vergangen vergessen|vergessen vergleichen|verglichen vergraben|vergraben verhalten|verhalten verlaufen|verlaufen verlieren|verloren vermeiden|vermieden vernehmen|vernommen verraten|verraten verschieben|verschoben verschlafen|verschlafen verschreiben|verschrieben verschwinden|verschwunden versprechen|versprochen verstehen|verstanden verzeihen|verziehen vorbeifliegen|vorbeigeflogen vorbeigehen|vorbeigegangen vorgehen|vorgegangen vorkommen|vorgekommen vorlesen|vorgelesen vornehmen|vorgenommen vorschlagen|vorgeschlagen vorsingen|vorgesungen vortragen|vorgetragen wachsen|gewachsen waschen|gewaschen wegfahren|weggefahren weggehen|weggegangen weglassen|weggelassen wegwerfen|weggeworfen wegziehen|weggezogen weitergeben|weitergegeben weiterhelfen|weitergeholfen weiterlesen|weitergelesen weiterschreiben|weitergeschrieben werben|geworben werden|geworden werfen|geworfen widersprechen|widersprochen wiederfinden|wiedergefunden wissen|gewusst zerreißen|zerrissen ziehen|gezogen zugehen|zugegangen zunehmen|zugenommen zurückgehen|zurückgegangen zurückkommen|zurückgekommen zurückrufen|zurückgerufen zuwenden|zugewandt zwingen|gezwungen übernehmen|übernommen übersehen|übersehen überweisen|überwiesen überwinden|überwunden
+`.trim();
+const irregularParticipleForms = Object.fromEntries(
+  irregularParticiplePairs.split(/\s+/).map((pair) => pair.split("|"))
+);
+Object.assign(irregularParticipleForms, {
+  haben: "gehabt", tun: "getan", wollen: "gewollt", "spazieren gehen": "spazieren gegangen",
+  wehtun: "wehgetan", leidtun: "leidgetan", wiederholen: "wiederholt", erschrecken: "erschrocken / erschreckt",
+  zusammenbrechen: "zusammengebrochen", zusammentreffen: "zusammengetroffen",
+  zurückerhalten: "zurückerhalten"
+});
+
+const separablePrefixes = [
+  "durcheinander", "auseinander", "herein", "heraus", "heran", "hierher", "hinauf", "hinein",
+  "entlang", "vorbei", "zurück", "zusammen", "weiter", "wohl", "hoch", "heim", "los", "mit", "nach",
+  "weg", "hinzu", "hin", "her", "ab", "an", "auf", "aus", "bei", "ein", "fest", "fort", "raus",
+  "rein", "um", "vor", "zu", "wieder"
+];
+const inseparablePrefixes = ["be", "emp", "ent", "er", "ge", "miss", "ver", "zer", "über", "unter"];
+const verbRowsWithParticiple = new Set(["tanzen", "singen", "kochen", "schwimmen"]);
+
+function verbInfinitive(target) {
+  const phrase = target.toLocaleLowerCase("de").split(";")[0]
+    .replace(/\s+(?:an|auf|aus|bei|für|gegen|in|mit|nach|über|um|unter|von|vor|zu)\s*\+\s*(?:akk\.|dat\.)\s*$/i, "")
+    .replace(/\s*\+\s*(?:akk\.|dat\.)\s*$/i, "")
+    .replace(/\s+(?:an|auf|aus|bei|für|gegen|in|mit|nach|über|um|unter|von|vor|zu)\s*$/i, "")
+    .trim();
+  if (phrase.startsWith("es geht")) return "gehen";
+  if (phrase === "spazieren gehen") return phrase;
+  const tokens = phrase.match(/[a-zäöüß]+/g) || [];
+  const candidates = tokens.filter((token) => token.endsWith("en") || token.endsWith("eln") || token.endsWith("ern") || token === "sein" || token === "tun");
+  return candidates[candidates.length - 1] || tokens[tokens.length - 1] || phrase;
+}
+
+function weakParticiple(verb) {
+  const stem = verb.endsWith("eln") || verb.endsWith("ern") ? verb.slice(0, -1) : verb.slice(0, -2);
+  const needsE = /(?:[dt]|gn|fn|chn|tm|dn|kn)$/.test(stem);
+  return `${stem}${needsE ? "et" : "t"}`;
+}
+
+function makeParticiple(verb) {
+  if (irregularParticipleForms[verb]) return irregularParticipleForms[verb];
+  if (verb.endsWith("ieren")) return `${verb.slice(0, -2)}t`;
+  const prefix = separablePrefixes.find((candidate) => verb.startsWith(candidate) && verb.length > candidate.length + 2);
+  if (prefix) {
+    const root = verb.slice(prefix.length);
+    return `${prefix}${irregularParticipleForms[root] || makeParticiple(root)}`;
+  }
+  const hasInseparablePrefix = inseparablePrefixes.some((candidate) => verb.startsWith(candidate));
+  return `${hasInseparablePrefix ? "" : "ge"}${weakParticiple(verb)}`;
+}
+
+for (const word of window.VOCABULARY) {
+  if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
+  word.category = "Verbi";
+  word.participlePrompt = word.de.toLocaleLowerCase("de").split(";")[0]
+    .replace(/\s+(?:an|auf|aus|bei|für|gegen|in|mit|nach|über|um|unter|von|vor|zu)\s*\+\s*(?:akk\.|dat\.)\s*$/i, "")
+    .replace(/\s*\+\s*(?:akk\.|dat\.)\s*$/i, "")
+    .replace(/\s+(?:an|auf|aus|bei|für|gegen|in|mit|nach|über|um|unter|von|vor|zu)\s*$/i, "")
+    .trim();
+  word.participle = makeParticiple(verbInfinitive(word.de));
+}

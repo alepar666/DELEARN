@@ -35,11 +35,24 @@
     catch (_) { setDailyNote("La memoria del browser è piena: libera spazio per salvare i progressi."); }
   }
 
-  function cardState(id) {
-    if (!progress.cards[id]) {
-      progress.cards[id] = { seen: false, repetitions: 0, interval: 0, ease: 2.5, dueAt: 0, lastReviewed: 0, lapses: 0 };
+  function cardState(id, aspect = "meaning") {
+    const key = aspect === "participle" ? `${id}::participle` : id;
+    if (!progress.cards[key]) {
+      progress.cards[key] = { seen: false, repetitions: 0, interval: 0, ease: 2.5, dueAt: 0, lastReviewed: 0, lapses: 0 };
     }
-    return progress.cards[id];
+    return progress.cards[key];
+  }
+
+  function studyUnits(words = VOCABULARY) {
+    return words.flatMap((word) => [
+      { id: word.id, aspect: "meaning" },
+      ...(word.participle ? [{ id: word.id, aspect: "participle" }] : [])
+    ]);
+  }
+
+  function isWordLearned(word) {
+    return cardState(word.id).repetitions > 0
+      && (!word.participle || cardState(word.id, "participle").repetitions > 0);
   }
 
   function resetDailyStatsIfNeeded() {
@@ -52,23 +65,28 @@
 
   function dueCards() {
     const now = Date.now();
-    return VOCABULARY.filter((word) => {
-      const state = cardState(word.id);
+    return studyUnits().filter((unit) => {
+      const state = cardState(unit.id, unit.aspect);
       return state.seen && state.dueAt <= now;
-    }).sort((a, b) => cardState(a.id).dueAt - cardState(b.id).dueAt);
+    }).sort((a, b) => cardState(a.id, a.aspect).dueAt - cardState(b.id, b.aspect).dueAt);
   }
 
   function unseenCards() {
-    return VOCABULARY.filter((word) => !cardState(word.id).seen);
+    return studyUnits().filter((unit) => !cardState(unit.id, unit.aspect).seen);
   }
 
   function availableCount() {
-    return dueCards().length + unseenCards().length;
+    const now = Date.now();
+    return VOCABULARY.filter((word) => {
+      const meaning = cardState(word.id);
+      const participle = word.participle && cardState(word.id, "participle");
+      return !meaning.seen || meaning.dueAt <= now || Boolean(participle && (!participle.seen || participle.dueAt <= now));
+    }).length;
   }
 
   function updateDashboard() {
     resetDailyStatsIfNeeded();
-    const learned = VOCABULARY.reduce((sum, word) => sum + (cardState(word.id).repetitions > 0 ? 1 : 0), 0);
+    const learned = VOCABULARY.reduce((sum, word) => sum + (isWordLearned(word) ? 1 : 0), 0);
     $("#due-count").textContent = String(availableCount());
     $("#learned-count").textContent = String(learned);
     $("#total-count").textContent = String(VOCABULARY.length);
@@ -90,7 +108,7 @@
     resetDailyStatsIfNeeded();
     let selected;
     if (words) {
-      selected = words;
+      selected = studyUnits(words);
     } else {
       const due = dueCards();
       const fresh = shuffle(unseenCards());
@@ -105,28 +123,35 @@
     const item = session?.queue[session.position];
     const word = item && VOCABULARY.find((entry) => entry.id === item.id);
     const hasCard = Boolean(word);
+    const isParticiple = item?.aspect === "participle";
     $("#empty-state").hidden = hasCard;
     $("#card-meta").hidden = !hasCard;
     $("#flashcard").hidden = !hasCard;
     $("#answer-prompt").hidden = true;
     if (!hasCard) {
-      const nextDue = VOCABULARY.map((entry) => cardState(entry.id).dueAt).filter((at) => at > Date.now()).sort((a, b) => a - b)[0];
+      const nextDue = studyUnits().map((unit) => cardState(unit.id, unit.aspect).dueAt)
+        .filter((at) => at > Date.now()).sort((a, b) => a - b)[0];
       $("#empty-message").textContent = nextDue
-        ? "Hai finito le parole previste per oggi. Quelle che hai ripassato torneranno nei prossimi giorni."
-        : "Hai completato il ripasso di oggi. Le nuove parole ti aspettano domani.";
+        ? "Hai esaurito le schede disponibili adesso. I ripassi torneranno quando saranno dovuti."
+        : "Hai completato tutte le schede disponibili. Puoi ripassarle comunque o sfogliare il vocabolario.";
       return;
     }
     session.revealed = false;
     $("#card-category").textContent = word.category.toUpperCase();
     $("#card-counter").textContent = `${session.position + 1} / ${session.queue.length}`;
-    $("#card-italian").textContent = word.it;
-    $("#card-german").textContent = word.de;
-    $("#card-extra").textContent = word.plural ? `Plurale: ${word.plural}` : "";
-    $("#card-extra").hidden = !word.plural;
+    $("#card-front-direction").textContent = isParticiple ? "QUAL È IL PARTICIPIO PASSATO DI?" : "COME SI DICE IN TEDESCO?";
+    $("#card-question-word").textContent = isParticiple ? word.participlePrompt : word.it;
+    $("#card-hint").textContent = isParticiple ? "Pensa alla forma, poi tocca la scheda" : "Pensa alla risposta, poi tocca la scheda";
+    $("#card-back-direction").textContent = isParticiple ? "PARTICIPIO PASSATO" : "IN TEDESCO";
+    $("#card-german").textContent = isParticiple ? word.participle : word.de;
+    $("#card-extra").textContent = !isParticiple && word.plural ? `Plurale: ${word.plural}` : "";
+    $("#card-extra").hidden = isParticiple || !word.plural;
     $("#card-face").hidden = false;
     $("#card-back").hidden = true;
-    $("#flashcard").setAttribute("aria-label", `Mostra la traduzione di: ${word.it}`);
-    $("#card-back").setAttribute("aria-label", `Traduzione: ${word.de}`);
+    $("#flashcard").setAttribute("aria-label", isParticiple
+      ? `Mostra il participio passato di ${word.participlePrompt}`
+      : `Mostra la traduzione di: ${word.it}`);
+    $("#card-back").setAttribute("aria-label", isParticiple ? `Participio passato: ${word.participle}` : `Traduzione: ${word.de}`);
     $("#flashcard").focus({ preventScroll: true });
   }
 
@@ -144,7 +169,7 @@
     const item = session?.queue[session.position];
     if (!item || !session.revealed) return;
     const now = Date.now();
-    const state = cardState(item.id);
+    const state = cardState(item.id, item.aspect);
     if (!state.seen) {
       state.seen = true;
     }
@@ -162,9 +187,10 @@
       state.ease = Math.max(1.3, state.ease - 0.2);
       state.lapses += 1;
       state.dueAt = now + 10 * MINUTE;
-      if (!item.retry && !session.retried.has(item.id)) {
-        session.retried.add(item.id);
-        session.queue.push({ id: item.id, retry: true });
+      const retryKey = `${item.id}:${item.aspect}`;
+      if (!item.retry && !session.retried.has(retryKey)) {
+        session.retried.add(retryKey);
+        session.queue.push({ id: item.id, aspect: item.aspect, retry: true });
       }
     }
     session.position += 1;
@@ -208,7 +234,7 @@
       return;
     }
     $("#vocab-list").innerHTML = matches.map((word) => {
-      const learned = cardState(word.id).repetitions > 0;
+      const learned = isWordLearned(word);
       return `<button class="vocab-row" type="button" data-word-id="${word.id}" aria-label="Ripassa ${escapeHtml(word.it)}: ${escapeHtml(word.de)}"><span class="vocab-it">${escapeHtml(word.it)}</span><span class="vocab-de">${escapeHtml(word.de)}</span><span class="vocab-status${learned ? " learned" : ""}" aria-hidden="true"></span></button>`;
     }).join("");
   }

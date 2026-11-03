@@ -36,4 +36,4 @@ Quando aggiungi una lezione, puoi indicarmi la sua cartella: estrarrò i testi c
 
 La logica è una variante binaria ispirata a SM-2: dopo una risposta corretta la prossima ripetizione è tra 1 giorno, poi 3 giorni e in seguito l'intervallo cresce in base al fattore facilità della parola. Una risposta errata abbassa quel fattore, riporta la parola a intervallo zero e la programma dopo 10 minuti; nell'esercizio corrente ricompare anche dopo le altre schede. Non c'è un limite giornaliero: tutte le parole nuove e i ripassi dovuti sono disponibili in ogni sessione.
 
-Le parole, gli intervalli e i progressi sono definiti in `vocab.js` e salvati localmente con `localStorage`.
+Le parole, i participi passati, gli intervalli e i progressi sono definiti in `vocab.js` e salvati localmente con `localStorage`. Per i verbi, il ripasso del significato e quello del participio hanno intervalli e progressi separati.
