@@ -149,21 +149,33 @@
       return;
     }
     session.revealed = false;
+    const isGrammar = Boolean(word.grammarQuestion);
     $("#card-category").textContent = word.category.toUpperCase();
     $("#card-counter").textContent = `${session.position + 1} / ${session.queue.length}`;
-    $("#card-front-direction").textContent = isParticiple ? "QUAL È IL PARTICIPIO PASSATO DI?" : "COME SI DICE IN TEDESCO?";
-    $("#card-question-word").textContent = isParticiple ? word.participlePrompt : word.it;
-    $("#card-hint").textContent = isParticiple ? "Pensa alla forma, poi tocca la scheda" : "Pensa alla risposta, poi tocca la scheda";
-    $("#card-back-direction").textContent = isParticiple ? "PARTICIPIO PASSATO" : "IN TEDESCO";
-    $("#card-german").textContent = isParticiple ? word.participle : word.de;
-    $("#card-extra").textContent = !isParticiple && word.plural ? `Plurale: ${word.plural}` : "";
-    $("#card-extra").hidden = isParticiple || !word.plural;
+    $("#card-front-direction").textContent = isParticiple
+      ? "QUAL È IL PARTICIPIO PASSATO DI?"
+      : isGrammar ? word.grammarInstruction : "COME SI DICE IN TEDESCO?";
+    $("#card-question-word").textContent = isParticiple ? word.participlePrompt : isGrammar ? word.grammarPrompt : word.it;
+    $("#card-question-word").classList.toggle("grammar-question", isGrammar);
+    $("#card-hint").textContent = isParticiple
+      ? "Pensa alla forma, poi tocca la scheda"
+      : "Pensa alla risposta, poi tocca la scheda";
+    $("#card-back-direction").textContent = isParticiple
+      ? "PARTICIPIO PASSATO"
+      : isGrammar ? "RISPOSTA" : "IN TEDESCO";
+    $("#card-german").textContent = isParticiple ? word.participle : isGrammar ? word.grammarAnswer : word.de;
+    $("#card-extra").textContent = isGrammar
+      ? word.grammarExplanation
+      : !isParticiple && word.plural ? `Plurale: ${word.plural}` : "";
+    $("#card-extra").hidden = !$("#card-extra").textContent;
     $("#card-face").hidden = false;
     $("#card-back").hidden = true;
     $("#flashcard").setAttribute("aria-label", isParticiple
       ? `Mostra il participio passato di ${word.participlePrompt}`
-      : `Mostra la traduzione di: ${word.it}`);
-    $("#card-back").setAttribute("aria-label", isParticiple ? `Participio passato: ${word.participle}` : `Traduzione: ${word.de}`);
+      : isGrammar ? `Rispondi alla domanda di grammatica: ${word.grammarPrompt}` : `Mostra la traduzione di: ${word.it}`);
+    $("#card-back").setAttribute("aria-label", isParticiple
+      ? `Participio passato: ${word.participle}`
+      : isGrammar ? `Risposta: ${word.grammarAnswer}` : `Traduzione: ${word.de}`);
     $("#flashcard").focus({ preventScroll: true });
   }
 
@@ -173,7 +185,9 @@
     $("#card-face").hidden = true;
     $("#card-back").hidden = false;
     $("#answer-prompt").hidden = false;
-    $("#flashcard").setAttribute("aria-label", "Traduzione mostrata");
+    const item = session.queue[session.position];
+    const word = VOCABULARY.find((entry) => entry.id === item.id);
+    $("#flashcard").setAttribute("aria-label", word?.grammarQuestion ? "Risposta grammaticale mostrata" : "Traduzione mostrata");
     $("#yes-button").focus({ preventScroll: true });
   }
 
@@ -247,7 +261,9 @@
     }
     $("#vocab-list").innerHTML = matches.map((word) => {
       const learned = isWordLearned(word);
-      return `<button class="vocab-row" type="button" data-word-id="${word.id}" aria-label="Ripassa ${escapeHtml(word.it)}: ${escapeHtml(word.de)}"><span class="vocab-it">${escapeHtml(word.it)}</span><span class="vocab-de">${escapeHtml(word.de)}</span><span class="vocab-status${learned ? " learned" : ""}" aria-hidden="true"></span></button>`;
+      const answer = word.grammarQuestion ? word.grammarAnswer : word.de;
+      const promptLabel = word.grammarQuestion ? "Domanda di grammatica" : "Ripassa";
+      return `<button class="vocab-row${word.grammarQuestion ? " grammar-vocab-row" : ""}" type="button" data-word-id="${word.id}" aria-label="${promptLabel}: ${escapeHtml(word.it)}: ${escapeHtml(answer)}"><span class="vocab-it">${escapeHtml(word.it)}</span><span class="vocab-de">${escapeHtml(answer)}</span><span class="vocab-status${learned ? " learned" : ""}" aria-hidden="true"></span></button>`;
     }).join("");
   }
 

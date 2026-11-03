@@ -61,6 +61,7 @@ h1 span { color: var(--gold); }
 .card-face, .card-back { display: flex; width: 100%; flex-direction: column; align-items: center; gap: 17px; }
 .card-direction { color: var(--subtle); font-size: 9px; font-weight: 700; letter-spacing: .16em; }
 .card-word { color: var(--ink); font-family: 'Playfair Display', Georgia, serif; font-size: clamp(35px, 8vw, 53px); font-weight: 500; line-height: 1.1; letter-spacing: -.04em; }
+.card-word.grammar-question { max-width: 650px; font-family: inherit; font-size: clamp(21px, 5vw, 30px); font-weight: 600; line-height: 1.3; letter-spacing: -.02em; }
 .german-word { color: var(--gold); }
 .card-hint, .card-extra { color: var(--muted); font-size: 12px; }
 .card-extra { margin-top: -8px; color: #c1bdaF; }
@@ -108,6 +109,7 @@ h1 span { color: var(--gold); }
 .vocab-row { display: grid; width: 100%; min-height: 61px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 12px; align-items: center; gap: 14px; padding: 10px 15px; border: 0; border-bottom: 1px solid #25282a; background: transparent; color: var(--ink); text-align: left; cursor: pointer; transition: background .14s; }
 .vocab-row:last-child { border-bottom: 0; }
 .vocab-row:hover { background: var(--surface-raised); }
+.vocab-row.grammar-vocab-row { align-items: start; }
 .vocab-it { font-size: 12px; font-weight: 600; }
 .vocab-de { color: var(--gold); font-family: 'Playfair Display', Georgia, serif; font-size: 15px; }
 .vocab-status { width: 6px; height: 6px; border-radius: 50%; background: #505557; }

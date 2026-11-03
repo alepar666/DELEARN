@@ -634,3 +634,83 @@ for (const word of window.VOCABULARY) {
     .trim();
   word.participle = makeParticiple(verbInfinitive(word.de));
 }
+
+const addGrammarQuestions = (rows) => {
+  for (const [id, instruction, prompt, answer, explanation] of rows) {
+    window.VOCABULARY.push({
+      id: `g-${id}`,
+      it: prompt,
+      de: answer,
+      plural: "",
+      category: "Grammatica",
+      grammarQuestion: true,
+      grammarInstruction: instruction,
+      grammarPrompt: prompt,
+      grammarAnswer: answer,
+      grammarExplanation: explanation
+    });
+  }
+};
+
+addGrammarQuestions([
+  ["case-nominative", "RICONOSCI IL CASO", "Chi compie l'azione?", "Nominativ", "Il nominativo indica il soggetto della frase."],
+  ["case-accusative", "RICONOSCI IL CASO", "Chi o che cosa subisce direttamente l'azione?", "Akkusativ", "L'accusativo indica il complemento oggetto diretto."],
+  ["case-dative", "RICONOSCI IL CASO", "A chi o a che cosa è destinata un'azione?", "Dativ", "Il dativo indica spesso il complemento di termine o il destinatario."],
+  ["case-genitive", "RICONOSCI IL CASO", "A quale domanda risponde il complemento che indica possesso o appartenenza?", "Genitiv — Wessen?", "Il genitivo indica di chi o di che cosa si parla."],
+  ["case-example-nominative", "RICONOSCI IL CASO", "In «Der Mann schenkt der Frau einen Ring», qual è il caso di «der Mann»?", "Nominativ", "Der Mann è il soggetto: compie l'azione."],
+  ["case-example-dative", "RICONOSCI IL CASO", "In «Der Mann schenkt der Frau einen Ring», qual è il caso di «der Frau»?", "Dativ", "Der Frau è la destinataria del regalo: a chi?"],
+  ["case-example-accusative", "RICONOSCI IL CASO", "In «Der Mann schenkt der Frau einen Ring», qual è il caso di «einen Ring»?", "Akkusativ", "Einen Ring è l'oggetto regalato: che cosa?"],
+  ["case-example-genitive", "RICONOSCI IL CASO", "In «Das ist das Auto des Mannes», qual è il caso di «des Mannes»?", "Genitiv", "Des Mannes indica a chi appartiene l'auto: di chi?"],
+  ["article-acc-m", "COMPLETA L'ARTICOLO", "Ich habe ___ Tisch gekauft. (der Tisch · accusativo maschile)", "den", "L'articolo determinativo maschile passa da der a den all'accusativo."],
+  ["article-dat-m", "COMPLETA L'ARTICOLO", "Ich spreche mit ___ Mann. (der Mann · dativo maschile)", "dem", "L'articolo determinativo maschile al dativo è dem."],
+  ["article-dat-f", "COMPLETA L'ARTICOLO", "Ich spreche mit ___ Frau. (die Frau · dativo femminile)", "der", "L'articolo determinativo femminile al dativo è der."],
+  ["article-dat-p", "COMPLETA L'ARTICOLO", "Ich spiele mit ___ Kindern. (die Kinder · dativo plurale)", "den", "L'articolo determinativo al dativo plurale è den; al sostantivo si aggiunge spesso -n, se non la possiede già."],
+  ["article-gen-m", "COMPLETA L'ARTICOLO", "Die Farbe ___ Tisches. (der Tisch · genitivo maschile)", "des", "L'articolo maschile al genitivo è des; il sostantivo prende -(e)s."],
+  ["article-gen-f", "COMPLETA L'ARTICOLO", "Das Auto ___ Frau. (die Frau · genitivo femminile)", "der", "L'articolo femminile al genitivo è der."],
+  ["declension-weak-choice", "SCEGLI LA DECLINAZIONE", "Dopo «der/die/das» o «dieser/diese/dieses», quale declinazione dell'aggettivo si usa?", "Debole — schwache Deklination", "Gli articoli determinativi e dimostrativi precedono la declinazione debole."],
+  ["declension-mixed-choice", "SCEGLI LA DECLINAZIONE", "Dopo «ein», «kein» o un aggettivo possessivo, quale declinazione si usa?", "Mista — gemischte Deklination", "Ein-, kein- e i possessivi hanno desinenze proprie; l'aggettivo completa le informazioni mancanti."],
+  ["declension-strong-choice", "SCEGLI LA DECLINAZIONE", "Se l'aggettivo precede il nome senza articolo, quale declinazione si usa?", "Forte — starke Deklination", "Senza articolo, l'aggettivo porta le desinenze che indicano genere, numero e caso."],
+  ["adjective-predicative", "RICORDA LA REGOLA", "In «Die Tasche ist rot», quale desinenza prende «rot»?", "Nessuna: «rot» resta invariato", "L'aggettivo è predicativo, dopo il verbo: non si declina. Davanti al nome sarebbe «die rote Tasche»."],
+
+  ["weak-nom-m", "COMPLETA LA DESINENZA", "Der ___ Tisch ist billig. (klein · nominativo maschile)", "kleine", "Declinazione debole dopo der: nominativo maschile in -e."],
+  ["weak-nom-f", "COMPLETA LA DESINENZA", "Die ___ Tasche ist teuer. (rot · nominativo femminile)", "rote", "Declinazione debole dopo die: nominativo femminile in -e."],
+  ["weak-nom-n", "COMPLETA LA DESINENZA", "Das ___ Kind spielt im Garten. (süß · nominativo neutro)", "süße", "Declinazione debole dopo das: nominativo neutro in -e."],
+  ["weak-nom-p", "COMPLETA LA DESINENZA", "Diese ___ Studenten haben die Prüfung bestanden. (gut · nominativo plurale)", "guten", "Con un articolo dimostrativo al plurale, l'aggettivo prende -en."],
+  ["weak-acc-m", "COMPLETA LA DESINENZA", "Ich habe den ___ Tisch gekauft. (klein · accusativo maschile)", "kleinen", "Nell'accusativo maschile dopo den, l'aggettivo debole prende -en."],
+  ["weak-acc-f", "COMPLETA LA DESINENZA", "Wie findest du die ___ Tasche? (rot · accusativo femminile)", "rote", "L'accusativo femminile dopo die è una delle cinque forme deboli in -e."],
+  ["weak-acc-p", "COMPLETA LA DESINENZA", "Der Professor hat diese ___ Studenten getroffen. (gut · accusativo plurale)", "guten", "Al plurale, dopo diese, l'aggettivo debole prende -en."],
+  ["weak-dat-n", "COMPLETA LA DESINENZA", "Ich habe mit dem ___ Kind gespielt. (süß · dativo neutro)", "süßen", "Nel dativo, dopo un articolo determinativo, l'aggettivo debole prende sempre -en."],
+  ["weak-gen-p", "COMPLETA LA DESINENZA", "Die hohen Noten dieser ___ Studenten. (gut · genitivo plurale)", "guten", "Nel genitivo dopo dieser, l'aggettivo debole prende -en."],
+
+  ["mixed-nom-m", "COMPLETA LA DESINENZA", "Ein ___ Tisch kostet zu viel. (klein · nominativo maschile)", "kleiner", "Dopo ein al nominativo maschile, l'aggettivo aggiunge -er per segnalare il genere."],
+  ["mixed-nom-f", "COMPLETA LA DESINENZA", "Eine ___ Frau wohnt auf dem Land. (alt · nominativo femminile)", "alte", "Dopo eine al nominativo femminile, l'aggettivo prende -e."],
+  ["mixed-nom-n", "COMPLETA LA DESINENZA", "Mein ___ Kind wird fünf Jahre alt. (süß · nominativo neutro)", "süßes", "Il possessivo mein non mostra la desinenza del neutro: l'aggettivo prende -es."],
+  ["mixed-nom-p", "COMPLETA LA DESINENZA", "Das sind keine ___ Eltern. (streng · nominativo plurale)", "strengen", "Al plurale, dopo keine, l'aggettivo misto prende -en."],
+  ["mixed-acc-m", "COMPLETA LA DESINENZA", "Ich habe einen ___ Tisch gekauft. (klein · accusativo maschile)", "kleinen", "Dopo einen all'accusativo maschile, l'aggettivo prende -en."],
+  ["mixed-acc-f", "COMPLETA LA DESINENZA", "Heute habe ich eine ___ Tasche weggeworfen. (alt · accusativo femminile)", "alte", "Dopo eine all'accusativo femminile, l'aggettivo prende -e."],
+  ["mixed-acc-n", "COMPLETA LA DESINENZA", "Ich habe ein ___ Auto gekauft. (sportlich · accusativo neutro)", "sportliches", "Ein non mostra la desinenza del neutro: l'aggettivo prende -es."],
+  ["mixed-acc-p", "COMPLETA LA DESINENZA", "Ich verkaufe meine ___ Kuchen. (lecker · accusativo plurale)", "leckeren", "Al plurale dopo meine, l'aggettivo misto prende -en."],
+  ["mixed-dat-f", "COMPLETA LA DESINENZA", "Ich habe deiner ___ Freundin einen Brief geschrieben. (nett · dativo femminile)", "netten", "Nel dativo, dopo un possessivo, l'aggettivo misto prende sempre -en."],
+  ["mixed-dat-p", "COMPLETA LA DESINENZA", "Ich habe vor deinen ___ Eltern Angst. (streng · dativo plurale)", "strengen", "Nel dativo plurale, dopo deinen, l'aggettivo prende -en."],
+  ["mixed-gen-m", "COMPLETA LA DESINENZA", "Die Farbe eines ___ Pullovers. (neu · genitivo maschile)", "neuen", "Nel genitivo dopo eines, l'aggettivo misto prende -en."],
+  ["mixed-gen-f", "COMPLETA LA DESINENZA", "Das ist der Sohn einer ___ Mutter. (streng · genitivo femminile)", "strengen", "Nel genitivo dopo einer, l'aggettivo misto prende -en."],
+  ["mixed-gen-n", "COMPLETA LA DESINENZA", "Die Wände meines ___ Hauses sind weiß. (alt · genitivo neutro)", "alten", "Nel genitivo dopo meines, l'aggettivo misto prende -en."],
+  ["mixed-gen-p", "COMPLETA LA DESINENZA", "Die Prüfungen keiner ___ Studenten. (gut · genitivo plurale)", "guten", "Nel genitivo plurale dopo keiner, l'aggettivo misto prende -en."],
+
+  ["strong-nom-m", "COMPLETA LA DESINENZA", "___ Mann infolge eines Unfalls. (verletzt · nominativo maschile)", "Verletzter", "Senza articolo, il nominativo maschile forte prende -er."],
+  ["strong-nom-f", "COMPLETA LA DESINENZA", "___ Sängerin im Theater. (toll · nominativo femminile)", "Tolle", "Senza articolo, il nominativo femminile forte prende -e."],
+  ["strong-nom-n", "COMPLETA LA DESINENZA", "___ Haus mit Pool. (groß · nominativo neutro)", "Großes", "Senza articolo, il nominativo neutro forte prende -es."],
+  ["strong-nom-p", "COMPLETA LA DESINENZA", "___ Bauern protestieren auf dem Platz. (verärgert · nominativo plurale)", "Verärgerte", "Senza articolo, il nominativo plurale forte prende -e."],
+  ["strong-acc-m", "COMPLETA LA DESINENZA", "Er bekam einen Preis für ___ Film. (best · accusativo maschile, senza articolo)", "besten", "Senza articolo, l'accusativo maschile forte prende -en."],
+  ["strong-acc-f", "COMPLETA LA DESINENZA", "Eine Abstimmung für ___ Straße. (neu · accusativo femminile)", "neue", "Senza articolo, l'accusativo femminile forte prende -e."],
+  ["strong-acc-n", "COMPLETA LA DESINENZA", "Es gibt ___ Wetter in Italien. (schön · accusativo neutro)", "schönes", "Senza articolo, l'accusativo neutro forte prende -es."],
+  ["strong-acc-p", "COMPLETA LA DESINENZA", "Es gab ___ Stürme in Deutschland. (stark · accusativo plurale)", "starke", "Senza articolo, l'accusativo plurale forte prende -e."],
+  ["strong-dat-m", "COMPLETA LA DESINENZA", "Ich habe ein Haus mit ___ Garten gekauft. (groß · dativo maschile)", "großem", "Senza articolo, il dativo maschile forte prende -em."],
+  ["strong-dat-f", "COMPLETA LA DESINENZA", "Demonstrationen auf ___ Straße. (neu · dativo femminile)", "neuer", "Senza articolo, il dativo femminile forte prende -er."],
+  ["strong-dat-n", "COMPLETA LA DESINENZA", "Ein Film mit ___ Bühnenbild. (best · dativo neutro)", "bestem", "Senza articolo, il dativo neutro forte prende -em."],
+  ["strong-dat-p", "COMPLETA LA DESINENZA", "Es ist schwierig, mit ___ Eltern zu sprechen. (streng · dativo plurale)", "strengen", "Senza articolo, il dativo plurale forte prende -en."],
+  ["strong-gen-m", "COMPLETA LA DESINENZA", "Die Blumen ___ Gartens. (neu · genitivo maschile)", "neuen", "Senza articolo, il genitivo maschile forte prende -en; il nome prende -(e)s."],
+  ["strong-gen-f", "COMPLETA LA DESINENZA", "Die Kinder ___ Mutter sind erzogen. (streng · genitivo femminile)", "strenger", "Senza articolo, il genitivo femminile forte prende -er."],
+  ["strong-gen-n", "COMPLETA LA DESINENZA", "Die Fenster ___ Hauses. (groß · genitivo neutro)", "großen", "Senza articolo, il genitivo neutro forte prende -en; il nome prende -(e)s."],
+  ["strong-gen-p", "COMPLETA LA DESINENZA", "Die Sprache ___ Blumen ist die Liebe. (rot · genitivo plurale)", "roter", "Senza articolo, il genitivo plurale forte prende -er."]
+]);
