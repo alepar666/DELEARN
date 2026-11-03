@@ -26,11 +26,33 @@
 
       <section id="review-view" class="view active" aria-label="Ripasso">
         <div class="stats-row" aria-label="I tuoi progressi">
-          <div class="stat"><strong id="due-count">0</strong><span>disponibili</span></div>
+          <div class="stat"><strong id="due-count">0</strong><span>schede disponibili</span></div>
           <div class="stat-divider"></div>
-          <div class="stat"><strong id="learned-count">0</strong><span>imparate</span></div>
+          <div class="stat"><strong id="learned-count">0</strong><span>schede imparate</span></div>
           <div class="stat-divider"></div>
-          <div class="stat"><strong id="total-count">0</strong><span>totali</span></div>
+          <div class="stat"><strong id="total-count">0</strong><span>schede totali</span></div>
+        </div>
+
+        <section class="category-progress" aria-label="Progresso per tipo di scheda">
+          <div class="progress-category" data-progress-category="vocabulary">
+            <div class="progress-category-heading"><span class="progress-category-name">Vocabolario</span><span class="progress-category-count">0 / 0</span></div>
+            <div class="progress-track" role="progressbar" aria-label="Vocabolario: schede imparate" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><span class="progress-fill"></span></div>
+          </div>
+          <div class="progress-category" data-progress-category="verbs">
+            <div class="progress-category-heading"><span class="progress-category-name">Verbi</span><span class="progress-category-count">0 / 0</span></div>
+            <div class="progress-track" role="progressbar" aria-label="Verbi: schede imparate" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><span class="progress-fill"></span></div>
+          </div>
+          <div class="progress-category" data-progress-category="grammar">
+            <div class="progress-category-heading"><span class="progress-category-name">Grammatica</span><span class="progress-category-count">0 / 0</span></div>
+            <div class="progress-track" role="progressbar" aria-label="Grammatica: schede imparate" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><span class="progress-fill"></span></div>
+          </div>
+        </section>
+
+        <div id="study-tabs" class="study-tabs" role="group" aria-label="Scegli la categoria di ripasso">
+          <button class="study-tab" type="button" data-study-category="vocabulary" aria-pressed="false">Vocabolario</button>
+          <button class="study-tab" type="button" data-study-category="verbs" aria-pressed="false">Verbi</button>
+          <button class="study-tab" type="button" data-study-category="grammar" aria-pressed="false">Grammatica</button>
+          <button class="study-tab selected" type="button" data-study-category="random" aria-pressed="true">Random</button>
         </div>
 
         <section id="study-panel" class="study-panel" aria-live="polite">

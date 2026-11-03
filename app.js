@@ -13,6 +13,7 @@
 
   let progress = loadProgress();
   let session = null;
+  let selectedStudyCategory = "random";
   let selectedCategory = "Tutte";
   let deferredInstallPrompt = null;
   let feedbackAudioContext = null;
@@ -50,6 +51,11 @@
     ]);
   }
 
+  function studyCategoryForWord(word) {
+    if (word.grammarQuestion) return "grammar";
+    return word.category === "Verbi" ? "verbs" : "vocabulary";
+  }
+
   function isWordLearned(word) {
     return cardState(word.id).repetitions > 0
       && (!word.participle || cardState(word.id, "participle").repetitions > 0);
@@ -61,18 +67,6 @@
       progress.stats.reviewedToday = 0;
       progress.stats.knownToday = 0;
     }
-  }
-
-  function dueCards() {
-    const now = Date.now();
-    return studyUnits().filter((unit) => {
-      const state = cardState(unit.id, unit.aspect);
-      return state.seen && state.dueAt <= now;
-    }).sort((a, b) => cardState(a.id, a.aspect).dueAt - cardState(b.id, b.aspect).dueAt);
-  }
-
-  function unseenCards() {
-    return studyUnits().filter((unit) => !cardState(unit.id, unit.aspect).seen);
   }
 
   function interleaveNewAndDue(fresh, due) {
@@ -90,20 +84,46 @@
 
   function availableCount() {
     const now = Date.now();
-    return VOCABULARY.filter((word) => {
-      const meaning = cardState(word.id);
-      const participle = word.participle && cardState(word.id, "participle");
-      return !meaning.seen || meaning.dueAt <= now || Boolean(participle && (!participle.seen || participle.dueAt <= now));
+    return studyUnits().filter((unit) => {
+      const state = cardState(unit.id, unit.aspect);
+      return !state.seen || state.dueAt <= now;
     }).length;
   }
 
   function updateDashboard() {
     resetDailyStatsIfNeeded();
-    const learned = VOCABULARY.reduce((sum, word) => sum + (isWordLearned(word) ? 1 : 0), 0);
+    const units = studyUnits();
+    const learned = units.filter((unit) => cardState(unit.id, unit.aspect).repetitions > 0).length;
     $("#due-count").textContent = String(availableCount());
     $("#learned-count").textContent = String(learned);
-    $("#total-count").textContent = String(VOCABULARY.length);
+    $("#total-count").textContent = String(units.length);
+    updateCategoryProgress(units);
     setDailyNote(vocabularyUpdatedLabel);
+  }
+
+  function updateCategoryProgress(units) {
+    const wordsById = new Map(VOCABULARY.map((word) => [word.id, word]));
+    const groups = { vocabulary: [], verbs: [], grammar: [] };
+    for (const unit of units) {
+      const word = wordsById.get(unit.id);
+      const group = studyCategoryForWord(word);
+      groups[group].push(unit);
+    }
+
+    for (const [name, categoryUnits] of Object.entries(groups)) {
+      const learned = categoryUnits.filter((unit) => cardState(unit.id, unit.aspect).repetitions > 0).length;
+      const total = categoryUnits.length;
+      const percentage = total ? Math.round((learned / total) * 100) : 0;
+      const category = document.querySelector(`[data-progress-category="${name}"]`);
+      const track = category.querySelector(".progress-track");
+      category.querySelector(".progress-category-count").textContent = `${learned} / ${total}`;
+      track.setAttribute("aria-valuemax", String(total));
+      track.setAttribute("aria-valuenow", String(learned));
+      track.setAttribute("aria-valuetext", `${learned} di ${total} schede imparate`);
+      track.style.setProperty("--progress-hue", `${Math.round(percentage * 1.2)}deg`);
+      const fill = track.querySelector(".progress-fill");
+      fill.style.width = `${percentage}%`;
+    }
   }
 
   function setDailyNote(message) { $("#daily-note-text").textContent = message; }
@@ -117,16 +137,27 @@
     return copy;
   }
 
-  function beginSession(words = null) {
+  function beginSession(words = null, category = selectedStudyCategory) {
     resetDailyStatsIfNeeded();
     let selected;
     if (words) {
       selected = studyUnits(words);
     } else {
-      const due = dueCards();
-      selected = interleaveNewAndDue(unseenCards(), due);
+      const categoryWords = category === "random"
+        ? VOCABULARY
+        : VOCABULARY.filter((word) => studyCategoryForWord(word) === category);
+      const units = studyUnits(categoryWords);
+      const now = Date.now();
+      const due = units.filter((unit) => {
+        const state = cardState(unit.id, unit.aspect);
+        return state.seen && state.dueAt <= now;
+      });
+      if (category === "random") shuffle(due);
+      else due.sort((a, b) => cardState(a.id, a.aspect).dueAt - cardState(b.id, b.aspect).dueAt);
+      const fresh = units.filter((unit) => !cardState(unit.id, unit.aspect).seen);
+      selected = interleaveNewAndDue(fresh, due);
     }
-    session = { queue: selected.map((unit) => ({ id: unit.id, aspect: unit.aspect, retry: false })), position: 0, revealed: false, retried: new Set() };
+    session = { queue: selected.map((unit) => ({ id: unit.id, aspect: unit.aspect, retry: false })), position: 0, revealed: false, retried: new Set(), category };
     updateDashboard();
     renderCurrentCard();
   }
@@ -141,20 +172,27 @@
     $("#flashcard").hidden = !hasCard;
     $("#answer-prompt").hidden = true;
     if (!hasCard) {
-      const nextDue = studyUnits().map((unit) => cardState(unit.id, unit.aspect).dueAt)
+      const categoryNames = { vocabulary: "il vocabolario", verbs: "i verbi", grammar: "la grammatica", random: "tutte le categorie" };
+      const categoryName = categoryNames[session.category];
+      const scopedWords = session.category === "random"
+        ? VOCABULARY
+        : VOCABULARY.filter((entry) => studyCategoryForWord(entry) === session.category);
+      const nextDue = studyUnits(scopedWords).map((unit) => cardState(unit.id, unit.aspect).dueAt)
         .filter((at) => at > Date.now()).sort((a, b) => a - b)[0];
       $("#empty-title").textContent = nextDue
         ? "Nessuna scheda disponibile adesso."
-        : "Tutte le schede completate.";
+        : session.category === "random" ? "Tutte le schede completate." : "Categoria completata.";
       $("#empty-message").textContent = nextDue
-        ? "Hai esaurito le schede disponibili adesso. I ripassi torneranno quando saranno dovuti."
-        : "Hai completato tutte le schede disponibili. Puoi ripassarle comunque o sfogliare il vocabolario.";
+        ? `Hai esaurito le schede disponibili in ${categoryName}. I ripassi torneranno quando saranno dovuti.`
+        : session.category === "random"
+          ? "Hai completato tutte le schede disponibili. Puoi ripassarle comunque o sfogliare il vocabolario."
+          : `Puoi scegliere un'altra categoria o ripassare comunque ${categoryName}.`;
       return;
     }
     session.revealed = false;
     const isGrammar = Boolean(word.grammarQuestion);
     $("#card-category").textContent = word.category.toUpperCase();
-    $("#card-counter").textContent = `${session.position + 1} / ${session.queue.length}`;
+    $("#card-counter").textContent = `${session.position + 1} / ${session.queue.length} nel ripasso`;
     $("#card-front-direction").textContent = isParticiple
       ? "QUAL È IL PARTICIPIO PASSATO DI?"
       : isGrammar ? word.grammarInstruction : "COME SI DICE IN TEDESCO?";
@@ -273,7 +311,21 @@
     return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   }
 
-  function practiceAll() { beginSession(shuffle(VOCABULARY)); }
+  function setSelectedStudyCategory(category) {
+    selectedStudyCategory = category;
+    document.querySelectorAll("[data-study-category]").forEach((button) => {
+      const selected = button.dataset.studyCategory === category;
+      button.classList.toggle("selected", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
+  }
+
+  function practiceAll() {
+    const words = selectedStudyCategory === "random"
+      ? VOCABULARY
+      : VOCABULARY.filter((word) => studyCategoryForWord(word) === selectedStudyCategory);
+    beginSession(shuffle(words), selectedStudyCategory);
+  }
 
   function playAnswerSound(correct) {
     const AudioContextClass = window.AudioContext || window.webkitAudioContext;
@@ -323,6 +375,13 @@
     recordAnswer(true);
   });
   $("#practice-all-button").addEventListener("click", practiceAll);
+  $("#study-tabs").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-study-category]");
+    if (!button) return;
+    const category = button.dataset.studyCategory;
+    setSelectedStudyCategory(category);
+    beginSession(null, category);
+  });
   $("#browse-link").addEventListener("click", showVocabulary);
   $("#back-to-review").addEventListener("click", showReview);
   $("#search-input").addEventListener("input", renderVocabulary);
@@ -385,5 +444,6 @@
     });
   }
   updateDashboard();
-  beginSession();
+  setSelectedStudyCategory("random");
+  beginSession(null, "random");
 })();

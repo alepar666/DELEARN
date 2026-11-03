@@ -53,6 +53,17 @@ h1 span { color: var(--gold); }
 .stat strong { color: var(--ink); font-family: 'Playfair Display', Georgia, serif; font-size: 23px; font-weight: 600; }
 .stat span { color: var(--muted); font-size: 11px; white-space: nowrap; }
 .stat-divider { width: 1px; height: 27px; background: var(--line); }
+.category-progress { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; margin: -10px 0 21px; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.018); }
+.progress-category { min-width: 0; }
+.progress-category-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; margin-bottom: 7px; }
+.progress-category-name { overflow: hidden; color: var(--muted); font-size: 10px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+.progress-category-count { color: var(--subtle); font-size: 9px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.progress-track { height: 4px; overflow: hidden; border-radius: 999px; background: hsl(var(--progress-hue, 0deg) 68% 42% / .24); }
+.progress-fill { display: block; width: 0; height: 100%; border-radius: inherit; background: hsl(var(--progress-hue, 0deg) 68% 52%); transition: width .25s ease, background-color .25s ease; }
+.study-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; margin: -5px 0 12px; }
+.study-tab { min-width: 0; min-height: 36px; padding: 7px 9px; overflow: hidden; border: 1px solid var(--line); border-radius: 9px; background: rgba(255,255,255,.02); color: var(--muted); font-size: 11px; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; transition: border-color .16s, background .16s, color .16s; }
+.study-tab:hover { border-color: #747a7c; color: var(--ink); }
+.study-tab.selected, .study-tab[aria-pressed="true"] { border-color: var(--gold); background: var(--gold); color: #17130a; }
 
 .study-panel { position: relative; min-height: 365px; padding: 18px 24px 24px; border: 1px solid #292c2e; border-radius: 20px; background: linear-gradient(145deg, #17191b, var(--surface) 68%); box-shadow: var(--shadow); }
 .card-meta { display: flex; align-items: center; justify-content: space-between; min-height: 25px; }
@@ -125,10 +136,18 @@ h1 span { color: var(--gold); }
   .stat { display: flex; flex-direction: column; gap: 0; }
   .stat strong { font-size: 21px; }
   .stat span { font-size: 10px; }
+  .category-progress { gap: 10px; padding: 11px 10px; }
+  .study-tabs { gap: 5px; }
+  .study-tab { padding-right: 4px; padding-left: 4px; font-size: 10px; }
   .study-panel { min-height: 365px; padding: 16px 17px 19px; }
   .flashcard { min-height: 260px; }
   .below-card { align-items: flex-start; flex-direction: column; margin-top: 15px; }
   .footer { margin-top: 46px; }
+}
+
+@media (max-width: 380px) {
+  .progress-category-heading { align-items: flex-start; flex-direction: column; gap: 2px; }
+  .progress-category-count { font-size: 8px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
