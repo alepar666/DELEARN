@@ -397,7 +397,15 @@
   if (isIos && !isStandalone) {
     $("#install-button").hidden = false;
     $("#install-button").textContent = "Come installarla";
-    $("#install-button").addEventListener("click", () => setDailyNote("Su iPhone: apri Condividi in Safari, poi scegli “Aggiungi alla schermata Home”."));
+    const installHelpDialog = $("#install-help-dialog");
+    $("#install-button").addEventListener("click", () => {
+      if (typeof installHelpDialog.showModal === "function") installHelpDialog.showModal();
+      else window.alert("In Safari, tocca Condividi, scegli “Aggiungi alla schermata Home”, poi tocca “Aggiungi”.");
+    });
+    $("#close-install-help").addEventListener("click", () => installHelpDialog.close());
+    installHelpDialog.addEventListener("click", (event) => {
+      if (event.target === installHelpDialog) installHelpDialog.close();
+    });
   } else {
     window.addEventListener("beforeinstallprompt", (event) => {
       event.preventDefault();

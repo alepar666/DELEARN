@@ -24,6 +24,20 @@
         <button id="install-button" class="install-button" hidden type="button">Installa app</button>
       </header>
 
+      <dialog id="install-help-dialog" class="install-dialog" aria-labelledby="install-help-title" aria-describedby="install-help-description">
+        <div class="install-dialog-topline">
+          <span class="eyebrow">IPHONE E IPAD</span>
+          <button id="close-install-help" class="install-dialog-close" type="button" aria-label="Chiudi istruzioni">×</button>
+        </div>
+        <h2 id="install-help-title">Installa Ripasso B1</h2>
+        <p id="install-help-description">In Safari, aggiungi l’app alla schermata Home:</p>
+        <ol>
+          <li>Tocca <strong>Condividi</strong> <span aria-hidden="true">↑</span>.</li>
+          <li>Scegli <strong>Aggiungi alla schermata Home</strong>.</li>
+          <li>Tocca <strong>Aggiungi</strong> per confermare.</li>
+        </ol>
+      </dialog>
+
       <section id="review-view" class="view active" aria-label="Ripasso">
         <div class="stats-row" aria-label="I tuoi progressi">
           <div class="stat"><strong id="due-count">0</strong><span>schede disponibili</span></div>
