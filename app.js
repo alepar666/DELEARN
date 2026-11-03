@@ -75,6 +75,19 @@
     return studyUnits().filter((unit) => !cardState(unit.id, unit.aspect).seen);
   }
 
+  function interleaveNewAndDue(fresh, due) {
+    const queue = [];
+    const freshCards = shuffle(fresh);
+    let freshIndex = 0;
+    let dueIndex = 0;
+
+    while (freshIndex < freshCards.length || dueIndex < due.length) {
+      if (freshIndex < freshCards.length) queue.push(freshCards[freshIndex++]);
+      if (dueIndex < due.length) queue.push(due[dueIndex++]);
+    }
+    return queue;
+  }
+
   function availableCount() {
     const now = Date.now();
     return VOCABULARY.filter((word) => {
@@ -111,10 +124,9 @@
       selected = studyUnits(words);
     } else {
       const due = dueCards();
-      const fresh = shuffle(unseenCards());
-      selected = [...due, ...fresh];
+      selected = interleaveNewAndDue(unseenCards(), due);
     }
-    session = { queue: selected.map((word) => ({ id: word.id, retry: false })), position: 0, revealed: false, retried: new Set() };
+    session = { queue: selected.map((unit) => ({ id: unit.id, aspect: unit.aspect, retry: false })), position: 0, revealed: false, retried: new Set() };
     updateDashboard();
     renderCurrentCard();
   }
