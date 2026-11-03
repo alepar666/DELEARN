@@ -1,5 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
 window.VOCABULARY_UPDATED_AT = "2026-11-03";
+window.VOCABULARY_UPDATED_LESSON = 16;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -581,7 +582,7 @@ Object.assign(irregularParticipleForms, {
   haben: "gehabt", tun: "getan", wollen: "gewollt", "spazieren gehen": "spazieren gegangen",
   wehtun: "wehgetan", leidtun: "leidgetan", wiederholen: "wiederholt", erschrecken: "erschrocken / erschreckt",
   zusammenbrechen: "zusammengebrochen", zusammentreffen: "zusammengetroffen",
-  zurückerhalten: "zurückerhalten"
+  zurückerhalten: "zurückerhalten", fangen: "gefangen", zerbrechen: "zerbrochen"
 });
 
 const separablePrefixes = [
@@ -623,6 +624,59 @@ function makeParticiple(verb) {
   const hasInseparablePrefix = inseparablePrefixes.some((candidate) => verb.startsWith(candidate));
   return `${hasInseparablePrefix ? "" : "ge"}${weakParticiple(verb)}`;
 }
+
+const addStableWords = (category, rows) => {
+  for (const [slug, it, de, plural = ""] of rows) {
+    window.VOCABULARY.push({ id: `l16-${slug}`, it, de, plural, category });
+  }
+};
+
+addStableWords("Verbi", [
+  ["verb-zerbrechen", "rompere; spezzare", "zerbrechen"], ["verb-fangen", "catturare; prendere", "fangen"],
+  ["verb-gebrauchen", "usare; servirsi di", "gebrauchen"], ["verb-verschmutzen", "sporcare", "verschmutzen"],
+  ["verb-festnehmen", "arrestare", "festnehmen"], ["verb-pflanzen", "piantare", "pflanzen"],
+  ["verb-aufnehmen", "registrare (audio)", "aufnehmen"], ["verb-loeschen", "cancellare; eliminare", "löschen"],
+  ["verb-oeffnen", "aprire", "öffnen"], ["verb-zubereiten", "preparare (un pasto)", "zubereiten"],
+  ["verb-verbrauchen", "consumare", "verbrauchen"], ["verb-beeinflussen", "influenzare", "beeinflussen"],
+  ["verb-foerdern", "favorire; promuovere", "fördern"], ["verb-verzichten", "rinunciare a", "verzichten auf + Akk."],
+  ["verb-probieren", "assaggiare; provare", "probieren"], ["verb-kosten", "assaggiare (gustare)", "kosten"],
+  ["verb-ernaehren", "alimentarsi", "sich ernähren"]
+]);
+
+addStableWords("Aggettivi", [
+  ["adj-frisch", "fresco", "frisch"], ["adj-tiefgekuehlt", "surgelato", "tiefgekühlt"],
+  ["adj-fettarm", "povero di grassi", "fettarm"], ["adj-fettreich", "ricco di grassi", "fettreich"],
+  ["adj-gesund", "sano", "gesund"], ["adj-ungesund", "malsano", "ungesund"],
+  ["adj-nachhaltig", "sostenibile", "nachhaltig"], ["adj-umweltfreundlich", "rispettoso dell'ambiente", "umweltfreundlich"],
+  ["adj-lokal", "locale", "lokal"], ["adj-regional", "regionale; a chilometro zero", "regional"],
+  ["adj-vegan", "vegano (aggettivo)", "vegan"], ["adj-vegetarisch", "vegetariano (aggettivo)", "vegetarisch"],
+  ["adj-koestlich", "squisito", "köstlich"], ["adj-geschmacklos", "insapore", "geschmacklos"],
+  ["adj-scharf", "piccante", "scharf"], ["adj-sauer", "acido", "sauer"],
+  ["adj-salzig", "salato", "salzig"], ["adj-satt", "sazio", "satt"]
+]);
+
+addStableWords("Alimentazione", [
+  ["food-ernaehrung", "l'alimentazione", "die Ernährung"],
+  ["food-essgewohnheit", "l'abitudine alimentare", "die Essgewohnheit", "die Essgewohnheiten"],
+  ["food-trend", "la tendenza", "der Trend", "die Trends"],
+  ["food-veganismus", "il veganismo", "der Veganismus"], ["food-vegetarismus", "il vegetarianismo", "der Vegetarismus"],
+  ["food-vegetarier", "il vegetariano", "der Vegetarier", "die Vegetarier"], ["food-veganer", "il vegano", "der Veganer", "die Veganer"],
+  ["food-allesesser", "l'onnivoro", "der Allesesser", "die Allesesser"], ["food-fleischesser", "il carnivoro", "der Fleischesser", "die Fleischesser"],
+  ["food-fitness-influencer", "l'influencer del fitness", "der Fitness-Influencer", "die Fitness-Influencer"],
+  ["food-konsument", "il consumatore attento ai prezzi", "der preisbewusste Konsument", "die preisbewussten Konsumenten"],
+  ["food-zeitmanagement", "la gestione del tempo", "das Zeitmanagement"], ["food-fast-food", "il fast food", "das Fast Food"],
+  ["food-slow-food", "lo slow food", "das Slow Food"], ["food-bio-produkt", "il prodotto biologico", "das Bio-Produkt", "die Bio-Produkte"],
+  ["food-insekt", "l'insetto", "das Insekt", "die Insekten"], ["food-fleischsteuer", "la tassa sulla carne", "die Fleischsteuer", "die Fleischsteuern"],
+  ["food-diaet", "la dieta", "die Diät", "die Diäten"], ["food-zukunftsnahrung", "il cibo del futuro", "die Zukunftsnahrung"],
+  ["food-zutat", "l'ingrediente", "die Zutat", "die Zutaten"], ["food-kalorie", "la caloria", "die Kalorie", "die Kalorien"],
+  ["food-bio-bauer", "l'agricoltore biologico", "der Bio-Bauer", "die Bio-Bauern"],
+  ["food-naehrstoff", "il nutriente", "der Nährstoff", "die Nährstoffe"], ["food-vitamin", "la vitamina", "das Vitamin", "die Vitamine"],
+  ["food-nachhaltigkeit", "la sostenibilità", "die Nachhaltigkeit"],
+  ["food-umweltbelastung", "l'impatto ambientale", "die Umweltbelastung", "die Umweltbelastungen"],
+  ["food-massentierhaltung", "l'allevamento intensivo", "die Massentierhaltung"], ["food-tierschutz", "la tutela degli animali", "der Tierschutz"],
+  ["food-lebensmittelverschwendung", "lo spreco alimentare", "die Lebensmittelverschwendung"],
+  ["food-genuss", "il piacere del cibo", "der Genuss"], ["food-schlechtes-gewissen", "il senso di colpa", "das schlechte Gewissen"]
+]);
 
 for (const word of window.VOCABULARY) {
   if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
@@ -671,6 +725,30 @@ addGrammarQuestions([
   ["declension-mixed-choice", "SCEGLI LA DECLINAZIONE", "Dopo «ein», «kein» o un aggettivo possessivo, quale declinazione si usa?", "Mista — gemischte Deklination", "Ein-, kein- e i possessivi hanno desinenze proprie; l'aggettivo completa le informazioni mancanti."],
   ["declension-strong-choice", "SCEGLI LA DECLINAZIONE", "Se l'aggettivo precede il nome senza articolo, quale declinazione si usa?", "Forte — starke Deklination", "Senza articolo, l'aggettivo porta le desinenze che indicano genere, numero e caso."],
   ["adjective-predicative", "RICORDA LA REGOLA", "In «Die Tasche ist rot», quale desinenza prende «rot»?", "Nessuna: «rot» resta invariato", "L'aggettivo è predicativo, dopo il verbo: non si declina. Davanti al nome sarebbe «die rote Tasche»."],
+  ["comparative-formation", "RICORDA LA REGOLA", "Come si forma di solito il comparativo di un aggettivo?", "Radice dell'aggettivo + -er (klein → kleiner)", "La lezione presenta il suffisso -er per il comparativo."],
+  ["comparative-as", "COMPLETA LA REGOLA", "Per dire «più ... di» si usa il comparativo seguito da quale parola?", "als", "Esempio della lezione: Deine Tasche ist schöner als meine."],
+  ["comparative-umlaut", "COMPLETA LA FRASE", "Mein ___ Bruder lebt in Deutschland. (jung · comparativo)", "jüngerer", "Jung forma il comparativo jünger; dopo mein, al nominativo maschile, l'aggettivo aggiunge -er."],
+  ["comparative-weak-ending", "COMPLETA LA DESINENZA", "Deine ___ Tasche ist teuer. (schön · comparativo, nominativo femminile)", "schönere", "Il comparativo schöner riceve anche la desinenza mista -e dopo deine."],
+  ["comparative-mixed-ending", "COMPLETA LA DESINENZA", "Ich habe einen ___ Pullover gekauft. (billig · comparativo, accusativo maschile)", "billigeren", "Billig diventa billiger; dopo einen l'aggettivo attributivo prende -en."],
+  ["comparative-gut", "RICORDA LA FORMA IRREGOLARE", "Qual è il comparativo di «gut»?", "besser", "Gut forma il comparativo in modo irregolare: besser."],
+  ["comparative-gern", "RICORDA LA FORMA IRREGOLARE", "Qual è il comparativo di «gern»?", "lieber", "Gern forma il comparativo in modo irregolare: lieber."],
+  ["comparative-viel", "RICORDA LA FORMA IRREGOLARE", "Qual è il comparativo di «viel»?", "mehr", "Viel forma il comparativo in modo irregolare: mehr."],
+  ["superlative-formation", "RICORDA LA REGOLA", "Come si forma di solito il superlativo predicativo?", "am + aggettivo + -(e)sten (am schönsten)", "La lezione usa am più la forma in -sten; in alcuni casi si inserisce una e."],
+  ["superlative-am", "RICORDA LA REGOLA", "Che cosa significa la forma contratta «am» nel superlativo?", "an dem", "La slide spiega am come contrazione di an dem."],
+  ["superlative-attributive", "COMPLETA LA DESINENZA", "Der ___ Zug der Welt fährt sehr schnell. (schnell · superlativo, nominativo maschile)", "schnellste", "Il superlativo attributivo è seguito dalla normale desinenza aggettivale: dopo der, -e."],
+  ["superlative-gut", "RICORDA LA FORMA IRREGOLARE", "Qual è il superlativo di «gut» nella forma con am?", "am besten", "La forma è irregolare: gut – besser – am besten."],
+  ["superlative-gern", "RICORDA LA FORMA IRREGOLARE", "Qual è il superlativo di «gern» nella forma con am?", "am liebsten", "La forma è irregolare: gern – lieber – am liebsten."],
+  ["superlative-viel", "RICORDA LA FORMA IRREGOLARE", "Qual è il superlativo di «viel» nella forma con am?", "am meisten", "La forma è irregolare: viel – mehr – am meisten."],
+  ["participle-attribute-rule", "RICORDA LA REGOLA", "Come si declina un participio passato usato prima di un sostantivo?", "Come un aggettivo attributivo", "Il participio II attributivo riceve la desinenza richiesta da articolo, caso, genere e numero."],
+  ["participle-attribute-weak-f", "COMPLETA LA DESINENZA", "Die ___ Pasta ist auf dem Tisch. (kochen → Partizip II · nominativo femminile)", "gekochte", "Dopo die al nominativo femminile, il participio attributivo prende -e."],
+  ["participle-attribute-mixed-m", "COMPLETA LA DESINENZA", "Ein ___ Mann ist bei der Polizei. (festnehmen → Partizip II · nominativo maschile)", "festgenommener", "Dopo ein al nominativo maschile, il participio attributivo prende -er."],
+  ["participle-attribute-weak-pl", "COMPLETA LA DESINENZA", "Die ___ Hausaufgaben waren schwierig. (korrigieren → Partizip II · plurale)", "korrigierten", "Dopo die al plurale, il participio attributivo prende -en."],
+  ["participle-attribute-weak-n", "COMPLETA LA DESINENZA", "Das ___ Handy gehört dem Mann. (stehlen → Partizip II · nominativo neutro)", "gestohlene", "Dopo das al nominativo neutro, il participio attributivo prende -e."],
+  ["participle-attribute-dative-m", "COMPLETA LA DESINENZA", "Das Kind spielt mit dem ___ Hund. (fangen → Partizip II · dativo maschile)", "gefangenen", "Nel dativo dopo dem, l'aggettivo attributivo prende -en."],
+  ["participle-attribute-dative-f", "COMPLETA LA DESINENZA", "Sie trinkt aus der ___ Tasse. (zerbrechen → Partizip II · dativo femminile)", "zerbrochenen", "Nel dativo dopo der, l'aggettivo attributivo prende -en."],
+  ["participle-attribute-mixed-n", "COMPLETA LA DESINENZA", "Er kauft ein ___ Handy. (gebrauchen → Partizip II · accusativo neutro)", "gebrauchtes", "Dopo ein all'accusativo neutro, il participio attributivo prende -es."],
+  ["participle-attribute-mixed-pl", "COMPLETA LA DESINENZA", "Deine ___ Kleider sind in der Waschmaschine. (waschen → Partizip II · plurale)", "gewaschenen", "Al plurale dopo deine, il participio attributivo prende -en."],
+  ["participle-attribute-acc-m", "COMPLETA LA DESINENZA", "Wir suchen den ___ Schlüssel. (verlieren → Partizip II · accusativo maschile)", "verlorenen", "Dopo den all'accusativo maschile, il participio attributivo prende -en."],
 
   ["weak-nom-m", "COMPLETA LA DESINENZA", "Der ___ Tisch ist billig. (klein · nominativo maschile)", "kleine", "Declinazione debole dopo der: nominativo maschile in -e."],
   ["weak-nom-f", "COMPLETA LA DESINENZA", "Die ___ Tasche ist teuer. (rot · nominativo femminile)", "rote", "Declinazione debole dopo die: nominativo femminile in -e."],

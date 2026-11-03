@@ -30,7 +30,9 @@ Il testo completo viene salvato in un file temporaneo e il percorso viene mostra
 ./scripts/import-lesson.sh "/percorso/della/lezione" "/percorso/testo-estratto.txt"
 ```
 
-Quando aggiungi una lezione, puoi indicarmi la sua cartella: estrarrò i testi con questo script, confronterò le parole con `vocab.js`, aggiungerò quelle nuove in fondo alle categorie, aggiornerò `VOCABULARY_UPDATED_AT` in `vocab.js` e rinnoverò la cache della PWA.
+PDFKit può mostrare un avviso `CoreGraphics PDF has logged an error` anche quando l'estrazione prosegue correttamente. Se il riepilogo termina con zero errori di apertura e OCR e il file di testo viene creato, l'avviso non ha interrotto l'importazione.
+
+Quando aggiungi una lezione, puoi indicarmi la sua cartella: estrarrò i testi con questo script, confronterò le parole con `vocab.js`, aggiungerò quelle nuove in fondo alle categorie, aggiornerò `VOCABULARY_UPDATED_AT` e `VOCABULARY_UPDATED_LESSON` in `vocab.js` e rinnoverò la cache della PWA.
 
 ## Ripetizione
 
@@ -38,4 +40,4 @@ La logica è una variante binaria ispirata a SM-2: dopo una risposta corretta la
 
 Le parole, i participi passati, gli intervalli e i progressi sono definiti in `vocab.js` e salvati localmente con `localStorage`. Per i verbi, il ripasso del significato e quello del participio hanno intervalli e progressi separati.
 
-Le schede di grammatica sono integrate nel mazzo e nei filtri di "Grammatica". Includono riconoscimento dei casi, forme degli articoli e declinazione debole, mista e forte degli aggettivi, con una spiegazione sul retro. Le domande riprendono gli schemi e gli esempi delle lezioni B1.
+Le schede di grammatica sono integrate nel mazzo e nei filtri di "Grammatica". Includono riconoscimento dei casi, forme degli articoli, declinazione debole, mista e forte, comparativi, superlativi e participi passati usati come aggettivi, con una spiegazione sul retro. Le domande riprendono gli schemi e gli esempi delle lezioni B1.

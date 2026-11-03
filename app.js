@@ -309,7 +309,7 @@
   const formattedVocabDate = new Intl.DateTimeFormat("it-IT", {
     day: "numeric", month: "long", year: "numeric"
   }).format(vocabDate);
-  const vocabularyUpdatedLabel = `Vocabolario aggiornato il ${formattedVocabDate}`;
+  const vocabularyUpdatedLabel = `Vocabolario aggiornato il ${formattedVocabDate} · Lektion ${VOCABULARY_UPDATED_LESSON}`;
 
   $("#flashcard").addEventListener("click", revealCard);
   $("#no-button").addEventListener("click", () => {
