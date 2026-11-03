@@ -40,4 +40,4 @@ La logica è una variante binaria ispirata a SM-2: dopo una risposta corretta la
 
 Le parole, i participi passati, gli intervalli e i progressi sono definiti in `vocab.js` e salvati localmente con `localStorage`. Per i verbi, il ripasso del significato e quello del participio hanno intervalli e progressi separati.
 
-Le schede di grammatica sono integrate nel mazzo e nei filtri di "Grammatica". Includono riconoscimento dei casi, forme degli articoli, declinazione debole, mista e forte, comparativi, superlativi e participi passati usati come aggettivi, con una spiegazione sul retro. Le domande riprendono gli schemi e gli esempi delle lezioni B1.
+Le schede di grammatica sono integrate nel mazzo e nei filtri di "Grammatica". Includono riconoscimento dei casi, forme degli articoli, declinazione debole, mista e forte, comparativi, superlativi e participi passati usati come aggettivi, con una spiegazione sul retro. Le domande riprendono gli schemi e gli esempi delle lezioni B1. "Sfoglia vocabolario" è una consultazione in sola lettura e non avvia un esercizio.

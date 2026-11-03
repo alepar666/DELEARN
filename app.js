@@ -143,6 +143,9 @@
     if (!hasCard) {
       const nextDue = studyUnits().map((unit) => cardState(unit.id, unit.aspect).dueAt)
         .filter((at) => at > Date.now()).sort((a, b) => a - b)[0];
+      $("#empty-title").textContent = nextDue
+        ? "Nessuna scheda disponibile adesso."
+        : "Tutte le schede completate.";
       $("#empty-message").textContent = nextDue
         ? "Hai esaurito le schede disponibili adesso. I ripassi torneranno quando saranno dovuti."
         : "Hai completato tutte le schede disponibili. Puoi ripassarle comunque o sfogliare il vocabolario.";
@@ -262,8 +265,7 @@
     $("#vocab-list").innerHTML = matches.map((word) => {
       const learned = isWordLearned(word);
       const answer = word.grammarQuestion ? word.grammarAnswer : word.de;
-      const promptLabel = word.grammarQuestion ? "Domanda di grammatica" : "Ripassa";
-      return `<button class="vocab-row${word.grammarQuestion ? " grammar-vocab-row" : ""}" type="button" data-word-id="${word.id}" aria-label="${promptLabel}: ${escapeHtml(word.it)}: ${escapeHtml(answer)}"><span class="vocab-it">${escapeHtml(word.it)}</span><span class="vocab-de">${escapeHtml(answer)}</span><span class="vocab-status${learned ? " learned" : ""}" aria-hidden="true"></span></button>`;
+      return `<div class="vocab-row${word.grammarQuestion ? " grammar-vocab-row" : ""}"><span class="vocab-it">${escapeHtml(word.it)}</span><span class="vocab-de">${escapeHtml(answer)}</span><span class="vocab-status${learned ? " learned" : ""}" aria-hidden="true"></span></div>`;
     }).join("");
   }
 
@@ -290,7 +292,7 @@
           oscillator.type = "sine";
           oscillator.frequency.setValueAtTime(frequency, start);
           volume.gain.setValueAtTime(0.0001, start);
-          volume.gain.exponentialRampToValueAtTime(0.035, start + 0.012);
+          volume.gain.exponentialRampToValueAtTime(0.14, start + 0.012);
           volume.gain.exponentialRampToValueAtTime(0.0001, start + 0.12);
           oscillator.connect(volume);
           volume.connect(context.destination);
@@ -331,13 +333,6 @@
     renderFilters();
     renderVocabulary();
   });
-  $("#vocab-list").addEventListener("click", (event) => {
-    const row = event.target.closest("[data-word-id]");
-    if (!row) return;
-    const word = VOCABULARY.find((entry) => entry.id === row.dataset.wordId);
-    if (word) { showReview(); beginSession([word]); }
-  });
-
   const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   const isStandalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
   if (isIos && !isStandalone) {

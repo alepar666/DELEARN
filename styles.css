@@ -106,9 +106,8 @@ h1 span { color: var(--gold); }
 .filter-chip.selected { border-color: var(--gold); background: var(--gold); color: #17130a; }
 .result-count { margin: 11px 0 9px; color: var(--subtle); font-size: 10px; }
 .vocab-list { overflow: hidden; border: 1px solid var(--line); border-radius: 13px; background: var(--surface); }
-.vocab-row { display: grid; width: 100%; min-height: 61px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 12px; align-items: center; gap: 14px; padding: 10px 15px; border: 0; border-bottom: 1px solid #25282a; background: transparent; color: var(--ink); text-align: left; cursor: pointer; transition: background .14s; }
+.vocab-row { display: grid; width: 100%; min-height: 61px; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 12px; align-items: center; gap: 14px; padding: 10px 15px; border-bottom: 1px solid #25282a; background: transparent; color: var(--ink); text-align: left; }
 .vocab-row:last-child { border-bottom: 0; }
-.vocab-row:hover { background: var(--surface-raised); }
 .vocab-row.grammar-vocab-row { align-items: start; }
 .vocab-it { font-size: 12px; font-weight: 600; }
 .vocab-de { color: var(--gold); font-family: 'Playfair Display', Georgia, serif; font-size: 15px; }
