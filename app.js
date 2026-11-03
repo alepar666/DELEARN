@@ -311,7 +311,7 @@
   const formattedVocabDate = new Intl.DateTimeFormat("it-IT", {
     day: "numeric", month: "long", year: "numeric"
   }).format(vocabDate);
-  const vocabularyUpdatedLabel = `Vocabolario aggiornato il ${formattedVocabDate} · Lektion ${VOCABULARY_UPDATED_LESSON}`;
+  const vocabularyUpdatedLabel = `Ultimo aggiornamento: ${formattedVocabDate} · Lektion ${VOCABULARY_UPDATED_LESSON}`;
 
   $("#flashcard").addEventListener("click", revealCard);
   $("#no-button").addEventListener("click", () => {
@@ -355,7 +355,34 @@
   }
 
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
-    window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
+    let serviceWorkerRegistration = null;
+    let reloadedForUpdate = false;
+    const alreadyControlled = Boolean(navigator.serviceWorker.controller);
+
+    if (alreadyControlled) {
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (reloadedForUpdate) return;
+        reloadedForUpdate = true;
+        window.location.reload();
+      });
+    }
+
+    async function checkForServiceWorkerUpdate() {
+      try {
+        serviceWorkerRegistration = serviceWorkerRegistration || await navigator.serviceWorker.getRegistration();
+        if (serviceWorkerRegistration) await serviceWorkerRegistration.update();
+      } catch (_) { /* Update checks can fail offline; the cached app remains available. */ }
+    }
+
+    window.addEventListener("load", async () => {
+      try {
+        serviceWorkerRegistration = await navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" });
+        await serviceWorkerRegistration.update();
+      } catch (_) { /* The app still works online if service workers are unavailable. */ }
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible") checkForServiceWorkerUpdate();
+    });
   }
   updateDashboard();
   beginSession();

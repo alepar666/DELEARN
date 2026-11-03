@@ -1,4 +1,4 @@
-# DELEARN
+# Ripasso B1
 
 Una PWA italiana per imparare e ripassare il vocabolario tedesco. L'app funziona senza account e salva le risposte nel browser del dispositivo. L'interfaccia usa un tema scuro con i colori della bandiera tedesca.
 

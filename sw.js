@@ -1,4 +1,4 @@
-const CACHE_NAME = "delearn-shell-v18";
+const CACHE_NAME = "delearn-shell-v23";
 const APP_FILES = [
   "./",
   "./index.html",
@@ -11,28 +11,47 @@ const APP_FILES = [
   "./app-icon-512.png"
 ];
 
+async function cacheCurrentShell() {
+  const cache = await caches.open(CACHE_NAME);
+  await Promise.all(APP_FILES.map(async (file) => {
+    const request = new Request(file, { cache: "reload" });
+    const response = await fetch(request);
+    if (!response.ok) throw new Error(`Impossibile aggiornare ${file}: ${response.status}`);
+    await cache.put(request, response);
+  }));
+}
+
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_FILES)));
-  self.skipWaiting();
+  event.waitUntil((async () => {
+    await cacheCurrentShell();
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))));
-  self.clients.claim();
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter((key) => key.startsWith("delearn-shell-") && key !== CACHE_NAME).map((key) => caches.delete(key)));
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET" || new URL(event.request.url).origin !== self.location.origin) return;
-  if (event.request.mode === "navigate") {
-    event.respondWith(fetch(event.request).then((response) => {
-      const copy = response.clone();
-      caches.open(CACHE_NAME).then((cache) => cache.put("./index.html", copy));
-      return response;
-    }).catch(() => caches.match("./index.html")));
-    return;
-  }
-  event.respondWith(caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
-    if (response.ok) caches.open(CACHE_NAME).then((cache) => cache.put(event.request, response.clone()));
-    return response;
-  })));
+  event.respondWith((async () => {
+    const cache = await caches.open(CACHE_NAME);
+    const cacheKey = event.request.mode === "navigate" ? "./index.html" : event.request;
+
+    try {
+      const freshRequest = event.request.mode === "navigate"
+        ? new Request(event.request.url, { cache: "no-cache", credentials: "same-origin" })
+        : new Request(event.request, { cache: "no-cache" });
+      const response = await fetch(freshRequest);
+      if (response.ok) await cache.put(cacheKey, response.clone());
+      if (response.ok) return response;
+      return (await cache.match(cacheKey)) || response;
+    } catch (_) {
+      return (await cache.match(cacheKey)) || (await caches.match(event.request)) || Response.error();
+    }
+  })());
 });
