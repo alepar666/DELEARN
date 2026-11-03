@@ -162,6 +162,36 @@ h1 span { color: var(--gold); }
   .progress-category-count { font-size: 8px; }
 }
 
+@media (max-width: 560px) and (max-height: 740px) {
+  .app-shell { padding-top: max(10px, env(safe-area-inset-top)); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .topbar { min-height: 34px; }
+  .stats-row { gap: 8px; margin: 10px 0 9px; padding: 8px 10px; }
+  .stat strong { font-size: 19px; line-height: 1.05; }
+  .stat span { font-size: 9px; }
+  .category-progress { gap: 8px; margin: 0 0 8px; padding: 8px 9px; }
+  .progress-category-heading { margin-bottom: 4px; }
+  .progress-category-name { font-size: 9px; }
+  .progress-category-count { font-size: 8px; }
+  .progress-track { height: 3px; }
+  .study-tabs { gap: 4px; margin: 0 0 7px; }
+  .study-tab { min-height: 32px; padding: 5px 3px; font-size: 9px; }
+  .study-panel { min-height: 0; padding: 10px 13px 12px; border-radius: 16px; }
+  .card-meta { min-height: 20px; }
+  .category-pill { padding: 4px 7px; font-size: 8px; }
+  .card-counter { font-size: 9px; }
+  .flashcard { min-height: clamp(140px, 25vh, 180px); margin-top: 0; padding: 12px 10px 18px; }
+  .card-face, .card-back { gap: 10px; }
+  .card-word { font-size: clamp(31px, 7vw, 41px); }
+  .card-word.grammar-question { font-size: clamp(18px, 4.8vw, 25px); }
+  .card-hint, .card-extra { font-size: 10.5px; }
+  .flip-cue { bottom: 0; font-size: 17px; }
+  .answer-prompt p { margin-bottom: 8px; font-size: 11px; }
+  .answer-buttons { gap: 8px; }
+  .answer-button { min-height: 42px; font-size: 13px; }
+  .below-card { margin-top: 10px; }
+  .footer { margin-top: 30px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
