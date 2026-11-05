@@ -1,6 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-03";
-window.VOCABULARY_UPDATED_LESSON = 16;
+window.VOCABULARY_UPDATED_AT = "2026-11-05";
+window.VOCABULARY_UPDATED_LESSON = 17;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -625,9 +625,9 @@ function makeParticiple(verb) {
   return `${hasInseparablePrefix ? "" : "ge"}${weakParticiple(verb)}`;
 }
 
-const addStableWords = (category, rows) => {
+const addStableWords = (category, rows, lesson = 16) => {
   for (const [slug, it, de, plural = ""] of rows) {
-    window.VOCABULARY.push({ id: `l16-${slug}`, it, de, plural, category });
+    window.VOCABULARY.push({ id: `l${lesson}-${slug}`, it, de, plural, category });
   }
 };
 
@@ -677,6 +677,14 @@ addStableWords("Alimentazione", [
   ["food-lebensmittelverschwendung", "lo spreco alimentare", "die Lebensmittelverschwendung"],
   ["food-genuss", "il piacere del cibo", "der Genuss"], ["food-schlechtes-gewissen", "il senso di colpa", "das schlechte Gewissen"]
 ]);
+
+addStableWords("Aggettivi", [
+  ["adj-zu-feucht", "troppo umido", "zu feucht"]
+], 17);
+
+addStableWords("Verbi", [
+  ["verb-sich-lohnen", "valere la pena", "sich lohnen"]
+], 17);
 
 for (const word of window.VOCABULARY) {
   if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
@@ -790,5 +798,45 @@ addGrammarQuestions([
   ["strong-gen-m", "COMPLETA LA DESINENZA", "Die Blumen ___ Gartens. (neu · genitivo maschile)", "neuen", "Senza articolo, il genitivo maschile forte prende -en; il nome prende -(e)s."],
   ["strong-gen-f", "COMPLETA LA DESINENZA", "Die Kinder ___ Mutter sind erzogen. (streng · genitivo femminile)", "strenger", "Senza articolo, il genitivo femminile forte prende -er."],
   ["strong-gen-n", "COMPLETA LA DESINENZA", "Die Fenster ___ Hauses. (groß · genitivo neutro)", "großen", "Senza articolo, il genitivo neutro forte prende -en; il nome prende -(e)s."],
-  ["strong-gen-p", "COMPLETA LA DESINENZA", "Die Sprache ___ Blumen ist die Liebe. (rot · genitivo plurale)", "roter", "Senza articolo, il genitivo plurale forte prende -er."]
+  ["strong-gen-p", "COMPLETA LA DESINENZA", "Die Sprache ___ Blumen ist die Liebe. (rot · genitivo plurale)", "roter", "Senza articolo, il genitivo plurale forte prende -er."],
+
+  ["l17-word-wenige", "ARTIKELWÖRTER", "Come si dice «pochi/e»?", "wenige", "Wenig- si declina come un aggettivo senza articolo."],
+  ["l17-word-ein-paar", "ARTIKELWÖRTER", "Come si dice «alcuni/e; un paio di»?", "ein paar", "Ein paar è un quantificatore plurale; l'aggettivo che segue usa la declinazione forte."],
+  ["l17-word-solche", "ARTIKELWÖRTER", "Come si dice «tali; di questo tipo»?", "solche", "Solch- segue la declinazione dell'articolo determinativo."],
+  ["l17-word-manche", "ARTIKELWÖRTER", "Come si dice «alcuni/e; certi/e»?", "manche", "Manch- compare, per esempio, in «Manche Menschen sind hochbegabt»."],
+  ["l17-word-genug", "ARTIKELWÖRTER", "Come si dice «abbastanza; a sufficienza»?", "genug", "Esempio della lezione: «Hast du genug Geld?»."],
+  ["l17-word-verschiedene", "ARTIKELWÖRTER", "Come si dice «diversi/e; vari/e»?", "verschiedene", "Verschieden- è tra gli articoli/parole determinanti della lezione."],
+  ["l17-word-etwas", "ARTIKELWÖRTER", "Come si dice «qualcosa; un po' di»?", "etwas", "Etwas può indicare una cosa non precisata o una quantità non precisata."],
+  ["l17-word-einige", "ARTIKELWÖRTER", "Come si dice «alcuni/e; parecchi/e»?", "einige", "Einig- è usato come quantificatore."],
+  ["l17-word-weitere", "ARTIKELWÖRTER", "Come si dice «ulteriori; altri/e»?", "weitere", "Weiter- è tra le parole determinanti della lezione."],
+  ["l17-word-viele", "ARTIKELWÖRTER", "Come si dice «molti/e»?", "viele", "Esempio della lezione: «Viele ausländische Facharbeiter ...»."],
+  ["l17-word-sonstige", "ARTIKELWÖRTER", "Come si dice «altri/e; rimanenti»?", "sonstige", "Sonstig- è tra le parole determinanti presentate nella panoramica."],
+  ["l17-word-etliche", "ARTIKELWÖRTER", "Come si dice «parecchi/e»?", "etliche", "Esempio della lezione: «etliche DDR-Bürger»."],
+  ["l17-word-alle", "ARTIKELWÖRTER", "Come si dice «tutti/e»?", "alle", "Alle segue la declinazione dell'articolo determinativo al plurale."],
+  ["l17-word-saemtliche", "ARTIKELWÖRTER", "Come si dice «tutti/e; l'intero insieme»?", "sämtliche", "Sämtliche segue la declinazione dell'articolo determinativo al plurale."],
+  ["l17-word-andere", "ARTIKELWÖRTER", "Come si dice «altri/e»?", "andere", "Ander- è tra i quantificatori plurali che seguono la declinazione forte."],
+  ["l17-word-mehrere", "ARTIKELWÖRTER", "Come si dice «diversi/e; numerosi/e»?", "mehrere", "Mehrere è un quantificatore plurale."],
+  ["l17-word-beide", "ARTIKELWÖRTER", "Come si dice «entrambi/e»?", "beide", "Beid- segue la declinazione dell'articolo determinativo al plurale."],
+  ["l17-word-jeder", "ARTIKELWÖRTER", "Come si dice «ogni; ciascuno/a»?", "jeder / jede / jedes", "Jed- segue la declinazione dell'articolo determinativo al singolare."],
+  ["l17-word-dieser", "ARTIKELWÖRTER", "Come si dice «questo/a»?", "dieser / diese / dieses", "Dies- segue la declinazione dell'articolo determinativo."],
+  ["l17-word-jener", "ARTIKELWÖRTER", "Come si dice «quello/a»?", "jener / jene / jenes", "Jen- segue la declinazione dell'articolo determinativo."],
+  ["l17-word-folgende", "ARTIKELWÖRTER", "Come si dice «seguente»?", "folgend", "Esempio della lezione: «am folgenden Tag»."],
+  ["l17-word-welcher", "ARTIKELWÖRTER", "Come si dice «quale»?", "welcher / welche / welches", "Welch- segue la declinazione dell'articolo determinativo."],
+  ["l17-word-manch-ein", "ARTIKELWÖRTER", "Come si dice «più di un; un certo»?", "manch ein", "Manch ein segue la declinazione dell'articolo indeterminativo."],
+  ["l17-word-irgendein", "ARTIKELWÖRTER", "Come si dice «un qualsiasi; un qualche»?", "irgendein", "Irgendein segue la declinazione dell'articolo indeterminativo."],
+  ["l17-word-irgendwelche", "ARTIKELWÖRTER", "Come si dice «qualche; alcuni/e; qualsiasi»?", "irgendwelche", "Irgendwelch- segue la declinazione dell'articolo determinativo al plurale."],
+  ["l17-word-kein", "ARTIKELWÖRTER", "Come si dice «nessun; nessuna»?", "kein", "Kein- segue la declinazione dell'articolo indeterminativo."],
+  ["l17-word-viel", "ARTIKELWÖRTER", "Come si dice «molto/a; molti/e»?", "viel", "Con viel l'aggettivo che segue usa la declinazione forte: «viel leerem Geschwätz»."],
+  ["l17-word-derjenige", "ARTIKELWÖRTER", "Come si dice «colui/colei/ciò che»?", "derjenige / diejenige / dasjenige", "Le forme concordano con ciò a cui si riferiscono; al plurale: diejenigen."],
+  ["l17-term-artikelwort", "VOCABOLARIO GRAMMATICALE", "Come si dice «parola articolo; determinante»?", "das Artikelwort; plurale: die Artikelwörter", "È il termine usato nelle slide per parole come manch-, welch- e sämtliche."],
+  ["l17-term-nullartikel", "VOCABOLARIO GRAMMATICALE", "Come si dice «articolo zero; assenza di articolo»?", "der Nullartikel", "Nullartikel indica che davanti al sostantivo non c'è un articolo determinativo o indeterminativo."],
+
+  ["l17-singular-definite-pattern", "RICONOSCI LA DECLINAZIONE", "Quali parole determinanti seguono al singolare lo schema dell'articolo determinativo?", "manch-, jen-, folgend-, dies-, welch-, jed-", "L'aggettivo che segue usa la declinazione debole, come dopo der/die/das."],
+  ["l17-singular-indefinite-pattern", "RICONOSCI LA DECLINAZIONE", "Quali parole determinanti seguono al singolare lo schema dell'articolo indeterminativo?", "manch ein-, kein-, irgendein-", "L'aggettivo che segue usa la declinazione mista, come dopo ein."],
+  ["l17-singular-zero-pattern", "RICONOSCI LA DECLINAZIONE", "Dopo etwas, genug, viel e mehr, quale declinazione dell'aggettivo si usa?", "Forte, come con il Nullartikel", "Esempi della lezione: «genug schwierige Grammatikaufgaben» e «viel leerem Geschwätz»."],
+  ["l17-plural-definite-pattern", "RICONOSCI LA DECLINAZIONE", "Quali parole determinanti plurali seguono lo schema dell'articolo determinativo?", "diejenigen-, dies-, irgendwelch-, jen-, solch-, beid-, alle, sämtliche, verschiedene", "L'aggettivo che segue usa la declinazione debole."],
+  ["l17-plural-zero-pattern", "RICONOSCI LA DECLINAZIONE", "Quali quantificatori plurali seguono lo schema senza articolo?", "wenig-, ander-, einig-, ein paar, etlich-, zahlreich-, viele, mehrere", "L'aggettivo che segue usa la declinazione forte."],
+  ["l17-example-mancher", "COMPLETA LA DESINENZA", "Mancher ___ Arbeitnehmer hat heutzutage Angst. (fleißig)", "fleißige", "Manch- segue la declinazione dell'articolo determinativo: al nominativo maschile l'aggettivo prende -e."],
+  ["l17-example-kein", "COMPLETA LA DESINENZA", "Kein ___ Mensch würde mit dem Auto rasen. (vorsichtig)", "vorsichtiger", "Kein- segue la declinazione mista: al nominativo maschile l'aggettivo prende -er."],
+  ["l17-example-alle", "COMPLETA LA DESINENZA", "Fast alle ___ Menschen müssen Steuern zahlen. (berufstätig)", "berufstätigen", "Alle segue la declinazione dell'articolo determinativo al plurale: l'aggettivo prende -en."]
 ]);

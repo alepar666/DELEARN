@@ -30,6 +30,8 @@ Il testo completo viene salvato in un file temporaneo e il percorso viene mostra
 ./scripts/import-lesson.sh "/percorso/della/lezione" "/percorso/testo-estratto.txt"
 ```
 
+Lo script estrae il testo ma non modifica `vocab.js`: le nuove parole e le domande grammaticali vanno aggiunte al codice dopo il confronto con le schede già presenti.
+
 PDFKit può mostrare un avviso `CoreGraphics PDF has logged an error` anche quando l'estrazione prosegue correttamente. Se il riepilogo termina con zero errori di apertura e OCR e il file di testo viene creato, l'avviso non ha interrotto l'importazione.
 
 Quando aggiungi una lezione, puoi indicarmi la sua cartella: estrarrò i testi con questo script, confronterò le parole con `vocab.js`, aggiungerò quelle nuove in fondo alle categorie, aggiornerò `VOCABULARY_UPDATED_AT` e `VOCABULARY_UPDATED_LESSON` in `vocab.js` e rinnoverò la cache della PWA.
