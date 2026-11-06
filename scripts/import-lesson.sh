@@ -22,3 +22,12 @@ else
 fi
 
 swift "$script_dir/extract_lesson.swift" "$input_dir" "$output_file"
+
+if command -v node >/dev/null 2>&1; then
+  printf '\nConfronto con il vocabolario esistente:\n'
+  if ! node "$script_dir/review-lesson.js" "$output_file"; then
+    printf 'Il testo è stato estratto; il confronto automatico non è riuscito.\n' >&2
+  fi
+else
+  printf '\nPer il confronto automatico installa Node.js o usa in seguito:\n  node "%s/review-lesson.js" "%s"\n' "$script_dir" "$output_file" >&2
+fi

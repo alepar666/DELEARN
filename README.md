@@ -18,7 +18,7 @@ Per provarla sul computer, puoi servirla con un server web locale, per esempio l
 
 ## Importare una lezione B1
 
-Lo script `scripts/import-lesson.sh` raccoglie ricorsivamente i PDF di una cartella, estrae il testo incorporato e usa l'OCR di macOS sulle pagine che contengono poco testo leggibile. Non richiede pacchetti aggiuntivi; richiede macOS con Swift disponibile.
+Lo script `scripts/import-lesson.sh` raccoglie ricorsivamente i PDF di una cartella, estrae il testo incorporato e usa l'OCR di macOS sulle pagine che contengono poco testo leggibile. Richiede macOS con Swift; se Node.js è disponibile, esegue anche il confronto automatico con il vocabolario.
 
 ```sh
 ./scripts/import-lesson.sh "/Users/alepar/Documents/corso tedesco/B1/Nome lezione"
@@ -31,6 +31,14 @@ Il testo completo viene salvato in un file temporaneo e il percorso viene mostra
 ```
 
 Lo script estrae il testo ma non modifica `vocab.js`: le nuove parole e le domande grammaticali vanno aggiunte al codice dopo il confronto con le schede già presenti.
+
+Se Node.js non è disponibile durante l'estrazione, puoi generare il rapporto in seguito:
+
+```sh
+node scripts/review-lesson.js "/percorso/testo-estratto.txt"
+```
+
+Il rapporto segnala le schede lessicali già riconosciute nel testo e le coppie tedesco-italiano scritte con `=` o `->`, indicando le corrispondenze letterali nel mazzo. Non aggiunge schede: varianti, forme flesse, refusi OCR e significato vanno ancora rivisti prima di aggiornare il codice.
 
 PDFKit può mostrare un avviso `CoreGraphics PDF has logged an error` anche quando l'estrazione prosegue correttamente. Se il riepilogo termina con zero errori di apertura e OCR e il file di testo viene creato, l'avviso non ha interrotto l'importazione.
 
