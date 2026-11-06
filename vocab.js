@@ -1,6 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-05";
-window.VOCABULARY_UPDATED_LESSON = 17;
+window.VOCABULARY_UPDATED_AT = "2026-11-06";
+window.VOCABULARY_UPDATED_LESSON = 18;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -581,7 +581,7 @@ const irregularParticipleForms = Object.fromEntries(
 Object.assign(irregularParticipleForms, {
   haben: "gehabt", tun: "getan", wollen: "gewollt", "spazieren gehen": "spazieren gegangen",
   wehtun: "wehgetan", leidtun: "leidgetan", wiederholen: "wiederholt", erschrecken: "erschrocken / erschreckt",
-  zusammenbrechen: "zusammengebrochen", zusammentreffen: "zusammengetroffen",
+  zusammenbrechen: "zusammengebrochen", zusammentreffen: "zusammengetroffen", erbrechen: "erbrochen",
   zurückerhalten: "zurückerhalten", fangen: "gefangen", zerbrechen: "zerbrochen"
 });
 
@@ -685,6 +685,128 @@ addStableWords("Aggettivi", [
 addStableWords("Verbi", [
   ["verb-sich-lohnen", "valere la pena", "sich lohnen"]
 ], 17);
+
+addStableWords("Verbi", [
+  ["verb-tipps-geben", "dare consigli", "Tipps geben"],
+  ["verb-ausschliessen", "escludere; non escludere", "ausschließen"],
+  ["verb-verdauen", "digerire", "verdauen"],
+  ["verb-vermitteln", "trasmettere; comunicare", "vermitteln"],
+  ["verb-versuchen", "tentare; provare", "versuchen"],
+  ["verb-aufbauen", "basare (su); costruire", "aufbauen"],
+  ["verb-wechseln", "cambiare; sostituire", "wechseln"],
+  ["verb-vertrauen", "fidarsi di", "vertrauen + Dat."],
+  ["verb-bewirtschaften", "coltivare; gestire un terreno", "bewirtschaften"],
+  ["verb-konsumieren", "consumare", "konsumieren"],
+  ["verb-wuerzen", "condire; insaporire", "würzen"],
+  ["verb-kotzen", "vomitare (colloquiale)", "kotzen"],
+  ["verb-erbrechen", "vomitare", "erbrechen"]
+], 18);
+
+addStableWords("Aggettivi", [
+  ["adj-winzig", "minuscolo/a", "winzig"], ["adj-riesig", "enorme; gigantesco/a", "riesig"],
+  ["adj-dick", "corpulento/a; grosso/a", "dick"], ["adj-duenn", "magro/a; sottile", "dünn"],
+  ["adj-mollig", "paffutello/a", "mollig"], ["adj-schlank", "snello/a; slanciato/a", "schlank"],
+  ["adj-fett", "grasso/a", "fett"], ["adj-duerr", "emaciato/a; molto magro/a", "dürr"],
+  ["adj-mager", "magro/a; scarno/a", "mager"], ["adj-schmaechtig", "esile; mingherlino/a", "schmächtig"],
+  ["adj-schmal", "stretto/a; esile", "schmal"], ["adj-attraktiv", "attraente", "attraktiv"],
+  ["adj-feminin", "femminile", "feminin"], ["adj-maskulin", "mascolino", "maskulin"],
+  ["adj-schwach", "debole", "schwach"], ["adj-rund", "rotondo/a", "rund"],
+  ["adj-laenglich", "allungato/a", "länglich"], ["adj-blass", "pallido/a", "blass"],
+  ["adj-sonnengebraeunt", "abbronzato/a", "sonnengebräunt"], ["adj-tief", "infossato/a; profondo/a", "tief"],
+  ["adj-hervorstehend", "sporgente", "hervorstehend"], ["adj-hell", "chiaro/a", "hell"],
+  ["adj-leuchtend", "luminoso/a; brillante", "leuchtend"], ["adj-hellblond", "biondo/a chiaro/a", "hellblond"],
+  ["adj-dunkelblond", "biondo/a scuro/a", "dunkelblond"], ["adj-gestraehnt", "con mèches", "gesträhnt"],
+  ["adj-bunt", "colorato/a", "bunt"], ["adj-gefaerbt", "tinto/a", "gefärbt"],
+  ["adj-dicht", "folto/a; fitto/a", "dicht"], ["adj-gebunden", "legato/a", "gebunden"],
+  ["adj-gestylt", "acconciato/a; pettinato/a", "gestylt"], ["adj-lockig", "riccio/a", "lockig"],
+  ["adj-aufstehend", "ritto/a; che si solleva", "aufstehend"], ["adj-schuetter", "diradato/a; rado/a", "schütter"],
+  ["adj-struppig", "arruffato/a; ispido/a", "struppig"], ["adj-knollig", "bitorzoluto/a", "knollig"],
+  ["adj-gerade", "dritto/a", "gerade"], ["adj-leicht-gebogen", "leggermente curvo/a", "leicht gebogen"],
+  ["adj-breit", "largo/a", "breit"], ["adj-voll", "pieno/a; carnoso/a", "voll"],
+  ["adj-anliegend", "aderente", "anliegend"], ["adj-leicht-abstehend", "leggermente sporgente", "leicht abstehend"],
+  ["adj-auffallend", "vistoso/a; appariscente", "auffallend"], ["adj-modern", "moderno/a", "modern"],
+  ["adj-bequem", "comodo/a", "bequem"], ["adj-chic", "chic; elegante", "chic"],
+  ["adj-cool", "cool; alla moda", "cool"], ["adj-spottbillig", "a prezzi stracciati", "spottbillig"],
+  ["adj-dreckig", "sporco/a", "dreckig"], ["adj-sauber", "pulito/a", "sauber"],
+  ["adj-schaebig", "trasandato/a; malridotto/a", "schäbig"], ["adj-schraeg", "strano/a; eccentrico/a", "schräg"],
+  ["adj-eintoenig", "monotono/a", "eintönig"], ["adj-gepflegt", "curato/a", "gepflegt"],
+  ["adj-jugendlich", "giovanile", "jugendlich"], ["adj-ordentlich", "ordinato/a", "ordentlich"],
+  ["adj-professionell", "professionale", "professionell"], ["adj-schmutzig", "sporco/a", "schmutzig"],
+  ["adj-serioes", "serio/a; rispettabile", "seriös"], ["adj-normal", "normale", "normal"],
+  ["adj-trocken", "secco/a", "trocken"], ["adj-fettig", "grasso/a", "fettig"],
+  ["adj-gemischt", "misto/a", "gemischt"], ["adj-hoch", "alto/a", "hoch"],
+  ["adj-niedrig", "basso/a", "niedrig"], ["adj-eckig", "squadrato/a; spigoloso/a", "eckig"],
+  ["adj-spitz", "appuntito/a", "spitz"], ["adj-vorstehend", "sporgente", "vorstehend"],
+  ["adj-hellbraun", "marrone chiaro", "hellbraun"], ["adj-bruenett", "bruno/a; con capelli scuri", "brünett"],
+  ["adj-ungepflegt", "trascurato/a; incolto/a", "ungepflegt"], ["adj-ausgewogen", "equilibrato/a (alimentazione)", "ausgewogen"],
+  ["adj-ausgeglichen", "equilibrato/a; bilanciato/a", "ausgeglichen"], ["adj-neugierig", "curioso/a", "neugierig"],
+  ["adj-negativ", "negativo/a", "negativ"], ["adj-tendenziell", "tendenzialmente", "tendenziell"],
+  ["adj-proteinreich", "ricco/a di proteine", "proteinreich"], ["adj-persoenlich", "personale", "persönlich"],
+  ["adj-schulterlang", "lungo/a fino alle spalle", "schulterlang"], ["adj-schneeweiss", "bianco/a come la neve", "schneeweiß"],
+  ["adj-zerzaust", "arruffato/a; spettinato/a", "zerzaust"], ["adj-hochgesteckt", "raccolto/a (capelli)", "hochgesteckt"],
+  ["adj-glatt-rasiert", "ben rasato/a", "glatt rasiert"]
+], 18);
+
+addStableWords("Parole utili", [
+  ["word-bewusst", "essere consapevole di", "sich einer Sache bewusst sein"],
+  ["word-seitdem", "da quando; da allora", "seitdem"]
+], 18);
+
+addStableWords("Cibo", [
+  ["food-mensa", "la mensa", "die Mensa", "die Mensen"]
+], 18);
+
+addStableWords("Alimentazione", [
+  ["food-dosenprodukt", "il prodotto in scatola", "das Dosenprodukt", "die Dosenprodukte"],
+  ["food-fertiggericht", "il piatto pronto", "das Fertiggericht", "die Fertiggerichte"],
+  ["food-kohlenhydrat", "il carboidrato", "das Kohlenhydrat", "die Kohlenhydrate"],
+  ["food-trockenfrucht", "la frutta secca", "die Trockenfrucht", "die Trockenfrüchte"],
+  ["food-schokoladenpaste", "la crema al cioccolato", "die Schokoladenpaste", "die Schokoladenpasten"],
+  ["food-dessert", "il dessert", "das Dessert", "die Desserts"],
+  ["food-haferflocke", "il fiocco d'avena", "die Haferflocke", "die Haferflocken"],
+  ["food-protein", "la proteina", "das Protein", "die Proteine"],
+  ["food-grillenmehl", "la farina di grillo", "das Grillenmehl"],
+  ["food-wurm", "il verme", "der Wurm", "die Würmer"],
+  ["food-rippchen", "la costina", "das Rippchen", "die Rippchen"],
+  ["food-allesfresser", "l'onnivoro", "der Allesfresser", "die Allesfresser"],
+  ["food-fleischfresser", "il carnivoro", "der Fleischfresser", "die Fleischfresser"],
+  ["food-omnivore-ernaehrung", "l'alimentazione onnivora", "die omnivore Ernährung"]
+], 18);
+
+addStableWords("Lavoro", [
+  ["work-unternehmen", "l'azienda; l'impresa", "das Unternehmen", "die Unternehmen"],
+  ["work-arbeitsschicht", "il turno di lavoro", "die Arbeitsschicht", "die Arbeitsschichten"]
+], 18);
+
+addStableWords("Concetti e termini", [
+  ["term-meinung", "l'opinione", "die Meinung", "die Meinungen"]
+], 18);
+
+addStableWords("Corpo e salute", [
+  ["body-koerperbau", "la costituzione fisica", "der Körperbau"],
+  ["body-augenbraue", "il sopracciglio", "die Augenbraue", "die Augenbrauen"],
+  ["body-nase", "il naso", "die Nase", "die Nasen"],
+  ["body-stirn", "la fronte", "die Stirn", "die Stirnen"],
+  ["body-kinn", "il mento", "das Kinn", "die Kinne"],
+  ["body-bart", "la barba", "der Bart", "die Bärte"],
+  ["body-haut", "la pelle", "die Haut"],
+  ["body-mittelscheitel", "la riga in mezzo", "der Mittelscheitel", "die Mittelscheitel"],
+  ["body-stirnglatze", "la stempiatura; la calvizie sulla fronte", "die Stirnglatze", "die Stirnglatzen"],
+  ["body-pferdeschwanz", "la coda di cavallo", "der Pferdeschwanz", "die Pferdeschwänze"],
+  ["body-zopf", "la treccia", "der Zopf", "die Zöpfe"],
+  ["body-stirnfranse", "la frangia", "die Stirnfranse", "die Stirnfransen"],
+  ["body-straehne", "la ciocca (di capelli)", "die Strähne", "die Strähnen"],
+  ["body-haarschnitt", "il taglio di capelli", "der Haarschnitt", "die Haarschnitte"],
+  ["body-schnurrbart", "i baffi", "der Schnurrbart", "die Schnurrbärte"],
+  ["body-kinnbart", "la barba al mento", "der Kinnbart", "die Kinnbärte"],
+  ["body-stoppelbart", "la barba incolta", "der Stoppelbart", "die Stoppelbärte"],
+  ["body-dreitagebart", "la barba di tre giorni", "der Dreitagebart"],
+  ["body-koteletten", "le basette", "die Koteletten"],
+  ["body-schnauz", "i baffi (colloquiale)", "der Schnauz", "die Schnäuze"],
+  ["body-vollbart", "la barba folta", "der Vollbart", "die Vollbärte"],
+  ["body-doppelkinn", "il doppio mento", "das Doppelkinn"],
+  ["body-gruebchen", "la fossetta (del mento)", "das Grübchen", "die Grübchen"]
+], 18);
 
 for (const word of window.VOCABULARY) {
   if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
@@ -838,5 +960,10 @@ addGrammarQuestions([
   ["l17-plural-zero-pattern", "RICONOSCI LA DECLINAZIONE", "Quali quantificatori plurali seguono lo schema senza articolo?", "wenig-, ander-, einig-, ein paar, etlich-, zahlreich-, viele, mehrere", "L'aggettivo che segue usa la declinazione forte."],
   ["l17-example-mancher", "COMPLETA LA DESINENZA", "Mancher ___ Arbeitnehmer hat heutzutage Angst. (fleißig)", "fleißige", "Manch- segue la declinazione dell'articolo determinativo: al nominativo maschile l'aggettivo prende -e."],
   ["l17-example-kein", "COMPLETA LA DESINENZA", "Kein ___ Mensch würde mit dem Auto rasen. (vorsichtig)", "vorsichtiger", "Kein- segue la declinazione mista: al nominativo maschile l'aggettivo prende -er."],
-  ["l17-example-alle", "COMPLETA LA DESINENZA", "Fast alle ___ Menschen müssen Steuern zahlen. (berufstätig)", "berufstätigen", "Alle segue la declinazione dell'articolo determinativo al plurale: l'aggettivo prende -en."]
+  ["l17-example-alle", "COMPLETA LA DESINENZA", "Fast alle ___ Menschen müssen Steuern zahlen. (berufstätig)", "berufstätigen", "Alle segue la declinazione dell'articolo determinativo al plurale: l'aggettivo prende -en."],
+
+  ["l18-case-trust", "RICORDA IL CASO", "Quale caso regge «vertrauen»?", "Dativ", "Vertrauen regge il dativo: «Ich vertraue meinem Freund»."],
+  ["l18-case-erinnern", "RICORDA IL CASO", "Quale caso segue «sich erinnern an»?", "Akkusativ", "La preposizione an regge l'accusativo in «Ich erinnere mich an den Urlaub»."],
+  ["l18-case-abhaengen", "RICORDA IL CASO", "Quale caso segue «abhängen von»?", "Dativ", "Von regge il dativo: «Das hängt von den Arbeitszeiten ab»."],
+  ["l18-since-word-order", "RICORDA L'ORDINE DELLE PAROLE", "Dove va il verbo coniugato nella subordinata introdotta da «seitdem»?", "Alla fine della subordinata", "Esempio: «Seitdem ich im Homeoffice arbeite, ...». Il verbo arbeite chiude la subordinata."]
 ]);
