@@ -21,7 +21,7 @@ Per provarla sul computer, puoi servirla con un server web locale, per esempio l
 Lo script `scripts/import-lesson.sh` raccoglie ricorsivamente i PDF di una cartella, estrae il testo incorporato e usa l'OCR di macOS sulle pagine che contengono poco testo leggibile. Non richiede pacchetti aggiuntivi; richiede macOS con Swift disponibile.
 
 ```sh
-./scripts/import-lesson.sh "/Users/alepar/Documents/corso tedesco/B1/Nome lezione"
+./scripts/import-lesson.sh "/Users/youruser/Documents/corsotedesco/lezioneN"
 ```
 
 Il testo completo viene salvato in un file temporaneo e il percorso viene mostrato al termine. Per scegliere un file di destinazione, aggiungilo come secondo argomento:
