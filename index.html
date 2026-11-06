@@ -38,6 +38,29 @@
         </ol>
       </dialog>
 
+      <dialog id="sync-dialog" class="install-dialog sync-dialog" aria-labelledby="sync-title" aria-describedby="sync-description">
+        <div class="install-dialog-topline">
+          <span class="eyebrow">PROGRESSI TRA DISPOSITIVI</span>
+          <button id="close-sync-dialog" class="install-dialog-close" type="button" aria-label="Chiudi sincronizzazione">×</button>
+        </div>
+        <h2 id="sync-title">Sincronizza i progressi</h2>
+        <p id="sync-description">Per partire, crea il profilo sull'iPhone: i suoi progressi saranno la base. Poi inserisci lo stesso codice sul Mac; i progressi locali del Mac verranno sostituiti.</p>
+        <p id="sync-message" class="sync-message" role="status" aria-live="polite" hidden></p>
+        <div id="sync-unlinked" class="sync-actions">
+          <button id="sync-create-button" class="answer-button answer-yes" type="button">Crea codice da questo dispositivo</button>
+          <label for="sync-code-input">Oppure collega un altro dispositivo con un codice</label>
+          <input id="sync-code-input" class="sync-code-input" type="text" inputmode="text" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Incolla il codice di sincronizzazione" />
+          <button id="sync-join-button" class="sync-secondary" type="button">Collega e sostituisci i progressi locali</button>
+        </div>
+        <div id="sync-linked" class="sync-actions" hidden>
+          <p>Questo dispositivo usa già il profilo:</p>
+          <code id="sync-code-display" class="sync-code-display"></code>
+          <button id="sync-copy-button" class="sync-secondary" type="button">Copia codice</button>
+          <button id="sync-now-button" class="sync-secondary" type="button">Sincronizza ora</button>
+          <button id="sync-unlink-button" class="sync-text-button" type="button">Scollega questo dispositivo</button>
+        </div>
+      </dialog>
+
       <section id="review-view" class="view active" aria-label="Ripasso">
         <div class="stats-row" aria-label="I tuoi progressi">
           <div class="stat"><strong id="due-count">0</strong><span>schede disponibili</span></div>
@@ -121,10 +144,12 @@
       </section>
 
       <footer class="footer" aria-label="Informazioni">
-        <p>Progressi salvati nel browser di questo dispositivo; non sincronizzati.</p>
+        <p id="sync-status">Progressi salvati nel browser di questo dispositivo.</p>
+        <button id="sync-settings-button" class="sync-text-button" type="button">Sincronizza tra dispositivi</button>
       </footer>
     </main>
     <script src="vocab.js"></script>
+    <script src="sync-config.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

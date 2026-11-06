@@ -56,6 +56,18 @@ button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid 
 .install-dialog ol { margin: 0; padding-left: 21px; }
 .install-dialog li { padding: 4px 0 4px 3px; }
 .install-dialog strong { color: var(--ink); }
+.sync-dialog { max-height: min(86vh, 680px); overflow-y: auto; }
+.sync-actions { display: flex; flex-direction: column; gap: 12px; margin-top: 17px; }
+.sync-actions label { color: var(--muted); font-size: 12px; }
+.sync-code-input { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #414547; border-radius: 9px; background: var(--surface); color: var(--ink); font-size: 13px; }
+.sync-code-input::placeholder { color: var(--subtle); }
+.sync-code-display { display: block; overflow-wrap: anywhere; padding: 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--gold); font-size: 13px; user-select: all; }
+.sync-message { padding: 9px 11px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.035); }
+.sync-message.error { border-color: rgba(221,0,0,.45); color: #ff958f; }
+.sync-secondary { min-height: 42px; padding: 9px 12px; border: 1px solid #414547; border-radius: 9px; background: transparent; color: var(--ink); font-size: 12px; font-weight: 700; cursor: pointer; }
+.sync-secondary:hover { border-color: var(--gold); color: var(--gold); }
+.sync-text-button { align-self: flex-start; padding: 3px 0; border: 0; background: transparent; color: var(--gold); font-size: 10px; font-weight: 700; cursor: pointer; }
+.sync-text-button:hover { text-decoration: underline; }
 
 .stats-row { display: flex; align-items: center; gap: clamp(13px, 4vw, 28px); margin: 22px 0 24px; padding: 17px 20px; border: 1px solid var(--line); border-radius: 13px; background: rgba(255,255,255,.025); }
 .eyebrow { margin: 0 0 13px; color: var(--gold); font-size: 10px; font-weight: 700; letter-spacing: .16em; }

@@ -2,6 +2,9 @@
   "use strict";
 
   const STORAGE_KEY = "wortschatz-progress-v1";
+  const SYNC_CODE_KEY = "delearn-sync-code-v1";
+  const SYNC_PENDING_KEY = "delearn-sync-pending-code-v1";
+  const SYNC_BACKUP_KEY = "delearn-pre-sync-progress-v1";
   const MINUTE = 60 * 1000;
   const DAY = 24 * 60 * MINUTE;
   const $ = (selector) => document.querySelector(selector);
@@ -17,6 +20,10 @@
   let selectedCategory = "Tutte";
   let deferredInstallPrompt = null;
   let feedbackAudioContext = null;
+  let syncCode = readStoredSyncCode();
+  let syncTimer = null;
+  let syncPromise = null;
+  let syncQueued = false;
 
   function loadProgress() {
     try {
@@ -34,6 +41,258 @@
   function saveProgress() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); }
     catch (_) { setDailyNote("La memoria del browser è piena: libera spazio per salvare i progressi."); }
+  }
+
+  function readStoredSyncCode() {
+    try { return localStorage.getItem(SYNC_CODE_KEY) || ""; }
+    catch (_) { return ""; }
+  }
+
+  function syncEndpoint() {
+    const base = String(window.DELEARN_SYNC_API || "").trim().replace(/\/+$/, "");
+    return base ? `${base}/v1/progress` : "";
+  }
+
+  function setSyncMessage(message, isError = false) {
+    const element = $("#sync-message");
+    element.textContent = message;
+    element.classList.toggle("error", isError);
+    element.hidden = !message;
+  }
+
+  function setSyncStatus(message) {
+    $("#sync-status").textContent = message;
+  }
+
+  function refreshSyncDialog() {
+    const configured = Boolean(syncEndpoint());
+    const linked = Boolean(syncCode);
+    $("#sync-unlinked").hidden = linked;
+    $("#sync-linked").hidden = !linked;
+    $("#sync-create-button").disabled = !configured;
+    $("#sync-join-button").disabled = !configured;
+    $("#sync-code-display").textContent = syncCode;
+    if (!configured) setSyncMessage("Il servizio online deve ancora essere configurato.", true);
+  }
+
+  function syncHeaders(code) {
+    return { "Authorization": `Bearer ${code}`, "Content-Type": "application/json" };
+  }
+
+  async function requestSyncApi(code, method, body = null) {
+    const endpoint = syncEndpoint();
+    if (!endpoint) throw new Error("Il servizio online non è configurato.");
+    const response = await fetch(endpoint, {
+      method,
+      headers: syncHeaders(code),
+      body: body ? JSON.stringify(body) : undefined,
+      cache: "no-store"
+    });
+    let result = {};
+    try { result = await response.json(); } catch (_) { /* A status message is still shown for non-JSON responses. */ }
+    if (!response.ok) {
+      const error = new Error(result.error || `Errore di sincronizzazione (${response.status}).`);
+      error.status = response.status;
+      throw error;
+    }
+    return result;
+  }
+
+  function makeSyncCode() {
+    const bytes = new Uint8Array(24);
+    crypto.getRandomValues(bytes);
+    let binary = "";
+    bytes.forEach((byte) => { binary += String.fromCharCode(byte); });
+    return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  }
+
+  function serializeProgress(value) {
+    const cards = Object.fromEntries(Object.entries(value.cards || {}).sort(([a], [b]) => a.localeCompare(b)));
+    const stats = value.stats || {};
+    return JSON.stringify({
+      cards,
+      stats: {
+        date: stats.date || "",
+        reviewedToday: Number(stats.reviewedToday) || 0,
+        knownToday: Number(stats.knownToday) || 0
+      }
+    });
+  }
+
+  function mergeProgress(localState, remoteState) {
+    const localCards = localState?.cards || {};
+    const remoteCards = remoteState?.cards || {};
+    const cards = { ...remoteCards };
+    for (const [key, localCard] of Object.entries(localCards)) {
+      const remoteCard = remoteCards[key];
+      const localReviewed = Number(localCard?.lastReviewed) || 0;
+      const remoteReviewed = Number(remoteCard?.lastReviewed) || 0;
+      if (!remoteCard || localReviewed >= remoteReviewed) cards[key] = localCard;
+    }
+
+    const localStats = localState?.stats || defaultState().stats;
+    const remoteStats = remoteState?.stats || defaultState().stats;
+    let stats;
+    if (localStats.date > remoteStats.date) stats = { ...localStats };
+    else if (remoteStats.date > localStats.date) stats = { ...remoteStats };
+    else stats = {
+      ...localStats,
+      reviewedToday: Math.max(Number(localStats.reviewedToday) || 0, Number(remoteStats.reviewedToday) || 0),
+      knownToday: Math.max(Number(localStats.knownToday) || 0, Number(remoteStats.knownToday) || 0)
+    };
+    return { cards, stats };
+  }
+
+  async function synchronizeProgress(code = syncCode) {
+    if (!code || !syncEndpoint()) return;
+    for (let attempt = 0; attempt < 4; attempt++) {
+      const cloud = await requestSyncApi(code, "GET");
+      const merged = mergeProgress(progress, cloud.progress);
+      progress = merged;
+      saveProgress();
+      const mergedJson = serializeProgress(merged);
+      if (mergedJson === serializeProgress(cloud.progress)) {
+        setSyncStatus("Progressi sincronizzati.");
+        updateDashboard();
+        return;
+      }
+      try {
+        await requestSyncApi(code, "PUT", { expectedRevision: cloud.revision, progress: merged });
+        setSyncStatus("Progressi sincronizzati.");
+        updateDashboard();
+        return;
+      } catch (error) {
+        if (error.status !== 409 || attempt === 3) throw error;
+      }
+    }
+  }
+
+  function requestProgressSync() {
+    if (!syncCode || !syncEndpoint()) return Promise.resolve();
+    if (syncPromise) {
+      syncQueued = true;
+      return syncPromise;
+    }
+    syncPromise = (async () => {
+      do {
+        syncQueued = false;
+        try {
+          await synchronizeProgress();
+        } catch (error) {
+          setSyncStatus(navigator.onLine
+            ? "Sincronizzazione non riuscita; i progressi sono salvati su questo dispositivo."
+            : "Offline: progressi salvati qui, sincronizzazione al prossimo collegamento.");
+          if (syncDialogIsOpen()) setSyncMessage(error.message || "Sincronizzazione non riuscita.", true);
+          throw error;
+        }
+      } while (syncQueued);
+    })().finally(() => { syncPromise = null; });
+    return syncPromise;
+  }
+
+  function syncDialogIsOpen() {
+    const dialog = $("#sync-dialog");
+    return Boolean(dialog.open);
+  }
+
+  function scheduleProgressSync() {
+    if (!syncCode || !syncEndpoint()) return;
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(() => { requestProgressSync().catch(() => {}); }, 450);
+  }
+
+  function updateSyncStatus() {
+    if (!syncEndpoint()) setSyncStatus("Progressi salvati nel browser di questo dispositivo.");
+    else if (syncCode) setSyncStatus("Profilo di sincronizzazione collegato.");
+    else setSyncStatus("Progressi salvati nel browser; sincronizzazione da configurare.");
+    refreshSyncDialog();
+  }
+
+  function describeSyncError(error) {
+    if (error.status === 404) return "Profilo non trovato: controlla il codice e riprova.";
+    if (error.status === 409) return "Il profilo è cambiato su un altro dispositivo. Riprova tra poco.";
+    return error.message || "Connessione non riuscita. I progressi locali sono intatti.";
+  }
+
+  async function createSyncFromThisDevice() {
+    if (!syncEndpoint()) return;
+    const button = $("#sync-create-button");
+    button.disabled = true;
+    setSyncMessage("Creo il profilo con i progressi presenti su questo dispositivo…");
+    try {
+      let code = localStorage.getItem(SYNC_PENDING_KEY) || makeSyncCode();
+      localStorage.setItem(SYNC_PENDING_KEY, code);
+      try {
+        await requestSyncApi(code, "POST", { progress });
+      } catch (error) {
+        if (error.status !== 409) throw error;
+        // Recover if the server created the profile but the response was lost.
+        await requestSyncApi(code, "GET");
+      }
+      localStorage.setItem(SYNC_CODE_KEY, code);
+      localStorage.removeItem(SYNC_PENDING_KEY);
+      syncCode = code;
+      setSyncMessage("Profilo creato. Copia il codice e inseriscilo sull'altro dispositivo.");
+      setSyncStatus("Profilo di sincronizzazione collegato.");
+      refreshSyncDialog();
+      requestProgressSync().catch(() => {});
+    } catch (error) {
+      setSyncMessage(describeSyncError(error), true);
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  async function joinSyncProfile() {
+    if (!syncEndpoint()) return;
+    const button = $("#sync-join-button");
+    const code = $("#sync-code-input").value.trim();
+    if (!/^[A-Za-z0-9_-]{32,64}$/.test(code)) {
+      setSyncMessage("Il codice non sembra valido. Incolla quello mostrato sull'iPhone.", true);
+      return;
+    }
+    button.disabled = true;
+    setSyncMessage("Recupero i progressi dal profilo…");
+    try {
+      const cloud = await requestSyncApi(code, "GET");
+      try { localStorage.setItem(SYNC_BACKUP_KEY, JSON.stringify(progress)); } catch (_) { /* A backup is best-effort; cloud state remains untouched. */ }
+      progress = {
+        cards: { ...(cloud.progress.cards || {}) },
+        stats: { ...(cloud.progress.stats || defaultState().stats) }
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+      localStorage.setItem(SYNC_CODE_KEY, code);
+      localStorage.removeItem(SYNC_PENDING_KEY);
+      syncCode = code;
+      $("#sync-code-input").value = "";
+      setSyncMessage("Collegato. I progressi locali precedenti di questo dispositivo sono stati sostituiti.");
+      setSyncStatus("Profilo di sincronizzazione collegato.");
+      refreshSyncDialog();
+      updateDashboard();
+      beginSession(null, selectedStudyCategory);
+      requestProgressSync().catch(() => {});
+    } catch (error) {
+      setSyncMessage(describeSyncError(error), true);
+    } finally {
+      button.disabled = false;
+    }
+  }
+
+  async function copySyncCode() {
+    try {
+      await navigator.clipboard.writeText(syncCode);
+      setSyncMessage("Codice copiato.");
+    } catch (_) {
+      setSyncMessage("Seleziona e copia il codice mostrato qui sopra.");
+    }
+  }
+
+  function unlinkSyncDevice() {
+    try { localStorage.removeItem(SYNC_CODE_KEY); } catch (_) { /* Local progress remains available. */ }
+    syncCode = "";
+    setSyncStatus("Progressi salvati nel browser di questo dispositivo.");
+    setSyncMessage("Dispositivo scollegato. I progressi locali sono rimasti intatti.");
+    refreshSyncDialog();
   }
 
   function cardState(id, aspect = "meaning") {
@@ -262,6 +521,7 @@
     }
     session.position += 1;
     saveProgress();
+    scheduleProgressSync();
     updateDashboard();
     renderCurrentCard();
   }
@@ -384,6 +644,20 @@
   });
   $("#browse-link").addEventListener("click", showVocabulary);
   $("#back-to-review").addEventListener("click", showReview);
+  const syncDialog = $("#sync-dialog");
+  $("#sync-settings-button").addEventListener("click", () => {
+    refreshSyncDialog();
+    syncDialog.showModal();
+  });
+  $("#close-sync-dialog").addEventListener("click", () => syncDialog.close());
+  syncDialog.addEventListener("click", (event) => {
+    if (event.target === syncDialog) syncDialog.close();
+  });
+  $("#sync-create-button").addEventListener("click", createSyncFromThisDevice);
+  $("#sync-join-button").addEventListener("click", joinSyncProfile);
+  $("#sync-copy-button").addEventListener("click", copySyncCode);
+  $("#sync-now-button").addEventListener("click", () => requestProgressSync().catch((error) => setSyncMessage(describeSyncError(error), true)));
+  $("#sync-unlink-button").addEventListener("click", unlinkSyncDevice);
   $("#search-input").addEventListener("input", renderVocabulary);
   $("#category-filters").addEventListener("click", (event) => {
     const button = event.target.closest("[data-category]");
@@ -451,7 +725,13 @@
       if (document.visibilityState === "visible") checkForServiceWorkerUpdate();
     });
   }
+  window.addEventListener("online", () => requestProgressSync().catch(() => {}));
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") requestProgressSync().catch(() => {});
+  });
+  updateSyncStatus();
   updateDashboard();
   setSelectedStudyCategory("random");
   beginSession(null, "random");
+  if (syncCode && syncEndpoint()) requestProgressSync().catch(() => {});
 })();

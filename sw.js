@@ -1,9 +1,10 @@
-const CACHE_NAME = "delearn-shell-v33";
+const CACHE_NAME = "delearn-shell-v35";
 const APP_FILES = [
   "./",
   "./index.html",
   "./styles.css",
   "./vocab.js",
+  "./sync-config.js",
   "./app.js",
   "./manifest.webmanifest",
   "./icon.svg",
