@@ -2,6 +2,10 @@
 
 Una PWA italiana per imparare e ripassare il vocabolario tedesco. L'app funziona senza account e salva le risposte nel browser del dispositivo. L'interfaccia usa un tema scuro con i colori della bandiera tedesca.
 
+## Licenza
+
+Il software e i contenuti originali di Ripasso B1 sono concessi gratuitamente per usi non commerciali secondo la [PolyForm Noncommercial License 1.0.0](LICENSE). Per qualsiasi uso commerciale è necessaria un'autorizzazione separata del titolare dei diritti. I materiali di terzi, se presenti, restano soggetti ai rispettivi diritti. La provenienza è indicata in [NOTICE](NOTICE).
+
 ## Pubblicazione su GitHub Pages
 
 Questa è una PWA statica: non richiede compilazione né dipendenze.
