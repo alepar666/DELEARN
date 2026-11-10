@@ -12,7 +12,7 @@ Per pubblicare modifiche future al Worker, dalla cartella del progetto esegui:
    npx wrangler deploy --config cloudflare/wrangler.jsonc
    ```
 
-Per le modifiche alla PWA, pubblica il repository su GitHub Pages: il nuovo service worker aggiorna la cache alla versione 35.
+Per le modifiche alla PWA, pubblica il repository su GitHub Pages: il nuovo service worker aggiorna la cache alla versione 36.
 
 Il piano gratuito Cloudflare comprende quote ampie per questa app personale. Se si supera una quota giornaliera, l'API restituisce un errore e l'app continua a salvare i progressi localmente.
 

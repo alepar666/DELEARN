@@ -9,6 +9,11 @@ func fail(_ message: String, code: Int32) -> Never {
     exit(code)
 }
 
+func reportProgress(_ message: String) {
+    fputs("\(message)\n", stderr)
+    fflush(stderr)
+}
+
 guard CommandLine.arguments.count == 3 else {
     fail("uso interno: extract_lesson.swift CARTELLA FILE_OUTPUT", code: 64)
 }
@@ -28,6 +33,15 @@ let files = (manager.enumerator(at: root, includingPropertiesForKeys: nil)?.allO
 guard !files.isEmpty else {
     fail("nessun PDF trovato dentro \(root.path)", code: 66)
 }
+
+do {
+    try manager.createDirectory(at: output.deletingLastPathComponent(), withIntermediateDirectories: true)
+    try "".write(to: output, atomically: true, encoding: .utf8)
+} catch {
+    fail("non riesco a inizializzare il file \(output.path): \(error.localizedDescription)", code: 73)
+}
+
+reportProgress("PDF da elaborare: \(files.count). Il testo parziale viene salvato dopo ogni pagina.")
 
 func recognizeText(on page: PDFPage) -> String {
     let bounds = page.bounds(for: .mediaBox)
@@ -63,15 +77,26 @@ var nativePages = 0
 var openErrors = 0
 var ocrErrors = 0
 
-for url in files {
+func savePartialOutput() {
+    do {
+        try outputText.write(to: output, atomically: true, encoding: .utf8)
+    } catch {
+        fail("non riesco a salvare il testo in \(output.path): \(error.localizedDescription)", code: 73)
+    }
+}
+
+for (fileIndex, url) in files.enumerated() {
     let relativePath = String(url.path.dropFirst(root.path.count + 1))
     outputText += "\n\n===== PDF: \(relativePath) =====\n"
+    reportProgress("[\(fileIndex + 1)/\(files.count)] Apro \(relativePath)")
 
     guard let document = PDFDocument(url: url) else {
         openErrors += 1
         outputText += "[PDFKit non è riuscito ad aprire il file]\n"
+        savePartialOutput()
         continue
     }
+    reportProgress("    Pagine: \(document.pageCount)")
 
     for index in 0..<document.pageCount {
         guard let page = document.page(at: index) else { continue }
@@ -80,25 +105,23 @@ for url in files {
 
         if nativeText.count < 400 {
             ocrPages += 1
+            reportProgress("    Pagina \(index + 1)/\(document.pageCount): OCR in corso")
             pageText = recognizeText(on: page)
             if pageText.contains("[Errore OCR:") || pageText.contains("[OCR non disponibile") {
                 ocrErrors += 1
             }
         } else {
             nativePages += 1
+            reportProgress("    Pagina \(index + 1)/\(document.pageCount): testo incorporato")
             pageText = nativeText
         }
 
         outputText += "\n--- PAGINA \(index + 1) ---\n\(pageText)\n"
+        savePartialOutput()
     }
 }
 
-do {
-    try manager.createDirectory(at: output.deletingLastPathComponent(), withIntermediateDirectories: true)
-    try outputText.write(to: output, atomically: true, encoding: .utf8)
-} catch {
-    fail("non riesco a salvare il testo in \(output.path): \(error.localizedDescription)", code: 73)
-}
+savePartialOutput()
 
 print("PDF elaborati: \(files.count); pagine con testo incorporato: \(nativePages); pagine passate a OCR: \(ocrPages); errori di apertura PDF: \(openErrors); errori OCR: \(ocrErrors)")
 print("Testo estratto: \(output.path)")

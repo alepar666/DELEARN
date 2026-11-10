@@ -1,6 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-06";
-window.VOCABULARY_UPDATED_LESSON = 18;
+window.VOCABULARY_UPDATED_AT = "2026-11-10";
+window.VOCABULARY_UPDATED_LESSON = 19;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -581,7 +581,7 @@ const irregularParticipleForms = Object.fromEntries(
 Object.assign(irregularParticipleForms, {
   haben: "gehabt", tun: "getan", wollen: "gewollt", "spazieren gehen": "spazieren gegangen",
   wehtun: "wehgetan", leidtun: "leidgetan", wiederholen: "wiederholt", erschrecken: "erschrocken / erschreckt",
-  zusammenbrechen: "zusammengebrochen", zusammentreffen: "zusammengetroffen", erbrechen: "erbrochen",
+  zusammenbrechen: "zusammengebrochen", zusammentreffen: "zusammengetroffen", erbrechen: "erbrochen", biegen: "gebogen",
   zurückerhalten: "zurückerhalten", fangen: "gefangen", zerbrechen: "zerbrochen"
 });
 
@@ -808,6 +808,100 @@ addStableWords("Corpo e salute", [
   ["body-gruebchen", "la fossetta (del mento)", "das Grübchen", "die Grübchen"]
 ], 18);
 
+addStableWords("Tempo e natura", [
+  ["month-januar", "gennaio", "der Januar"], ["month-februar", "febbraio", "der Februar"],
+  ["month-maerz", "marzo", "der März"], ["month-april", "aprile", "der April"],
+  ["month-mai", "maggio", "der Mai"], ["month-juni", "giugno", "der Juni"],
+  ["month-juli", "luglio", "der Juli"], ["month-september", "settembre", "der September"],
+  ["month-oktober", "ottobre", "der Oktober"], ["month-november", "novembre", "der November"],
+  ["month-dezember", "dicembre", "der Dezember"],
+  ["term-silvesterabend", "la sera di San Silvestro", "der Silvesterabend"]
+], 19);
+
+addStableWords("Città", [
+  ["place-querstrasse", "la traversa", "die Querstraße", "die Querstraßen"]
+], 19);
+
+addStableWords("Luoghi e geografia", [
+  ["place-ostsee", "il Mar Baltico", "die Ostsee"]
+], 19);
+
+addStableWords("Scuola e formazione", [
+  ["school-vorlesung", "la lezione universitaria", "die Vorlesung", "die Vorlesungen"],
+  ["school-grammatikaufgabe", "l'esercizio di grammatica", "die Grammatikaufgabe", "die Grammatikaufgaben"]
+], 19);
+
+addStableWords("Lavoro", [
+  ["work-geschaeftsleitung", "la direzione aziendale", "die Geschäftsleitung"],
+  ["work-anwalt", "l'avvocato", "der Anwalt", "die Anwälte"]
+], 19);
+
+addStableWords("Persone", [
+  ["person-reisende", "il/la viaggiatore/trice", "der/die Reisende", "die Reisenden"]
+], 19);
+
+addStableWords("Viaggi", [
+  ["place-wartehalle", "la sala d'attesa", "die Wartehalle", "die Wartehallen"]
+], 19);
+
+addStableWords("Tempo libero", [
+  ["leisure-puzzle", "il puzzle", "das Puzzle", "die Puzzles"],
+  ["leisure-team", "la squadra; il team", "das Team", "die Teams"]
+], 19);
+
+addStableWords("Cibo", [
+  ["food-buefett", "il buffet", "das Büfett (auch: Buffet)", "die Büfetts"]
+], 19);
+
+addStableWords("Concetti e termini", [
+  ["term-grund", "il motivo; la ragione", "der Grund", "die Gründe"],
+  ["term-ding", "la cosa", "das Ding", "die Dinge"],
+  ["term-unfall", "l'incidente", "der Unfall", "die Unfälle"],
+  ["term-vogel", "l'uccello", "der Vogel", "die Vögel"],
+  ["term-streich", "lo scherzo; la marachella", "der Streich", "die Streiche"],
+  ["term-teil", "il pezzo; la parte", "das Teil", "die Teile"],
+  ["term-laune", "l'umore", "die Laune", "die Launen"],
+  ["term-stress", "lo stress", "der Stress"], ["term-druck", "la pressione", "der Druck"],
+  ["term-angelegenheit", "la faccenda; la questione", "die Angelegenheit", "die Angelegenheiten"],
+  ["term-motto", "il motto", "das Motto", "die Mottos"], ["term-weile", "il tempo; un po' di tempo", "die Weile"]
+], 19);
+
+addStableWords("Parole utili", [
+  ["word-inzwischen", "nel frattempo", "inzwischen"],
+  ["word-eher", "piuttosto; più", "eher"],
+  ["word-besonders", "specialmente; in particolare", "besonders"]
+], 19);
+
+addStableWords("Verbi", [
+  ["verb-abbiegen", "svoltare", "abbiegen"],
+  ["verb-nachbereiten", "rielaborare; ripassare dopo una lezione", "nachbereiten"],
+  ["verb-sich-beschweren", "lamentarsi; sporgere reclamo", "sich beschweren"],
+  ["verb-ausloesen", "provocare; scatenare", "auslösen"],
+  ["verb-aufbleiben", "restare sveglio/a fino a tardi", "aufbleiben"]
+], 19);
+
+addStableWords("Aggettivi", [
+  ["adj-gewissenhaft", "coscienzioso/a; scrupoloso/a", "gewissenhaft"],
+  ["adj-gruendlich", "accurato/a; approfondito/a", "gründlich"],
+  ["adj-unerwartet", "inaspettato/a", "unerwartet"],
+  ["adj-heimatverbunden", "legato/a alla propria terra", "heimatverbunden"],
+  ["adj-enttaeuscht", "deluso/a", "enttäuscht"],
+  ["adj-hochbegabt", "molto dotato/a", "hochbegabt"],
+  ["adj-anstrengend", "faticoso/a; impegnativo/a", "anstrengend"],
+  ["adj-lustig", "divertente; buffo/a", "lustig"],
+  ["adj-ehrgeizig", "ambizioso/a", "ehrgeizig"],
+  ["adj-ruecksichtslos", "sconsiderato/a; senza riguardo", "rücksichtslos"],
+  ["adj-euphorisch", "euforico/a", "euphorisch"],
+  ["adj-gesellschaftlich", "sociale; relativo alla società", "gesellschaftlich"],
+  ["adj-frustrierend", "frustrante", "frustrierend"],
+  ["adj-deprimierend", "deprimente", "deprimierend"],
+  ["adj-altbekannt", "ben noto/a da tempo", "altbekannt"],
+  ["adj-gelassen", "calmo/a; sereno/a", "gelassen"],
+  ["adj-freundlich", "cordiale; gentile", "freundlich"],
+  ["adj-nett", "simpatico/a; gentile", "nett"],
+  ["adj-gebraucht", "usato/a", "gebraucht"]
+], 19);
+
 for (const word of window.VOCABULARY) {
   if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
   word.category = "Verbi";
@@ -818,6 +912,15 @@ for (const word of window.VOCABULARY) {
     .trim();
   word.participle = makeParticiple(verbInfinitive(word.de));
 }
+
+// "Erfahren" è anche aggettivo (esperto/a) oltre che verbo (venire a sapere).
+window.VOCABULARY.push({
+  id: "l19-adj-erfahren",
+  it: "esperto/a; con esperienza",
+  de: "erfahren",
+  plural: "",
+  category: "Aggettivi"
+});
 
 const addGrammarQuestions = (rows) => {
   for (const [id, instruction, prompt, answer, explanation] of rows) {
@@ -965,5 +1068,13 @@ addGrammarQuestions([
   ["l18-case-trust", "RICORDA IL CASO", "Quale caso regge «vertrauen»?", "Dativ", "Vertrauen regge il dativo: «Ich vertraue meinem Freund»."],
   ["l18-case-erinnern", "RICORDA IL CASO", "Quale caso segue «sich erinnern an»?", "Akkusativ", "La preposizione an regge l'accusativo in «Ich erinnere mich an den Urlaub»."],
   ["l18-case-abhaengen", "RICORDA IL CASO", "Quale caso segue «abhängen von»?", "Dativ", "Von regge il dativo: «Das hängt von den Arbeitszeiten ab»."],
-  ["l18-since-word-order", "RICORDA L'ORDINE DELLE PAROLE", "Dove va il verbo coniugato nella subordinata introdotta da «seitdem»?", "Alla fine della subordinata", "Esempio: «Seitdem ich im Homeoffice arbeite, ...». Il verbo arbeite chiude la subordinata."]
+  ["l18-since-word-order", "RICORDA L'ORDINE DELLE PAROLE", "Dove va il verbo coniugato nella subordinata introdotta da «seitdem»?", "Alla fine della subordinata", "Esempio: «Seitdem ich im Homeoffice arbeite, ...». Il verbo arbeite chiude la subordinata."],
+
+  ["l19-ordinal-forms", "NUMERI ORDINALI", "Come si formano normalmente i numeri ordinali tedeschi?", "Da 1 a 19: -te; dal 20 in poi: -ste", "Esempi della lezione: neunte, elfte, dreiundzwanzigste. Gli ordinali si declinano come aggettivi."],
+  ["l19-date-cases", "SCRIVI LA DATA", "Che differenza c'è tra «Der wievielte ist heute?» e «Den wievielten haben wir heute?»", "Nominativ: der neunte; Akkusativ: den neunten", "Il caso dipende dalla funzione nella frase; la desinenza dell'ordinale cambia come quella di un aggettivo."],
+  ["l19-date-am", "SCRIVI LA DATA", "Come si legge «Wir treffen uns am 23.12.2026»?", "Wir treffen uns am dreiundzwanzigsten zwölften zweitausendsechsundzwanzig.", "Nella data numerica si leggono come ordinali sia il giorno sia il mese; dopo am l'ordinale prende -en."],
+  ["l19-date-letter", "SCRIVI LA DATA", "Come si scrive la data dopo il nome di una città in una lettera?", "Rom, den 9.11.2026", "Nella formula vista a lezione si usa den: «Rom, den ...»."],
+  ["l19-comparative-colleague", "KOMPARATIV UND SUPERLATIV", "Completa: einen erfahren__ Kollegen → einen erfahren__ Kollegen → den erfahren__ Kollegen", "erfahrenen → erfahreneren → erfahrensten", "Il comparativo aggiunge -er e il superlativo -st; poi si applicano le desinenze dell'aggettivo richieste dall'articolo e dal caso."],
+  ["l19-comparative-team", "KOMPARATIV UND SUPERLATIV", "Quali sono le tre forme per «un team colorato; un team più colorato; il team più colorato»?", "ein buntes Team → ein bunteres Team → das bunteste Team", "Nel neutro nominativo/accusativo, ein richiede -es; nel superlativo con das si usa -e."],
+  ["l19-comparative-experience", "KOMPARATIV UND SUPERLATIV", "Come si completa: viel Erfahrung → ___ Erfahrung → die ___ Erfahrung?", "mehr Erfahrung → die meiste Erfahrung", "Con un nome non numerabile si usa mehr al comparativo e die meiste al superlativo determinato."]
 ]);
