@@ -50,7 +50,7 @@ Quando aggiungi una lezione, puoi indicarmi la sua cartella: estrarrò i testi c
 
 ## Ripetizione
 
-La logica è una variante binaria ispirata a SM-2: dopo una risposta corretta la prossima ripetizione è tra 1 giorno, poi 3 giorni e in seguito l'intervallo cresce in base al fattore facilità della parola. Una risposta errata abbassa quel fattore, riporta la parola a intervallo zero e la programma dopo 10 minuti; nell'esercizio corrente ricompare una sola volta, in fondo alla coda. Le schede nuove e i ripassi dovuti si alternano, così un arretrato di ripassi non nasconde le schede mai viste. Non c'è un limite giornaliero: tutte le parole nuove e i ripassi dovuti sono disponibili in ogni sessione.
+La logica è una variante binaria ispirata a SM-2: dopo una risposta corretta la prossima ripetizione è tra 1 giorno, poi 3 giorni e in seguito l'intervallo cresce in base al fattore facilità della parola. Una risposta errata abbassa quel fattore, riporta la parola a intervallo zero e la programma dopo 10 minuti; nell'esercizio corrente ricompare una sola volta, in fondo alla coda. Le schede nuove delle lezioni più recenti vengono proposte per prime; dopo ogni quattro schede nuove compare un ripasso dovuto. Così il materiale appena aggiunto è raggiungibile subito, mentre i ripassi continuano a comparire senza monopolizzare la sessione. Non c'è un limite giornaliero: tutte le parole nuove e i ripassi dovuti restano disponibili.
 
 Le parole, i participi passati, gli intervalli e i progressi sono definiti in `vocab.js` e salvati localmente con `localStorage`. Per i verbi, il ripasso del significato e quello del participio hanno intervalli e progressi separati.
 

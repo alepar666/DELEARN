@@ -328,14 +328,30 @@
     }
   }
 
+  function lessonNumberForUnit(unit) {
+    const match = unit.id.match(/^(?:g-)?l(\d+)-/);
+    return match ? Number(match[1]) : 0;
+  }
+
+  function prioritizeFreshCards(fresh) {
+    return shuffle(fresh).sort((a, b) => {
+      const aspectRank = (unit) => unit.aspect === "participle" ? 1 : 0;
+      const aspectDifference = aspectRank(a) - aspectRank(b);
+      if (aspectDifference) return aspectDifference;
+      return lessonNumberForUnit(b) - lessonNumberForUnit(a);
+    });
+  }
+
   function interleaveNewAndDue(fresh, due) {
     const queue = [];
-    const freshCards = shuffle(fresh);
+    const freshCards = prioritizeFreshCards(fresh);
     let freshIndex = 0;
     let dueIndex = 0;
 
     while (freshIndex < freshCards.length || dueIndex < due.length) {
-      if (freshIndex < freshCards.length) queue.push(freshCards[freshIndex++]);
+      for (let i = 0; i < 4 && freshIndex < freshCards.length; i++) {
+        queue.push(freshCards[freshIndex++]);
+      }
       if (dueIndex < due.length) queue.push(due[dueIndex++]);
     }
     return queue;
