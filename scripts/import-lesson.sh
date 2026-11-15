@@ -1,5 +1,6 @@
 #!/bin/sh
 set -eu
+started_at=$(date +%s)
 
 if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
   echo "Uso: $0 CARTELLA_LEZIONE [FILE_OUTPUT.txt]" >&2
@@ -31,3 +32,6 @@ if command -v node >/dev/null 2>&1; then
 else
   printf '\nPer il confronto automatico installa Node.js o usa in seguito:\n  node "%s/review-lesson.js" "%s"\n' "$script_dir" "$output_file" >&2
 fi
+
+finished_at=$(date +%s)
+printf '\nTempo totale importazione: %s s\n' "$((finished_at - started_at))"

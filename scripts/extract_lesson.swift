@@ -4,6 +4,8 @@ import Foundation
 import PDFKit
 import Vision
 
+let extractionStartedAt = Date()
+
 func fail(_ message: String, code: Int32) -> Never {
     fputs("Errore: \(message)\n", stderr)
     exit(code)
@@ -125,3 +127,4 @@ savePartialOutput()
 
 print("PDF elaborati: \(files.count); pagine con testo incorporato: \(nativePages); pagine passate a OCR: \(ocrPages); errori di apertura PDF: \(openErrors); errori OCR: \(ocrErrors)")
 print("Testo estratto: \(output.path)")
+print("Tempo estrazione: \(String(format: "%.2f", Date().timeIntervalSince(extractionStartedAt))) s")

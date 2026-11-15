@@ -1,6 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-10";
-window.VOCABULARY_UPDATED_LESSON = 19;
+window.VOCABULARY_UPDATED_AT = "2026-11-15";
+window.VOCABULARY_UPDATED_LESSON = 21;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -902,6 +902,87 @@ addStableWords("Aggettivi", [
   ["adj-gebraucht", "usato/a", "gebraucht"]
 ], 19);
 
+addStableWords("Concetti e termini", [
+  ["l20-feuerwerk", "i fuochi d'artificio", "das Feuerwerk", "die Feuerwerke"],
+  ["l20-festmenue", "il menu delle feste", "das Festmenü", "die Festmenüs"],
+  ["l20-silvestermenue", "il menu di San Silvestro", "das Silvestermenü", "die Silvestermenüs"],
+  ["l20-rauch", "il fumo", "der Rauch"],
+  ["l20-szenario", "lo scenario", "das Szenario", "die Szenarien"],
+  ["l20-antikes-rom", "l'antica Roma", "das antike Rom"],
+  ["l20-verspaetung", "il ritardo", "die Verspätung", "die Verspätungen"],
+  ["l20-anschluss", "la coincidenza (treno o autobus)", "der Anschluss", "die Anschlüsse"],
+  ["l20-durchsage", "l'annuncio all'altoparlante", "die Durchsage", "die Durchsagen"],
+  ["l20-bordkarte", "la carta d'imbarco", "die Bordkarte", "die Bordkarten"],
+  ["l20-gleisaenderung", "il cambio di binario", "die Gleisänderung", "die Gleisänderungen"],
+  ["l20-unterkunft", "l'alloggio", "die Unterkunft", "die Unterkünfte"],
+  ["l20-verpflegung", "il vitto; il trattamento (pensione completa o mezza pensione)", "die Verpflegung"],
+  ["l20-kurtaxe", "la tassa di soggiorno", "die Kurtaxe", "die Kurtaxen"],
+  ["l20-sehenswuerdigkeit", "l'attrazione turistica", "die Sehenswürdigkeit", "die Sehenswürdigkeiten"],
+  ["l20-stadtfuehrung", "la visita guidata della città", "die Stadtführung", "die Stadtführungen"],
+  ["l20-geheimtipp", "il consiglio da insider; il posto poco conosciuto", "der Geheimtipp", "die Geheimtipps"],
+  ["l20-reiselust", "la voglia; il piacere di viaggiare", "die Reiselust"],
+  ["l20-erholung", "il riposo; il recupero", "die Erholung"],
+  ["l20-jugendherberge", "l'ostello della gioventù", "die Jugendherberge", "die Jugendherbergen"],
+  ["l20-postkarte", "la cartolina", "die Postkarte", "die Postkarten"],
+  ["l20-reisepanne", "l'imprevisto di viaggio", "die Reise-Panne", "die Reise-Pannen"],
+  ["l20-kulturschock", "lo shock culturale", "der Kulturschock", "die Kulturschocks"],
+  ["l20-natur", "la natura", "die Natur"],
+  ["l20-staedtereise", "il viaggio in una città", "die Städtereise", "die Städtereisen"],
+  ["l20-transportmittel", "il mezzo di trasporto", "das Transportmittel", "die Transportmittel"],
+  ["l20-weltreise", "il giro del mondo", "die Weltreise", "die Weltreisen"],
+  ["l20-smartphone", "lo smartphone", "das Smartphone", "die Smartphones"],
+  ["l20-massentourismus", "il turismo di massa", "der Massentourismus"],
+  ["l20-traumreise", "il viaggio dei sogni", "die Traumreise", "die Traumreisen"],
+  ["l20-pass", "il passaporto", "der Pass", "die Pässe"],
+  ["l20-reisebuero", "l'agenzia di viaggi", "das Reisebüro", "die Reisebüros"],
+  ["l20-app", "l'applicazione; l'app", "die App", "die Apps"],
+  ["l20-lotto", "la lotteria", "das Lotto"]
+], 20);
+
+addStableWords("Parole utili", [
+  ["l20-mehr-oder-weniger", "più o meno", "mehr oder weniger"],
+  ["l20-inbegriffen", "incluso/a; compreso/a", "inbegriffen; inklusive"],
+  ["l20-ausgebucht", "tutto esaurito; al completo", "ausgebucht"],
+  ["l20-ausser", "tranne; eccetto", "außer"],
+  ["l20-digital-detox", "disintossicazione digitale", "Digital Detox"]
+], 20);
+
+addStableWords("Aggettivi", [
+  ["l20-wohlgesonnen", "ben disposto/a verso qualcuno", "wohlgesonnen"],
+  ["l20-stimmungsvoll", "suggestivo/a; dall'atmosfera coinvolgente", "stimmungsvoll"],
+  ["l20-feucht", "umido/a", "feucht"],
+  ["l20-atemberaubend", "mozzafiato", "atemberaubend"],
+  ["l20-malerisch", "pittoresco/a", "malerisch"],
+  ["l20-allein", "solo/a; da solo/a", "allein"]
+], 20);
+
+addStableWords("Verbi", [
+  ["l20-verpassen", "perdere (un treno, un autobus o un'occasione)", "verpassen"],
+  ["l20-stornieren", "annullare (una prenotazione)", "stornieren"],
+  ["l20-einchecken", "fare il check-in", "einchecken"],
+  ["l20-auschecken", "fare il check-out", "auschecken"],
+  ["l20-bummeln", "gironzolare; passeggiare per negozi", "bummeln"]
+], 20);
+
+addStableWords("Verbi", [
+  ["l21-sich-aergern-ueber", "arrabbiarsi per; essere infastidito/a da", "sich ärgern über + Akk."],
+  ["l21-sich-bemuehen-um", "impegnarsi per; cercare di ottenere", "sich bemühen um + Akk."],
+  ["l21-sich-beschaeftigen-mit", "occuparsi di; dedicarsi a", "sich beschäftigen mit + Dat."],
+  ["l21-sich-beteiligen-an", "partecipare a", "sich beteiligen an + Dat."],
+  ["l21-sich-erholen-von", "riprendersi da", "sich erholen von + Dat."],
+  ["l21-sich-erkundigen-nach", "informarsi su", "sich erkundigen nach + Dat."],
+  ["l21-sich-gewöhnen-an", "abituarsi a", "sich gewöhnen an + Akk."],
+  ["l21-sich-handeln-um", "trattarsi di", "sich handeln um + Akk."],
+  ["l21-leiden-an", "soffrire di (una malattia)", "leiden an + Dat."],
+  ["l21-leiden-unter", "soffrire per; risentire di", "leiden unter + Dat."],
+  ["l21-rechnen-mit", "fare i conti con; aspettarsi", "rechnen mit + Dat."],
+  ["l21-sich-schuetzen-vor", "proteggersi da", "sich schützen vor + Dat."],
+  ["l21-sich-verlassen-auf", "fare affidamento su", "sich verlassen auf + Akk."],
+  ["l21-sich-verlieben-in", "innamorarsi di", "sich verlieben in + Akk."],
+  ["l21-sich-verstehen-mit", "andare d'accordo con", "sich verstehen mit + Dat."],
+  ["l21-sich-wenden-an", "rivolgersi a", "sich wenden an + Akk."]
+], 21);
+
 for (const word of window.VOCABULARY) {
   if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
   word.category = "Verbi";
@@ -1076,5 +1157,40 @@ addGrammarQuestions([
   ["l19-date-letter", "SCRIVI LA DATA", "Come si scrive la data dopo il nome di una città in una lettera?", "Rom, den 9.11.2026", "Nella formula vista a lezione si usa den: «Rom, den ...»."],
   ["l19-comparative-colleague", "KOMPARATIV UND SUPERLATIV", "Completa: einen erfahren__ Kollegen → einen erfahren__ Kollegen → den erfahren__ Kollegen", "erfahrenen → erfahreneren → erfahrensten", "Il comparativo aggiunge -er e il superlativo -st; poi si applicano le desinenze dell'aggettivo richieste dall'articolo e dal caso."],
   ["l19-comparative-team", "KOMPARATIV UND SUPERLATIV", "Quali sono le tre forme per «un team colorato; un team più colorato; il team più colorato»?", "ein buntes Team → ein bunteres Team → das bunteste Team", "Nel neutro nominativo/accusativo, ein richiede -es; nel superlativo con das si usa -e."],
-  ["l19-comparative-experience", "KOMPARATIV UND SUPERLATIV", "Come si completa: viel Erfahrung → ___ Erfahrung → die ___ Erfahrung?", "mehr Erfahrung → die meiste Erfahrung", "Con un nome non numerabile si usa mehr al comparativo e die meiste al superlativo determinato."]
+  ["l19-comparative-experience", "KOMPARATIV UND SUPERLATIV", "Come si completa: viel Erfahrung → ___ Erfahrung → die ___ Erfahrung?", "mehr Erfahrung → die meiste Erfahrung", "Con un nome non numerabile si usa mehr al comparativo e die meiste al superlativo determinato."],
+
+  ["l20-konjunktiv-wuerde", "KONJUNKTIV II", "Come si forma spesso il Konjunktiv II per esprimere un desiderio o un'ipotesi?", "würde + infinito", "Esempio della lezione: «Welches Land würdest du besuchen?»"],
+  ["l20-konjunktiv-wenn", "ORDINE DELLE PAROLE", "Dove si trova il verbo coniugato nella subordinata introdotta da «wenn»?", "Alla fine della subordinata", "Esempio: «Wenn du ein Jahr Zeit hättest, ...»; hättest chiude la subordinata."],
+  ["l20-konjunktiv-haben", "KONJUNKTIV II", "Completa: Wenn du ein Jahr Zeit ___, wohin würdest du fahren?", "hättest", "Haben usa la forma irregolare hättest alla seconda persona singolare."],
+  ["l20-konjunktiv-sein", "KONJUNKTIV II", "Qual è la forma Konjunktiv II di «sein» alla seconda persona singolare?", "wärst", "Esempio: «Wenn du allein wärst, ...». La forma è irregolare."],
+
+  ["l21-verb-prep-case", "VERBI CON PREPOSIZIONE", "Quando studi un verbo seguito da una preposizione, quali informazioni conviene imparare insieme?", "Verbo + preposizione + caso", "La preposizione e il caso sono parte della costruzione: per esempio warten auf + Akkusativ, helfen bei + Dativ."],
+  ["l21-verb-abhaengen", "COMPLETA LA PREPOSIZIONE", "Ob wir fahren, hängt ___ Wetter ab. (von + caso)", "vom — von dem; Dativ", "Abhängen regge von; von richiede il dativo."],
+  ["l21-verb-achten", "COMPLETA LA PREPOSIZIONE", "Bitte achte ___ den neuen Mantel. (auf + caso)", "auf; Akkusativ", "Achten auf regge l'accusativo."],
+  ["l21-verb-anfangen", "COMPLETA LA PREPOSIZIONE", "Ich fange ___ der Übung an. (mit + caso)", "mit; Dativ", "Anfangen mit regge il dativo."],
+  ["l21-verb-aergern", "COMPLETA LA PREPOSIZIONE", "Wir ärgern uns ___ den Regen. (über + caso)", "über; Akkusativ", "Sich ärgern über regge l'accusativo."],
+  ["l21-verb-bedanken", "COMPLETA LA PREPOSIZIONE", "Ich bedanke mich ___ dir. (bei + caso)", "bei; Dativ", "Bedanken bei indica la persona che si ringrazia e regge il dativo."],
+  ["l21-verb-bemuehen", "COMPLETA LA PREPOSIZIONE", "Karla bemüht sich ___ eine Arbeit. (um + caso)", "um; Akkusativ", "Sich bemühen um regge l'accusativo."],
+  ["l21-verb-bewerben", "COMPLETA LA PREPOSIZIONE", "Er bewirbt sich ___ einer Bäckerei. (bei + caso)", "bei; Dativ", "Sich bewerben bei indica l'ente o il luogo a cui ci si candida; bei regge il dativo."],
+  ["l21-verb-erkundigen", "COMPLETA LA PREPOSIZIONE", "Oma erkundigt sich ___ ihren Plänen. (nach + caso)", "nach; Dativ", "Sich erkundigen nach regge il dativo."],
+  ["l21-verb-freuen-auf", "COMPLETA LA PREPOSIZIONE", "Kinder freuen sich ___ die Ferien. (auf + caso)", "auf; Akkusativ", "Sich freuen auf esprime attesa per qualcosa di futuro e regge l'accusativo."],
+  ["l21-verb-freuen-ueber", "COMPLETA LA PREPOSIZIONE", "Jeder freut sich ___ eine Gehaltserhöhung. (über + caso)", "über; Akkusativ", "Sich freuen über esprime gioia per qualcosa e regge l'accusativo."],
+  ["l21-verb-gewoehnen", "COMPLETA LA PREPOSIZIONE", "Ich kann mich nicht ___ die Zeitumstellung gewöhnen. (an + caso)", "an; Akkusativ", "Sich gewöhnen an regge l'accusativo."],
+  ["l21-verb-interessieren", "COMPLETA LA PREPOSIZIONE", "Monika interessiert sich ___ ein Smartphone. (für + caso)", "für; Akkusativ", "Sich interessieren für regge l'accusativo."],
+  ["l21-verb-teilnehmen", "COMPLETA LA PREPOSIZIONE", "Nordkorea nimmt ___ der Fußball-WM teil. (an + caso)", "an; Dativ", "Teilnehmen an regge il dativo."],
+  ["l21-verb-warten", "COMPLETA LA PREPOSIZIONE", "Hier wartet man lange ___ einen Bus. (auf + caso)", "auf; Akkusativ", "Warten auf regge l'accusativo."],
+
+  ["l21-noun-angst", "SOSTANTIVI CON PREPOSIZIONE", "Peter hatte keine Angst ___ Spinnen. (vor + caso)", "vor; Dativ", "Angst vor regge il dativo."],
+  ["l21-noun-frage", "SOSTANTIVI CON PREPOSIZIONE", "Es stellt sich die Frage ___ dem Sinn des Bauprojekts. (nach + caso)", "nach; Dativ", "Frage nach regge il dativo."],
+  ["l21-noun-gedanke", "SOSTANTIVI CON PREPOSIZIONE", "Der Gedanke ___ den Abschied macht mich traurig. (an + caso)", "an; Akkusativ", "Gedanke an regge l'accusativo."],
+  ["l21-noun-hoffnung", "SOSTANTIVI CON PREPOSIZIONE", "Sie gaben die Hoffnung ___ ein eigenes Baby nicht auf. (auf + caso)", "auf; Akkusativ", "Hoffnung auf regge l'accusativo."],
+  ["l21-noun-interesse", "SOSTANTIVI CON PREPOSIZIONE", "Wir haben Interesse ___ diesem Wagen. (an + caso)", "an; Dativ", "Interesse an regge il dativo."],
+  ["l21-noun-wunsch", "SOSTANTIVI CON PREPOSIZIONE", "Nach einem stressigen Tag habe ich den Wunsch ___ absoluter Ruhe. (nach + caso)", "nach; Dativ", "Wunsch nach regge il dativo."],
+
+  ["l21-adj-abhaengig", "AGGETTIVI CON PREPOSIZIONE", "Liza Minelli war vom Alkohol abhängig. Quale caso regge «abhängig von»?", "Dativ", "Von regge il dativo: vom è la contrazione di von dem."],
+  ["l21-adj-stolz", "AGGETTIVI CON PREPOSIZIONE", "Lothar ist stolz ___ seine Arbeit. (auf + caso)", "auf; Akkusativ", "Stolz auf regge l'accusativo."],
+  ["l21-adj-freundlich", "AGGETTIVI CON PREPOSIZIONE", "Ein Chef sollte freundlich ___ Kunden sein. (zu + caso)", "zu; Dativ", "Freundlich zu regge il dativo."],
+  ["l21-adj-interessiert", "AGGETTIVI CON PREPOSIZIONE", "Christian Wulf war interessiert ___ der Position. (an + caso)", "an; Dativ", "Interessiert an regge il dativo."],
+  ["l21-adj-zufrieden", "AGGETTIVI CON PREPOSIZIONE", "Das Nationalteam war zufrieden ___ dem Ergebnis. (mit + caso)", "mit; Dativ", "Zufrieden mit regge il dativo."],
+  ["l21-adj-wuetend", "AGGETTIVI CON PREPOSIZIONE", "Viele Kunden sind wütend ___ den schlechten Service. (über + caso)", "über; Akkusativ", "Wütend über regge l'accusativo."]
 ]);
