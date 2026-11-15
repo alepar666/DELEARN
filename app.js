@@ -482,7 +482,8 @@
     $("#card-german").textContent = isParticiple ? word.participle : isGrammar ? word.grammarAnswer : word.de;
     $("#card-extra").textContent = isGrammar
       ? word.grammarExplanation
-      : !isParticiple && word.plural ? `Plurale: ${word.plural}` : "";
+      : isParticiple ? `Significato: ${word.it}`
+        : word.plural ? `Plurale: ${word.plural}` : "";
     $("#card-extra").hidden = !$("#card-extra").textContent;
     $("#card-face").hidden = false;
     $("#card-back").hidden = true;
