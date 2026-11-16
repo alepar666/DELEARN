@@ -22,7 +22,8 @@ else
   output_file="${TMPDIR:-/tmp}/delearn-${folder_name}-${timestamp}.txt"
 fi
 
-swift "$script_dir/extract_lesson.swift" "$input_dir" "$output_file"
+module_cache=${SWIFT_MODULE_CACHE_PATH:-${TMPDIR:-/tmp}/delearn-swift-module-cache}
+swift -module-cache-path "$module_cache" "$script_dir/extract_lesson.swift" "$input_dir" "$output_file"
 
 if command -v node >/dev/null 2>&1; then
   printf '\nConfronto con il vocabolario esistente:\n'

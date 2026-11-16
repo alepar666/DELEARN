@@ -1,6 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-15";
-window.VOCABULARY_UPDATED_LESSON = 21;
+window.VOCABULARY_UPDATED_AT = "2026-11-16";
+window.VOCABULARY_UPDATED_LESSON = 22;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -580,6 +580,7 @@ const irregularParticipleForms = Object.fromEntries(
 );
 Object.assign(irregularParticipleForms, {
   haben: "gehabt", tun: "getan", wollen: "gewollt", "spazieren gehen": "spazieren gegangen",
+  "auswendig lernen": "auswendig gelernt",
   wehtun: "wehgetan", leidtun: "leidgetan", wiederholen: "wiederholt", erschrecken: "erschrocken / erschreckt",
   zusammenbrechen: "zusammengebrochen", zusammentreffen: "zusammengetroffen", erbrechen: "erbrochen", biegen: "gebogen",
   zurückerhalten: "zurückerhalten", fangen: "gefangen", zerbrechen: "zerbrochen"
@@ -601,7 +602,7 @@ function verbInfinitive(target) {
     .replace(/\s+(?:an|auf|aus|bei|für|gegen|in|mit|nach|über|um|unter|von|vor|zu)\s*$/i, "")
     .trim();
   if (phrase.startsWith("es geht")) return "gehen";
-  if (phrase === "spazieren gehen") return phrase;
+  if (phrase === "spazieren gehen" || phrase === "auswendig lernen") return phrase;
   const tokens = phrase.match(/[a-zäöüß]+/g) || [];
   const candidates = tokens.filter((token) => token.endsWith("en") || token.endsWith("eln") || token.endsWith("ern") || token === "sein" || token === "tun");
   return candidates[candidates.length - 1] || tokens[tokens.length - 1] || phrase;
@@ -983,6 +984,32 @@ addStableWords("Verbi", [
   ["l21-sich-wenden-an", "rivolgersi a", "sich wenden an + Akk."]
 ], 21);
 
+addStableWords("Concetti e termini", [
+  ["term-geraet", "il dispositivo; l'apparecchio", "das Gerät", "die Geräte"],
+  ["term-lage", "la situazione; la condizione", "die Lage; die Situation"],
+  ["term-weg", "la strada; il percorso", "der Weg", "die Wege"],
+  ["term-gedaechtnis", "la memoria", "das Gedächtnis", "die Gedächtnisse"],
+  ["term-geldstrafe", "la multa", "die Geldstrafe", "die Geldstrafen"],
+  ["term-disziplinarordnung", "il regolamento disciplinare", "die Disziplinarordnung", "die Disziplinarordnungen"],
+  ["term-fahrplan", "l'orario dei mezzi; l'orario ferroviario", "der Fahrplan", "die Fahrpläne"],
+  ["term-schuldirektor", "il preside; il direttore scolastico", "der Schuldirektor", "die Schuldirektoren"],
+  ["term-passant", "il passante", "der Passant", "die Passanten"]
+], 22);
+
+addStableWords("Aggettivi", [
+  ["adj-wirtschaftlich", "economico/a; relativo/a all'economia", "wirtschaftlich"]
+], 22);
+
+addStableWords("Verbi", [
+  ["verb-arbeiten-an", "lavorare a (un progetto o un compito)", "arbeiten an + Dat."],
+  ["verb-auswendig-lernen", "imparare a memoria", "auswendig lernen"],
+  ["verb-sich-bedanken-bei-fuer", "ringraziare qualcuno per qualcosa", "sich bedanken bei + Dat. für + Akk."],
+  ["verb-sich-beschweren-bei-ueber", "lamentarsi con qualcuno di qualcosa", "sich beschweren bei + Dat. über + Akk."],
+  ["verb-erzaehlen-ueber", "parlare di; raccontare qualcosa (argomento)", "erzählen über + Akk."],
+  ["verb-erzaehlen-von", "raccontare di; parlare di una persona o di un'esperienza", "erzählen von + Dat."],
+  ["verb-fragen-nach", "chiedere informazioni su; chiedere di", "fragen nach + Dat."]
+], 22);
+
 for (const word of window.VOCABULARY) {
   if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
   word.category = "Verbi";
@@ -1192,5 +1219,21 @@ addGrammarQuestions([
   ["l21-adj-freundlich", "AGGETTIVI CON PREPOSIZIONE", "Ein Chef sollte freundlich ___ Kunden sein. (zu + caso)", "zu; Dativ", "La frase significa «un capo dovrebbe essere gentile con i clienti». Freundlich zu regge il dativo."],
   ["l21-adj-interessiert", "AGGETTIVI CON PREPOSIZIONE", "Christian Wulf war interessiert ___ der Position. (an + caso)", "an; Dativ", "La frase significa «Christian Wulf era interessato alla posizione». Interessiert an regge il dativo."],
   ["l21-adj-zufrieden", "AGGETTIVI CON PREPOSIZIONE", "Das Nationalteam war zufrieden ___ dem Ergebnis. (mit + caso)", "mit; Dativ", "La frase significa «la nazionale era soddisfatta del risultato». Zufrieden mit regge il dativo."],
-  ["l21-adj-wuetend", "AGGETTIVI CON PREPOSIZIONE", "Viele Kunden sind wütend ___ den schlechten Service. (über + caso)", "über; Akkusativ", "La frase significa «molti clienti sono arrabbiati per il cattivo servizio». Wütend über regge l'accusativo."]
+  ["l21-adj-wuetend", "AGGETTIVI CON PREPOSIZIONE", "Viele Kunden sind wütend ___ den schlechten Service. (über + caso)", "über; Akkusativ", "La frase significa «molti clienti sono arrabbiati per il cattivo servizio». Wütend über regge l'accusativo."],
+
+  ["l22-wo-preposition", "PRONOMINALADVERBI", "Come si forma la domanda su una cosa inanimata con una preposizione?", "wo(r) + preposizione", "Per riferirsi a cose o argomenti si usa wo(r) più la preposizione: worüber = «su che cosa?»; wonach = «che cosa?» / «di che cosa?»."],
+  ["l22-animate-question", "DOMANDE SU PERSONE", "Come si chiede di una persona dopo una preposizione?", "preposizione + wen (Akkusativ) oppure wem (Dativ)", "Con le persone non si usa wo(r)-: per esempio «Von wem erzählst du?» («Di chi racconti?»)."],
+  ["l22-da-preposition", "PRONOMINALADVERBI", "Come si riprende una cosa inanimata già nominata dopo una preposizione?", "da(r) + preposizione", "Esempi: «Worüber?» — «Darüber.»; «Wonach?» — «Danach.» In italiano: «Su che cosa?» — «Su questo.»"],
+  ["l22-animate-pronoun", "PRONOMI PERSONALI CON PREPOSIZIONE", "Come si riprende una persona dopo una preposizione?", "preposizione + pronome personale al caso richiesto", "Per esempio: «Von meiner Chefin» diventa «von ihr»; von regge il dativo."],
+  ["l22-r-linker", "PRONOMINALADVERBI", "Quando si inserisce una «r» tra wo/da e la preposizione?", "Quando la preposizione inizia per vocale", "An, auf e über formano woran/daran, worauf/darauf, worüber/darüber. Con nach non si inserisce la r: wonach/danach."],
+  ["l22-worueber-darueber", "COMPLETA DOMANDA E RISPOSTA", "Riferendoti a un argomento: ___ erzählst du? — Ich erzähle ___. (über)", "Worüber — darüber", "Worüber chiede «su che cosa?»; darüber riprende un argomento già nominato."],
+  ["l22-von-wem-von-ihr", "COMPLETA DOMANDA E RISPOSTA", "Riferendoti alla tua direttrice: ___ erzählst du? — Ich erzähle ___. (von)", "Von wem — von ihr", "Per una persona si usa von + caso/pronome: von meiner Chefin → von ihr."],
+  ["l22-nach-danach", "COMPLETA IL PRONOME AVVERBIALE", "«Fragst du nach dem Weg?» — «Ja, ich frage ___.»", "danach", "Nach dem Weg («sulla strada») è una cosa: nach + da- diventa danach."],
+  ["l22-nach-ihr", "COMPLETA IL PRONOME PERSONALE", "«Fragst du nach der Chefin?» — «Ja, ich frage nach ___.»", "ihr", "La Chefin è una persona; nach regge il dativo, quindi si usa ihr."],
+  ["l22-arbeiten-an", "COMPLETA LA PREPOSIZIONE E IL CASO", "Ich habe ___ einem Projekt gearbeitet. (arbeiten an)", "an; Dativ", "Arbeiten an significa «lavorare a»; an regge il dativo in questa costruzione. Esempio: «Ho lavorato a un progetto»."],
+  ["l22-bedanken-cases", "COMPLETA LE PREPOSIZIONI", "Ich bedanke mich ___ dir ___ das Geschenk. (bei / für)", "bei + Dativ; für + Akkusativ", "La frase significa «ti ringrazio per il regalo»: bei dir indica la persona, für das Geschenk il motivo."],
+  ["l22-beschweren-cases", "COMPLETA LE PREPOSIZIONI", "Sie beschwert sich ___ dem Chef ___ die Verspätung. (bei / über)", "bei + Dativ; über + Akkusativ", "Sich bei jemandem über etwas beschweren significa «lamentarsi con qualcuno di qualcosa»."],
+  ["l22-erzaehlen-cases", "SCEGLI LA PREPOSIZIONE E IL CASO", "Per raccontare un argomento si usa erzählen ___ + ___; per parlare di una persona, erzählen ___ + ___.", "über + Akkusativ; von + Dativ", "Esempi: «über die Situation» (sull'argomento) e «von meiner Chefin» (di una persona)."],
+  ["l22-aus-von", "ORIGINE E PROVENIENZA", "Nel foglio, quale preposizione indica l'origine in «Ich komme ___ Rom»?", "aus; Dativ", "Aus indica l'origine («vengo da Roma»); von può indicare una provenienza occasionale. Entrambe reggono il dativo."],
+  ["l22-gewoehnt-daran", "COMPLETA IL PRONOME AVVERBIALE", "«Wir sind an die Zeitumstellung gewöhnt.» Come sostituisci «an die Zeitumstellung»?", "daran", "Gewöhnt sein an significa «essere abituato a»; an die Zeitumstellung si riprende con daran."]
 ]);
