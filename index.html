@@ -113,7 +113,10 @@
           </button>
 
           <div id="answer-prompt" class="answer-prompt" hidden>
-            <p>Te lo ricordavi?</p>
+            <div class="answer-prompt-heading">
+              <p>Te lo ricordavi?</p>
+              <button id="ignore-button" class="ignore-button" type="button">Ignora scheda</button>
+            </div>
             <div class="answer-buttons">
               <button id="no-button" class="answer-button answer-no" type="button"><span aria-hidden="true">↻</span> No</button>
               <button id="yes-button" class="answer-button answer-yes" type="button"><span aria-hidden="true">✓</span> Sì</button>
@@ -139,6 +142,7 @@
         <h1 id="vocab-title">Il vocabolario.</h1>
         <div class="search-wrap"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Cerca in italiano o tedesco" autocomplete="off" /></div>
         <div id="category-filters" class="category-filters" aria-label="Filtra per argomento"></div>
+        <div class="ignored-filter-wrap"><button id="toggle-ignored" class="filter-chip" type="button" aria-pressed="false">Mostra solo ignorate (0)</button></div>
         <p id="vocab-result-count" class="result-count"></p>
         <div id="vocab-list" class="vocab-list"></div>
       </section>

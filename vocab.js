@@ -1,6 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-16";
-window.VOCABULARY_UPDATED_LESSON = 22;
+window.VOCABULARY_UPDATED_AT = "2026-11-17";
+window.VOCABULARY_UPDATED_LESSON = 24;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -580,7 +580,7 @@ const irregularParticipleForms = Object.fromEntries(
 );
 Object.assign(irregularParticipleForms, {
   haben: "gehabt", tun: "getan", wollen: "gewollt", "spazieren gehen": "spazieren gegangen",
-  "auswendig lernen": "auswendig gelernt",
+  "auswendig lernen": "auswendig gelernt", "werbung machen": "Werbung gemacht",
   wehtun: "wehgetan", leidtun: "leidgetan", wiederholen: "wiederholt", erschrecken: "erschrocken / erschreckt",
   zusammenbrechen: "zusammengebrochen", zusammentreffen: "zusammengetroffen", erbrechen: "erbrochen", biegen: "gebogen",
   zurückerhalten: "zurückerhalten", fangen: "gefangen", zerbrechen: "zerbrochen"
@@ -602,7 +602,7 @@ function verbInfinitive(target) {
     .replace(/\s+(?:an|auf|aus|bei|für|gegen|in|mit|nach|über|um|unter|von|vor|zu)\s*$/i, "")
     .trim();
   if (phrase.startsWith("es geht")) return "gehen";
-  if (phrase === "spazieren gehen" || phrase === "auswendig lernen") return phrase;
+  if (phrase === "spazieren gehen" || phrase === "auswendig lernen" || phrase === "werbung machen") return phrase;
   const tokens = phrase.match(/[a-zäöüß]+/g) || [];
   const candidates = tokens.filter((token) => token.endsWith("en") || token.endsWith("eln") || token.endsWith("ern") || token === "sein" || token === "tun");
   return candidates[candidates.length - 1] || tokens[tokens.length - 1] || phrase;
@@ -1010,6 +1010,73 @@ addStableWords("Verbi", [
   ["verb-fragen-nach", "chiedere informazioni su; chiedere di", "fragen nach + Dat."]
 ], 22);
 
+addStableWords("Acquisti", [
+  ["term-konsum", "il consumo", "der Konsum"],
+  ["term-kundin", "la cliente", "die Kundin", "die Kundinnen"],
+  ["term-produkt", "il prodotto", "das Produkt", "die Produkte"],
+  ["term-werbung", "la pubblicità", "die Werbung"],
+  ["term-marke", "la marca; il marchio", "die Marke", "die Marken"],
+  ["term-konsumdruck", "la pressione al consumo", "der Konsumdruck"],
+  ["term-konsumgesellschaft", "la società dei consumi", "die Konsumgesellschaft", "die Konsumgesellschaften"],
+  ["term-kaufverhalten", "il comportamento d'acquisto", "das Kaufverhalten"],
+  ["term-rabatt", "lo sconto", "der Rabatt", "die Rabatte"],
+  ["term-qualitaet", "la qualità", "die Qualität", "die Qualitäten"],
+  ["term-vorteil", "il vantaggio", "der Vorteil", "die Vorteile"],
+  ["term-nachteil", "lo svantaggio", "der Nachteil", "die Nachteile"],
+  ["term-soziale-medien", "i social media; i social network", "soziale Medien"],
+  ["term-influencer", "l'influencer", "der Influencer", "die Influencer"],
+  ["term-einfluss", "l'influenza; l'influsso", "der Einfluss", "die Einflüsse"],
+  ["term-secondhand", "di seconda mano", "Secondhand"],
+  ["term-fast-fashion", "la moda veloce (produzione di abiti a basso costo)", "Fast Fashion"]
+], 24);
+
+addStableWords("Ambiente", [
+  ["term-umwelt", "l'ambiente", "die Umwelt"],
+  ["term-muell", "i rifiuti; la spazzatura", "der Müll"]
+], 24);
+
+addStableWords("Lavoro", [
+  ["work-jobinterview", "il colloquio di lavoro", "das Jobinterview", "die Jobinterviews"],
+  ["work-arbeitsbedingung", "la condizione di lavoro", "die Arbeitsbedingung", "die Arbeitsbedingungen"],
+  ["work-befoerderung", "la promozione (sul lavoro)", "die Beförderung", "die Beförderungen"],
+  ["work-kundensupport", "il supporto clienti", "der Kundensupport"],
+  ["work-budgetplanung", "la pianificazione del budget", "die Budgetplanung"],
+  ["work-teammanagement", "la gestione del team", "das Teammanagement"],
+  ["work-markttrend", "la tendenza di mercato", "der Markttrend", "die Markttrends"],
+  ["work-vertragsbedingung", "la clausola contrattuale", "die Vertragsbedingung", "die Vertragsbedingungen"]
+], 24);
+
+addStableWords("Aggettivi", [
+  ["adj-fair-produziert", "prodotto/a in modo equo", "fair produziert"]
+], 24);
+
+addStableWords("Parole utili", [
+  ["phrase-werbung-machen", "fare pubblicità", "Werbung machen"]
+], 24);
+
+addStableWords("Verbi", [
+  ["verb-einkaufen", "fare acquisti; fare la spesa", "einkaufen"],
+  ["verb-sparen", "risparmiare", "sparen"],
+  ["verb-verschwenden", "sprecare", "verschwenden"],
+  ["verb-posten", "pubblicare un post", "posten"],
+  ["verb-liken", "mettere «mi piace»", "liken"],
+  ["verb-klicken", "cliccare", "klicken"],
+  ["verb-folgen", "seguire (una persona o un account)", "folgen + Dat."],
+  ["verb-bestellen", "ordinare (online)", "bestellen"],
+  ["verb-recyceln", "riciclare", "recyceln"],
+  ["verb-produzieren", "produrre (rifiuti o beni)", "produzieren"]
+], 24);
+
+addStableWords("Verbi", [
+  ["verb-hoffen-auf", "sperare in", "hoffen auf + Akk."],
+  ["verb-diskutieren-ueber", "discutere di qualcosa e con qualcuno", "diskutieren über + Akk.; mit + Dat."],
+  ["verb-glauben-an", "credere in", "glauben an + Akk."],
+  ["verb-sich-begeistern-fuer", "entusiasmarsi per", "sich begeistern für + Akk."],
+  ["verb-sich-orientieren-an", "orientarsi secondo; basarsi su", "sich orientieren an + Dat."],
+  ["verb-verhandeln-ueber", "negoziare su; trattare", "verhandeln über + Akk."],
+  ["verb-sich-verabschieden-von", "congedarsi da", "sich verabschieden von + Dat."]
+], 24);
+
 for (const word of window.VOCABULARY) {
   if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
   word.category = "Verbi";
@@ -1235,5 +1302,25 @@ addGrammarQuestions([
   ["l22-beschweren-cases", "COMPLETA LE PREPOSIZIONI", "Sie beschwert sich ___ dem Chef ___ die Verspätung. (bei / über)", "bei + Dativ; über + Akkusativ", "Sich bei jemandem über etwas beschweren significa «lamentarsi con qualcuno di qualcosa»."],
   ["l22-erzaehlen-cases", "SCEGLI LA PREPOSIZIONE E IL CASO", "Per raccontare un argomento si usa erzählen ___ + ___; per parlare di una persona, erzählen ___ + ___.", "über + Akkusativ; von + Dativ", "Esempi: «über die Situation» (sull'argomento) e «von meiner Chefin» (di una persona)."],
   ["l22-aus-von", "ORIGINE E PROVENIENZA", "Nel foglio, quale preposizione indica l'origine in «Ich komme ___ Rom»?", "aus; Dativ", "Aus indica l'origine («vengo da Roma»); von può indicare una provenienza occasionale. Entrambe reggono il dativo."],
-  ["l22-gewoehnt-daran", "COMPLETA IL PRONOME AVVERBIALE", "«Wir sind an die Zeitumstellung gewöhnt.» Come sostituisci «an die Zeitumstellung»?", "daran", "Gewöhnt sein an significa «essere abituato a»; an die Zeitumstellung si riprende con daran."]
+  ["l22-gewoehnt-daran", "COMPLETA IL PRONOME AVVERBIALE", "«Wir sind an die Zeitumstellung gewöhnt.» Come sostituisci «an die Zeitumstellung»?", "daran", "Gewöhnt sein an significa «essere abituato a»; an die Zeitumstellung si riprende con daran."],
+
+  ["l24-wo-mit", "COMPLETA LA DOMANDA", "Ich habe mit der Übung angefangen. Per chiedere di una cosa: ___ hast du angefangen?", "Womit", "Mit der Übung indica una cosa: si usa wo(r) + preposizione. Per una persona si chiede «Mit wem?»."],
+  ["l24-da-mit", "COMPLETA IL PRONOME AVVERBIALE", "«Hast du mit der Übung begonnen?» — «Ja, ___.»", "damit", "Mit der Übung è una cosa: mit regge il dativo e mit + da- diventa damit («con questo»)."],
+  ["l24-worauf-darauf", "COMPLETA DOMANDA E RISPOSTA", "Ich hoffe auf eine bessere Zukunft. ___ hoffst du? — Ich hoffe ___.", "Worauf — darauf", "Hoffen auf regge l'accusativo. Per una cosa si usa worauf nella domanda e darauf nella risposta."],
+  ["l24-auf-wen", "DOMANDA SU UNA PERSONA", "Per chiedere «su chi speri?» con hoffen auf, quale domanda usi?", "Auf wen hoffst du?", "Per una persona si usa preposizione + wen, non worauf."],
+  ["l24-wozu-dazu", "COMPLETA DOMANDA E RISPOSTA", "Er hat mich zur Party eingeladen. ___ hat er dich eingeladen? — Ja, ___.", "Wozu — dazu", "Einladen zu regge il dativo. Per riferirsi alla festa si usano wozu e dazu."],
+  ["l24-worueber-mit-wem", "DISTINGUI LE DUE PREPOSIZIONI", "Worüber hast du mit deinen Kindern diskutiert? Quale parte indica l'argomento e quale le persone?", "über die Hausaufgaben = argomento; mit deinen Kindern = persone", "Über regge l'accusativo e introduce l'argomento; mit regge il dativo e introduce le persone."],
+  ["l24-an-wen-denken", "DOMANDA SU UNA PERSONA", "An ___ denkst du oft? — An meinen Sohn.", "wen", "Denken an regge l'accusativo. Per la persona si chiede «An wen?»."],
+  ["l24-daran-denken", "COMPLETA IL PRONOME AVVERBIALE", "«Denkst du oft an deine Schulzeit?» — «Ja, ich denke oft ___.»", "daran", "An deine Schulzeit indica una cosa/esperienza: an + da- diventa daran."],
+  ["l24-an-ihn-glauben", "COMPLETA IL PRONOME PERSONALE", "«Glaubst du an Gott?» — «Ja, ich glaube an ___.»", "ihn", "Glauben an regge l'accusativo; per una persona si usa il pronome personale, non daran."],
+  ["l24-dafuer-interessieren", "COMPLETA IL PRONOME AVVERBIALE", "«Interessierst du dich für Politik?» — «Ja, ___.»", "dafür", "Für Politik è un argomento: für + da- diventa dafür."],
+  ["l24-interessieren-korrekt", "SCEGLI LA COSTRUZIONE CORRETTA", "Come si dice «sono interessato alle nuove tecnologie»?", "Ich interessiere mich für neue Technologien. / Ich bin an neuen Technologien interessiert.", "Sich interessieren regge für + Akkusativ; «interessiert sein» usa an + Dativ. Nel foglio compare una volta la forma errata «sich interessieren an»."],
+  ["l24-arbeiten-praepositionen", "SCEGLI LA PREPOSIZIONE", "Completa: lavorare ___ un progetto; lavorare ___ un'azienda; lavorare ___ il computer.", "an + Dativ; bei + Dativ; mit + Dativ", "An indica il progetto su cui si lavora, bei l'azienda presso cui si lavora, mit lo strumento o la persona con cui si lavora."],
+  ["l24-bewerben-um-bei", "COMPLETA LE PREPOSIZIONI", "Er bewirbt sich ___ eine Stelle ___ einem Unternehmen.", "um + Akkusativ; bei + Dativ", "Sich bewerben um indica la posizione richiesta; sich bewerben bei indica l'azienda o l'ente."],
+  ["l24-vorbereiten-auf", "COMPLETA LA PREPOSIZIONE E IL CASO", "Ich bereite mich ___ das Meeting vor.", "auf + Akkusativ", "Sich vorbereiten auf significa «prepararsi per» e regge l'accusativo."],
+  ["l24-erfahren-von", "COMPLETA LA PREPOSIZIONE E IL CASO", "Ich habe ___ der neuen Regelung im Unternehmen erfahren.", "von + Dativ", "Erfahren von significa «venire a sapere di» e regge il dativo."],
+  ["l24-sprechen-mit-ueber", "COMPLETA LE PREPOSIZIONI", "Ich habe ___ meinem Kollegen ___ das neue Projekt gesprochen.", "mit + Dativ; über + Akkusativ", "Sprechen mit significa «parlare con»; sprechen über significa «parlare di»."],
+  ["l24-verantwortlich-fuer", "COMPLETA LA PREPOSIZIONE E IL CASO", "Ich bin ___ die Budgetplanung verantwortlich.", "für + Akkusativ", "Verantwortlich für regge l'accusativo."],
+  ["l24-verpflichtet-zu", "COMPLETA LA PREPOSIZIONE E IL CASO", "Wir sind ___ einer transparenten Kommunikation verpflichtet.", "zu + Dativ", "Verpflichtet zu regge il dativo."],
+  ["l24-mit-meinem-job", "CORREGGI LA DESINENZA", "Ich bin mit ___ Job zufrieden. (mein)", "meinem", "Mit regge il dativo; Job è maschile, quindi mein diventa meinem. Nel foglio la forma «meinen Job» è un refuso."]
 ]);

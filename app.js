@@ -12,12 +12,13 @@
     const d = new Date();
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
   };
-  const defaultState = () => ({ cards: {}, stats: { date: todayKey(), reviewedToday: 0, knownToday: 0 } });
+  const defaultState = () => ({ cards: {}, ignoredCards: {}, stats: { date: todayKey(), reviewedToday: 0, knownToday: 0 } });
 
   let progress = loadProgress();
   let session = null;
   let selectedStudyCategory = "random";
   let selectedCategory = "Tutte";
+  let showIgnoredOnly = false;
   let deferredInstallPrompt = null;
   let feedbackAudioContext = null;
   let syncCode = readStoredSyncCode();
@@ -29,6 +30,9 @@
     try {
       const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
       if (stored && stored.cards && stored.stats) {
+        if (!stored.ignoredCards || typeof stored.ignoredCards !== "object" || Array.isArray(stored.ignoredCards)) {
+          stored.ignoredCards = {};
+        }
         delete stored.stats.streak;
         delete stored.stats.lastStudyDate;
         delete stored.stats.newSeenToday;
@@ -108,9 +112,11 @@
 
   function serializeProgress(value) {
     const cards = Object.fromEntries(Object.entries(value.cards || {}).sort(([a], [b]) => a.localeCompare(b)));
+    const ignoredCards = Object.fromEntries(Object.entries(value.ignoredCards || {}).sort(([a], [b]) => a.localeCompare(b)));
     const stats = value.stats || {};
     return JSON.stringify({
       cards,
+      ignoredCards,
       stats: {
         date: stats.date || "",
         reviewedToday: Number(stats.reviewedToday) || 0,
@@ -130,6 +136,14 @@
       if (!remoteCard || localReviewed >= remoteReviewed) cards[key] = localCard;
     }
 
+    const ignoredCards = { ...(remoteState?.ignoredCards || {}) };
+    for (const [id, localRecord] of Object.entries(localState?.ignoredCards || {})) {
+      const remoteRecord = ignoredCards[id];
+      const localUpdated = Number(localRecord?.updatedAt) || 0;
+      const remoteUpdated = Number(remoteRecord?.updatedAt) || 0;
+      if (!remoteRecord || localUpdated >= remoteUpdated) ignoredCards[id] = localRecord;
+    }
+
     const localStats = localState?.stats || defaultState().stats;
     const remoteStats = remoteState?.stats || defaultState().stats;
     let stats;
@@ -140,7 +154,7 @@
       reviewedToday: Math.max(Number(localStats.reviewedToday) || 0, Number(remoteStats.reviewedToday) || 0),
       knownToday: Math.max(Number(localStats.knownToday) || 0, Number(remoteStats.knownToday) || 0)
     };
-    return { cards, stats };
+    return { cards, ignoredCards, stats };
   }
 
   async function synchronizeProgress(code = syncCode) {
@@ -150,6 +164,7 @@
       const merged = mergeProgress(progress, cloud.progress);
       progress = merged;
       saveProgress();
+      if (pruneIgnoredSessionItems()) renderCurrentCard();
       const mergedJson = serializeProgress(merged);
       if (mergedJson === serializeProgress(cloud.progress)) {
         setSyncStatus("Progressi sincronizzati.");
@@ -258,6 +273,7 @@
       try { localStorage.setItem(SYNC_BACKUP_KEY, JSON.stringify(progress)); } catch (_) { /* A backup is best-effort; cloud state remains untouched. */ }
       progress = {
         cards: { ...(cloud.progress.cards || {}) },
+        ignoredCards: { ...(cloud.progress.ignoredCards || {}) },
         stats: { ...(cloud.progress.stats || defaultState().stats) }
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
@@ -303,8 +319,39 @@
     return progress.cards[key];
   }
 
+  function isWordIgnored(id) {
+    return progress.ignoredCards?.[id]?.ignored === true;
+  }
+
+  function pruneIgnoredSessionItems() {
+    if (!session) return false;
+    const oldQueue = session.queue;
+    const oldPosition = session.position;
+    const currentWasIgnored = Boolean(oldQueue[oldPosition] && isWordIgnored(oldQueue[oldPosition].id));
+    const ignoredBefore = oldQueue.slice(0, oldPosition).filter((item) => isWordIgnored(item.id)).length;
+    session.queue = oldQueue.filter((item) => !isWordIgnored(item.id));
+    session.position = Math.max(0, oldPosition - ignoredBefore);
+    if (!currentWasIgnored && oldQueue.length !== session.queue.length && session.queue[session.position]) {
+      $("#card-counter").textContent = `${session.position + 1} / ${session.queue.length} nel ripasso`;
+    }
+    return currentWasIgnored;
+  }
+
+  function setWordIgnored(id, ignored) {
+    progress.ignoredCards ||= {};
+    const previousUpdatedAt = Number(progress.ignoredCards[id]?.updatedAt) || 0;
+    progress.ignoredCards[id] = { ignored, updatedAt: Math.max(Date.now(), previousUpdatedAt + 1) };
+    saveProgress();
+    scheduleProgressSync();
+    updateDashboard();
+    const currentWasIgnored = pruneIgnoredSessionItems();
+    if (currentWasIgnored) renderCurrentCard();
+    updateIgnoredFilterButton();
+    renderVocabulary();
+  }
+
   function studyUnits(words = VOCABULARY) {
-    return words.flatMap((word) => [
+    return words.filter((word) => !isWordIgnored(word.id)).flatMap((word) => [
       { id: word.id, aspect: "meaning" },
       ...(word.participle ? [{ id: word.id, aspect: "participle" }] : [])
     ]);
@@ -452,18 +499,26 @@
       const scopedWords = session.category === "random"
         ? VOCABULARY
         : VOCABULARY.filter((entry) => studyCategoryForWord(entry) === session.category);
+      const activeWords = scopedWords.filter((entry) => !isWordIgnored(entry.id));
+      const ignoredWords = scopedWords.length - activeWords.length;
       const nextDue = studyUnits(scopedWords).map((unit) => cardState(unit.id, unit.aspect).dueAt)
         .filter((at) => at > Date.now()).sort((a, b) => a - b)[0];
-      $("#empty-title").textContent = nextDue
-        ? "Nessuna scheda disponibile adesso."
-        : session.category === "random" ? "Tutte le schede completate." : "Categoria completata.";
-      $("#empty-message").textContent = nextDue
-        ? `Hai esaurito le schede disponibili in ${categoryName}. I ripassi torneranno quando saranno dovuti.`
-        : session.category === "random"
-          ? "Hai completato tutte le schede disponibili. Puoi ripassarle comunque o sfogliare il vocabolario."
-          : `Puoi scegliere un'altra categoria o ripassare comunque ${categoryName}.`;
+      const allIgnored = activeWords.length === 0 && ignoredWords > 0;
+      $("#practice-all-button").hidden = allIgnored;
+      $("#empty-title").textContent = allIgnored
+        ? "Tutte le schede sono ignorate."
+        : nextDue ? "Nessuna scheda disponibile adesso."
+          : session.category === "random" ? "Tutte le schede completate." : "Categoria completata.";
+      $("#empty-message").textContent = allIgnored
+        ? 'Puoi reinserirle da “Sfoglia il vocabolario”, usando “Ripristina”.'
+        : nextDue
+          ? `Hai esaurito le schede disponibili in ${categoryName}. I ripassi torneranno quando saranno dovuti.`
+          : session.category === "random"
+            ? "Hai completato tutte le schede disponibili. Puoi ripassarle comunque o sfogliare il vocabolario."
+            : `Puoi scegliere un'altra categoria o ripassare comunque ${categoryName}.`;
       return;
     }
+    $("#practice-all-button").hidden = false;
     session.revealed = false;
     const isGrammar = Boolean(word.grammarQuestion);
     $("#card-category").textContent = word.category.toUpperCase();
@@ -543,11 +598,19 @@
     renderCurrentCard();
   }
 
+  function ignoreCurrentCard() {
+    const item = session?.queue[session.position];
+    if (!item) return;
+    setWordIgnored(item.id, true);
+  }
+
   function showVocabulary() {
     $("#review-view").hidden = true;
     $("#vocabulary-view").hidden = false;
     $("#search-input").value = "";
     selectedCategory = "Tutte";
+    showIgnoredOnly = false;
+    updateIgnoredFilterButton();
     renderFilters();
     renderVocabulary();
     window.scrollTo(0, 0);
@@ -568,19 +631,30 @@
     ).join("");
   }
 
+  function updateIgnoredFilterButton() {
+    const button = $("#toggle-ignored");
+    const count = VOCABULARY.filter((word) => isWordIgnored(word.id)).length;
+    button.textContent = showIgnoredOnly ? "Mostra tutto" : `Mostra solo ignorate (${count})`;
+    button.setAttribute("aria-pressed", String(showIgnoredOnly));
+  }
+
   function renderVocabulary() {
     const query = $("#search-input").value.trim().toLocaleLowerCase("it");
     const matches = VOCABULARY.filter((word) => (selectedCategory === "Tutte" || word.category === selectedCategory)
+      && (!showIgnoredOnly || isWordIgnored(word.id))
       && (!query || `${word.it} ${word.de} ${word.plural} ${word.category}`.toLocaleLowerCase("it").includes(query)));
-    $("#vocab-result-count").textContent = `${matches.length} ${matches.length === 1 ? "parola" : "parole"}`;
+    $("#vocab-result-count").textContent = showIgnoredOnly
+      ? `${matches.length} ${matches.length === 1 ? "scheda ignorata" : "schede ignorate"}`
+      : `${matches.length} ${matches.length === 1 ? "parola" : "parole"}`;
     if (!matches.length) {
       $("#vocab-list").innerHTML = '<div class="no-results">Non ho trovato parole con questa ricerca.</div>';
       return;
     }
     $("#vocab-list").innerHTML = matches.map((word) => {
       const learned = isWordLearned(word);
+      const ignored = isWordIgnored(word.id);
       const answer = word.grammarQuestion ? word.grammarAnswer : word.de;
-      return `<div class="vocab-row${word.grammarQuestion ? " grammar-vocab-row" : ""}"><span class="vocab-it">${escapeHtml(word.it)}</span><span class="vocab-de">${escapeHtml(answer)}</span><span class="vocab-status${learned ? " learned" : ""}" aria-hidden="true"></span></div>`;
+      return `<div class="vocab-row${word.grammarQuestion ? " grammar-vocab-row" : ""}${ignored ? " vocab-ignored" : ""}"><span class="vocab-it">${escapeHtml(word.it)}</span><span class="vocab-de">${escapeHtml(answer)}</span><span class="vocab-status${learned ? " learned" : ""}" aria-hidden="true"></span><button class="vocab-ignore-button${ignored ? " restore" : ""}" type="button" data-ignore-id="${escapeHtml(word.id)}" aria-label="${ignored ? "Ripristina" : "Ignora"} scheda: ${escapeHtml(word.it)}">${ignored ? "Ripristina" : "Ignora"}</button></div>`;
     }).join("");
   }
 
@@ -651,6 +725,7 @@
     playAnswerSound(true);
     recordAnswer(true);
   });
+  $("#ignore-button").addEventListener("click", ignoreCurrentCard);
   $("#practice-all-button").addEventListener("click", practiceAll);
   $("#study-tabs").addEventListener("click", (event) => {
     const button = event.target.closest("[data-study-category]");
@@ -676,6 +751,16 @@
   $("#sync-now-button").addEventListener("click", () => requestProgressSync().catch((error) => setSyncMessage(describeSyncError(error), true)));
   $("#sync-unlink-button").addEventListener("click", unlinkSyncDevice);
   $("#search-input").addEventListener("input", renderVocabulary);
+  $("#toggle-ignored").addEventListener("click", () => {
+    showIgnoredOnly = !showIgnoredOnly;
+    updateIgnoredFilterButton();
+    renderVocabulary();
+  });
+  $("#vocab-list").addEventListener("click", (event) => {
+    const button = event.target.closest("[data-ignore-id]");
+    if (!button) return;
+    setWordIgnored(button.dataset.ignoreId, !isWordIgnored(button.dataset.ignoreId));
+  });
   $("#category-filters").addEventListener("click", (event) => {
     const button = event.target.closest("[data-category]");
     if (!button) return;
