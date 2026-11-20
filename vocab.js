@@ -1,6 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-17";
-window.VOCABULARY_UPDATED_LESSON = 24;
+window.VOCABULARY_UPDATED_AT = "2026-11-20";
+window.VOCABULARY_UPDATED_LESSON = 26;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -1076,6 +1076,143 @@ addStableWords("Verbi", [
   ["verb-verhandeln-ueber", "negoziare su; trattare", "verhandeln über + Akk."],
   ["verb-sich-verabschieden-von", "congedarsi da", "sich verabschieden von + Dat."]
 ], 24);
+
+addStableWords("Concetti e termini", [
+  ["term-mundpropaganda", "il passaparola", "die Mundpropaganda"],
+  ["term-wirtschaft", "l'economia", "die Wirtschaft"],
+  ["term-offroad-reifen", "lo pneumatico da fuoristrada", "der Offroad-Reifen", "die Offroad-Reifen"],
+  ["term-fuenf-sterne-hotel", "l'hotel a cinque stelle", "das Fünf-Sterne-Hotel", "die Fünf-Sterne-Hotels"],
+  ["term-hotelkette", "la catena alberghiera", "die Hotelkette", "die Hotelketten"],
+  ["term-beitragsjahr", "l'anno di contribuzione previdenziale", "das Beitragsjahr", "die Beitragsjahre"],
+  ["term-beitrag", "il contributo previdenziale", "der Beitrag", "die Beiträge"],
+  ["term-arbeitskosten", "i costi del lavoro", "die Arbeitskosten"]
+], 25);
+
+addStableWords("Lavoro", [
+  ["work-traumjob", "il lavoro dei sogni", "der Traumjob", "die Traumjobs"]
+], 25);
+
+addStableWords("Scuola e formazione", [
+  ["school-hotelfachschule", "l'istituto alberghiero", "die Hotelfachschule", "die Hotelfachschulen"],
+  ["school-berufsschule", "la scuola professionale", "die Berufsschule", "die Berufsschulen"]
+], 25);
+
+addStableWords("Persone", [
+  ["person-araber", "l'arabo", "der Araber", "die Araber"],
+  ["person-rumaene", "il rumeno", "der Rumäne", "die Rumänen"]
+], 25);
+
+addStableWords("Aggettivi", [
+  ["adj-hoeflich", "educato/a; cortese", "höflich"],
+  ["adj-anspruchsvoll", "impegnativo/a; esigente", "anspruchsvoll"],
+  ["adj-kompetent", "competente; qualificato/a", "kompetent"],
+  ["adj-inkompetent", "incompetente", "inkompetent"],
+  ["adj-freiwillig", "volontario/a; di propria volontà", "freiwillig"],
+  ["adj-ruhig", "calmo/a; tranquillo/a", "ruhig"]
+], 25);
+
+addStableWords("Parole utili", [
+  ["phrase-schwarz-arbeiten", "lavorare in nero", "schwarz arbeiten"],
+  ["phrase-in-rente-gehen", "andare in pensione", "in Rente gehen"],
+  ["phrase-in-der-stadt-herumgehen", "andare in giro per la città", "in der Stadt herumgehen"],
+  ["phrase-bummeln-durch-die-stadt", "passeggiare per la città", "durch die Stadt bummeln"],
+  ["phrase-gelegenheit-nutzen", "cogliere; sfruttare l'occasione", "die Gelegenheit nutzen"],
+  ["word-waere", "sarebbe (Konjunktiv II di sein)", "wäre"]
+], 25);
+
+addStableWords("Verbi", [
+  ["verb-weitersagen", "riferire; passare parola", "weitersagen"],
+  ["verb-verdienen", "guadagnare (denaro); meritare", "verdienen"],
+  ["verb-sich-zurueckziehen", "ritirarsi; appartarsi", "sich zurückziehen"],
+  ["verb-einzahlen", "versare (denaro o contributi)", "einzahlen"],
+  ["verb-nutzen", "usare; sfruttare un'occasione", "nutzen"]
+], 25);
+
+addStableWords("Cibo", [
+  ["term-lebensmittel", "i generi alimentari; gli alimenti", "das Lebensmittel", "die Lebensmittel"],
+  ["term-tierfutter", "il cibo per animali", "das Tierfutter"]
+], 26);
+
+addStableWords("Acquisti", [
+  ["term-paket", "il pacco", "das Paket", "die Pakete"],
+  ["term-abo", "l'abbonamento", "das Abo", "die Abos"],
+  ["term-website", "il sito web", "die Website; die Webseite", "die Websites; die Webseiten"],
+  ["term-groesse", "la taglia; la dimensione", "die Größe", "die Größen"],
+  ["term-kompromiss", "il compromesso", "der Kompromiss", "die Kompromisse"],
+  ["term-rezension-bewertung", "la recensione; la valutazione", "die Rezension; die Bewertung", "die Rezensionen; die Bewertungen"],
+  ["term-kundenportfolio", "il portafoglio clienti", "das Kundenportfolio", "die Kundenportfolios"],
+  ["term-online-plattform", "la piattaforma online", "die Online-Plattform", "die Online-Plattformen"]
+], 26);
+
+addStableWords("Abbigliamento", [
+  ["term-schuheinlage", "la soletta per le scarpe", "die Schuheinlage", "die Schuheinlagen"],
+  ["term-springerstiefel", "lo stivale da paracadutista; lo stivale anfibio", "der Springerstiefel", "die Springerstiefel"]
+], 26);
+
+addStableWords("Corpo e salute", [
+  ["term-blut", "il sangue", "das Blut"]
+], 26);
+
+addStableWords("Lavoro", [
+  ["work-ueberweisung", "il bonifico", "die Überweisung", "die Überweisungen"],
+  ["work-vertrag", "il contratto", "der Vertrag", "die Verträge"],
+  ["work-finanzamt", "l'ufficio delle imposte (Finanzamt)", "das Finanzamt", "die Finanzämter"],
+  ["work-prozentsatz", "la percentuale; il tasso percentuale", "der Prozentsatz", "die Prozentsätze"],
+  ["work-arbeitskultur", "la cultura del lavoro", "die Arbeitskultur", "die Arbeitskulturen"],
+  ["work-mitarbeiter", "il dipendente; la dipendente", "der Mitarbeiter; die Mitarbeiterin", "die Mitarbeiter; die Mitarbeiterinnen"],
+  ["work-arbeitsstress", "lo stress lavorativo", "der Arbeitsstress"]
+], 26);
+
+addStableWords("Concetti e termini", [
+  ["term-anfang", "l'inizio", "der Anfang", "die Anfänge"],
+  ["term-moeglichkeit", "la possibilità", "die Möglichkeit", "die Möglichkeiten"],
+  ["term-praktikum", "il tirocinio; lo stage", "das Praktikum", "die Praktika"],
+  ["term-marketing", "il marketing", "das Marketing"],
+  ["term-veranstaltung", "l'evento; la manifestazione", "die Veranstaltung", "die Veranstaltungen"],
+  ["term-puenktlichkeit", "la puntualità", "die Pünktlichkeit"],
+  ["term-professionalitaet", "la professionalità", "die Professionalität"],
+  ["term-entscheidung", "la decisione", "die Entscheidung", "die Entscheidungen"],
+  ["term-organisation", "l'organizzazione", "die Organisation", "die Organisationen"],
+  ["term-massnahme", "la misura; il provvedimento", "die Maßnahme", "die Maßnahmen"]
+], 26);
+
+addStableWords("Parole utili", [
+  ["phrase-ab-und-zu", "ogni tanto; di tanto in tanto", "ab und zu"],
+  ["phrase-auf-der-grundlage", "sulla base di + dativo", "auf der Grundlage von + Dat."],
+  ["phrase-eine-rolle-spielen", "avere un ruolo; svolgere una funzione", "eine Rolle spielen"],
+  ["phrase-im-angebot", "in offerta; in saldo", "im Angebot"],
+  ["phrase-wohin-gehen", "andare da qualche parte", "irgendwohin gehen"],
+  ["phrase-schmerzen-weg", "i dolori sono passati", "Die Schmerzen sind weg"],
+  ["phrase-schnelles-geldverdienen", "guadagnare soldi in fretta", "zum schnellen Geldverdienen"],
+  ["word-wie", "come; in che modo", "wie"]
+], 26);
+
+addStableWords("Aggettivi", [
+  ["adj-griffbereit", "a portata di mano", "griffbereit"],
+  ["adj-konsumorientiert", "orientato/a al consumo", "konsumorientiert"],
+  ["adj-elektronisch", "elettronico/a", "elektronisch"],
+  ["adj-nuetzlich", "utile", "nützlich"],
+  ["adj-gemuetlich", "confortevole; accogliente", "gemütlich"],
+  ["adj-haltbar-langlebig", "resistente; durevole", "haltbar; langlebig"],
+  ["adj-legendaer", "leggendario/a", "legendär"],
+  ["adj-nervoes", "nervoso/a", "nervös"],
+  ["adj-international", "internazionale", "international"],
+  ["adj-beruflich", "professionale; relativo/a al lavoro", "beruflich"],
+  ["adj-verantwortlich-fuer", "responsabile di + accusativo", "verantwortlich für + Akk."],
+  ["adj-beeindruckt-von", "colpito/a; impressionato/a da + dativo", "beeindruckt von + Dat."],
+  ["adj-ueberrascht-ueber", "sorpreso/a da + accusativo", "überrascht über + Akk."]
+], 26);
+
+addStableWords("Verbi", [
+  ["verb-shoppen", "fare shopping; acquistare", "shoppen"],
+  ["verb-anfassen", "toccare; maneggiare", "anfassen"],
+  ["verb-regulieren", "regolare", "regulieren"],
+  ["verb-verleiten-zu", "indurre; tentare qualcuno a fare qualcosa", "verleiten zu + Dat."],
+  ["verb-fuehren-zu", "portare a; causare", "führen zu + Dat."],
+  ["verb-veranlassen", "indurre; spingere a fare qualcosa", "veranlassen"],
+  ["verb-aufpassen", "fare attenzione; stare attento/a", "aufpassen"],
+  ["verb-traeumen-von", "sognare; sognare di", "träumen von + Dat."]
+], 26);
 
 for (const word of window.VOCABULARY) {
   if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
