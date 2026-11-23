@@ -1,6 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-20";
-window.VOCABULARY_UPDATED_LESSON = 26;
+window.VOCABULARY_UPDATED_AT = "2026-11-23";
+window.VOCABULARY_UPDATED_LESSON = 27;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -1214,6 +1214,38 @@ addStableWords("Verbi", [
   ["verb-traeumen-von", "sognare; sognare di", "träumen von + Dat."]
 ], 26);
 
+addStableWords("Tempo e natura", [
+  ["time-nacht", "la notte", "die Nacht", "die Nächte"],
+  ["time-vormittag", "la mattinata (prima di mezzogiorno)", "der Vormittag", "die Vormittage"]
+], 27);
+
+addStableWords("Parole utili", [
+  ["phrase-in-der-nacht", "di notte; durante la notte", "in der Nacht"],
+  ["phrase-am-vormittag", "di mattina; nella mattinata", "am Vormittag"],
+  ["phrase-deswegen", "per questo motivo; perciò", "aus diesem Grund; deswegen"]
+], 27);
+
+addStableWords("Persone", [
+  ["person-gastfamilie", "la famiglia ospitante", "die Gastfamilie", "die Gastfamilien"]
+], 27);
+
+addStableWords("Cibo", [
+  ["term-futter", "il mangime; il cibo per animali", "das Futter"]
+], 27);
+
+addStableWords("Concetti e termini", [
+  ["term-glueck", "la fortuna; la felicità", "das Glück"]
+], 27);
+
+addStableWords("Aggettivi", [
+  ["adj-aufgeschlossen", "aperto/a; socievole", "aufgeschlossen"],
+  ["adj-verliebt-in", "innamorato/a di + accusativo", "verliebt in + Akk."]
+], 27);
+
+addStableWords("Verbi", [
+  ["verb-sich-verabreden-mit", "darsi appuntamento con; accordarsi con", "sich verabreden mit + Dat."]
+], 27);
+
 for (const word of window.VOCABULARY) {
   if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
   word.category = "Verbi";
@@ -1460,4 +1492,29 @@ addGrammarQuestions([
   ["l24-verantwortlich-fuer", "COMPLETA LA PREPOSIZIONE E IL CASO", "Ich bin ___ die Budgetplanung verantwortlich.", "für + Akkusativ", "Verantwortlich für regge l'accusativo."],
   ["l24-verpflichtet-zu", "COMPLETA LA PREPOSIZIONE E IL CASO", "Wir sind ___ einer transparenten Kommunikation verpflichtet.", "zu + Dativ", "Verpflichtet zu regge il dativo."],
   ["l24-mit-meinem-job", "CORREGGI LA DESINENZA", "Ich bin mit ___ Job zufrieden. (mein)", "meinem", "Mit regge il dativo; Job è maschile, quindi mein diventa meinem. Nel foglio la forma «meinen Job» è un refuso."]
+]);
+
+addGrammarQuestions([
+  ["l27-relative-terms-satz", "TERMINI GRAMMATICALI", "Come si dice «proposizione relativa» in tedesco?", "Relativsatz", "Una proposizione relativa è una subordinata introdotta da un pronome relativo."],
+  ["l27-relative-terms-pronomen", "TERMINI GRAMMATICALI", "Come si dice «pronome relativo» in tedesco?", "Relativpronomen", "Il pronome relativo si riferisce a un nome della frase principale e introduce la relativa."],
+  ["l27-relative-rule", "REGOLA DEI PRONOMI RELATIVI", "Da cosa dipendono genere e numero del pronome relativo? E il suo caso?", "Genere e numero dall'antecedente; caso dalla funzione nella proposizione relativa.", "Il pronome concorda per genere e numero con il nome a cui si riferisce, ma il caso dipende dal ruolo che svolge nella subordinata."],
+  ["l27-relative-word-order", "ORDINE DELLE PAROLE", "Dove va il verbo coniugato in una proposizione relativa tedesca?", "Alla fine della subordinata", "La relativa è una subordinata: il verbo coniugato occupa l'ultima posizione."],
+  ["l27-relative-nominative-table", "PRONOMI RELATIVI · NOMINATIVO", "Quali pronomi relativi si usano al nominativo per maschile, femminile, neutro e plurale?", "der; die; das; die", "Al nominativo il pronome relativo svolge la funzione di soggetto della subordinata."],
+  ["l27-relative-accusative-table", "PRONOMI RELATIVI · ACCUSATIVO", "Quali pronomi relativi si usano all'accusativo per maschile, femminile, neutro e plurale?", "den; die; das; die", "La forma cambia rispetto al nominativo solo al maschile singolare: der diventa den."],
+  ["l27-relative-dative-table", "PRONOMI RELATIVI · DATIVO", "Quali pronomi relativi si usano al dativo per maschile, femminile, neutro e plurale?", "dem; der; dem; denen", "Al dativo plurale si usa denen; gli altri casi riprendono le forme dem, der, dem."],
+  ["l27-relative-genitive-table", "PRONOMI RELATIVI · GENITIVO", "Quali pronomi relativi indicano possesso al genitivo per maschile, femminile, neutro e plurale?", "dessen; deren; dessen; deren", "Dessen si usa per antecedenti maschili e neutri; deren per femminili e plurali."],
+  ["l27-relative-nominative-m", "COMPLETA IL PRONOME RELATIVO", "Das ist der Mann, ___ neben mir lebt.", "der", "Mann è maschile singolare; nella relativa è il soggetto, quindi si usa il nominativo der."],
+  ["l27-relative-nominative-f", "COMPLETA IL PRONOME RELATIVO", "Das ist die Lehrerin, ___ sehr nett ist.", "die", "Lehrerin è femminile singolare e il pronome è soggetto della relativa: nominativo die."],
+  ["l27-relative-accusative-m", "COMPLETA IL PRONOME RELATIVO", "Das ist der Mann, auf ___ ich lange gewartet habe.", "den", "L'antecedente è maschile singolare; warten auf regge l'accusativo, quindi den."],
+  ["l27-relative-accusative-n", "COMPLETA IL PRONOME RELATIVO", "Ich habe ein Buch gelesen, ___ ich auf dem Markt gekauft habe.", "das", "Buch è neutro singolare e nella relativa è complemento oggetto: accusativo das."],
+  ["l27-relative-accusative-pl", "COMPLETA IL PRONOME RELATIVO", "Ich habe mit den Eltern gesprochen, über ___ ich diskutiert habe.", "die", "Eltern è plurale; diskutieren über regge l'accusativo, che al plurale è die."],
+  ["l27-relative-dative-m", "COMPLETA IL PRONOME RELATIVO", "Das ist der Mann, mit ___ ich gestern gesprochen habe.", "dem", "Mit regge il dativo; Mann è maschile singolare, quindi si usa dem."],
+  ["l27-relative-dative-f", "COMPLETA IL PRONOME RELATIVO", "Das ist die Lehrerin, ___ ich die Situation erklärt habe.", "der", "La Lehrerin è la destinataria di ciò che ho spiegato: dativo femminile der."],
+  ["l27-relative-dative-pl", "COMPLETA IL PRONOME RELATIVO", "Ich habe mit den Eltern gesprochen, mit ___ ich schon letztes Jahr geredet habe.", "denen", "Mit regge il dativo; al plurale il pronome relativo è denen."],
+  ["l27-relative-genitive-m", "COMPLETA IL PRONOME RELATIVO", "Der Freund, ___ Sohn Arzt ist, kommt zu mir.", "dessen", "Sohn appartiene al Freund: il genitivo relativo maschile è dessen."],
+  ["l27-relative-genitive-f", "COMPLETA IL PRONOME RELATIVO", "Erika, in ___ Schwester Max verliebt ist, will heiraten.", "deren", "L'antecedente Erika è femminile; il genitivo relativo femminile è deren."],
+  ["l27-relative-genitive-n", "COMPLETA IL PRONOME RELATIVO", "Das ist das kleine Kind, ___ Mutter Karin heißt.", "dessen", "L'antecedente Kind è neutro; il genitivo relativo neutro è dessen."],
+  ["l27-relative-genitive-pl", "COMPLETA IL PRONOME RELATIVO", "Menschen, ___ Träume wahr werden, haben viel Glück.", "deren", "L'antecedente Menschen è plurale; il genitivo relativo plurale è deren."],
+  ["l27-relative-dative-preposition", "COMPLETA IL PRONOME RELATIVO", "Das ist der Film, vor ___ ich Angst hatte.", "dem", "In Angst haben vor, vor regge il dativo. Film è maschile singolare: vor dem."],
+  ["l27-ob-wenn", "DOMANDE INDIRETTE E CONDIZIONI", "Per una domanda indiretta con «se» si usa «ob» o «wenn»? E quando si usa «wenn»?", "ob per «se» nelle domande indirette; wenn per «se» nelle condizioni e «quando».", "Esempio: «Ich weiß nicht, ob er kommt» (non so se viene); «Wenn er kommt, ruf mich an» (se/quando viene, chiamami)."]
 ]);
