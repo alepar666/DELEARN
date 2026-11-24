@@ -1,6 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-23";
-window.VOCABULARY_UPDATED_LESSON = 27;
+window.VOCABULARY_UPDATED_AT = "2026-11-24";
+window.VOCABULARY_UPDATED_LESSON = 28;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -1246,6 +1246,43 @@ addStableWords("Verbi", [
   ["verb-sich-verabreden-mit", "darsi appuntamento con; accordarsi con", "sich verabreden mit + Dat."]
 ], 27);
 
+addStableWords("Concetti e termini", [
+  ["term-kuenstliche-intelligenz", "l'intelligenza artificiale", "die künstliche Intelligenz (KI)"],
+  ["term-datenschutz", "la protezione dei dati", "der Datenschutz"],
+  ["term-daten", "i dati (informatici)", "die Daten"],
+  ["term-information", "l'informazione", "die Information", "die Informationen"],
+  ["term-vertrauen", "la fiducia", "das Vertrauen"],
+  ["term-privatsphaere", "la privacy; la sfera privata", "die Privatsphäre"],
+  ["term-kreativitaet", "la creatività", "die Kreativität"],
+  ["term-arbeitswelt", "il mondo del lavoro", "die Arbeitswelt", "die Arbeitswelten"],
+  ["term-erfindung", "l'invenzione", "die Erfindung", "die Erfindungen"],
+  ["term-gefahr", "il pericolo", "die Gefahr", "die Gefahren"],
+  ["term-grenze", "il limite; il confine", "die Grenze", "die Grenzen"],
+  ["term-wahrheit", "la verità", "die Wahrheit"],
+  ["term-arbeitsplatz", "il posto di lavoro", "der Arbeitsplatz", "die Arbeitsplätze"]
+], 28);
+
+addStableWords("Tecnologia", [
+  ["term-email", "l'email; il messaggio di posta elettronica", "die E-Mail", "die E-Mails"],
+  ["term-roboter", "il robot", "der Roboter", "die Roboter"],
+  ["term-chatbot", "il chatbot", "der Chatbot", "die Chatbots"],
+  ["term-technologie", "la tecnologia", "die Technologie", "die Technologien"],
+  ["term-uebersetzer", "il traduttore automatico; il traduttore", "der Übersetzer", "die Übersetzer"],
+  ["term-uebersetzung", "la traduzione", "die Übersetzung", "die Übersetzungen"]
+], 28);
+
+addStableWords("Aggettivi", [
+  ["adj-hilfreich", "utile; d'aiuto", "hilfreich"],
+  ["adj-gefaehrlich", "pericoloso/a", "gefährlich"],
+  ["adj-unheimlich", "inquietante; che fa paura", "unheimlich"],
+  ["adj-verfuegbar", "disponibile", "verfügbar"]
+], 28);
+
+addStableWords("Verbi", [
+  ["verb-uebersetzen", "tradurre", "übersetzen"],
+  ["verb-ersetzen", "sostituire", "ersetzen"]
+], 28);
+
 for (const word of window.VOCABULARY) {
   if (word.category !== "Verbi" && !verbRowsWithParticiple.has(word.de)) continue;
   word.category = "Verbi";
@@ -1517,4 +1554,17 @@ addGrammarQuestions([
   ["l27-relative-genitive-pl", "COMPLETA IL PRONOME RELATIVO", "Menschen, ___ Träume wahr werden, haben viel Glück.", "deren", "L'antecedente Menschen è plurale; il genitivo relativo plurale è deren."],
   ["l27-relative-dative-preposition", "COMPLETA IL PRONOME RELATIVO", "Das ist der Film, vor ___ ich Angst hatte.", "dem", "In Angst haben vor, vor regge il dativo. Film è maschile singolare: vor dem."],
   ["l27-ob-wenn", "DOMANDE INDIRETTE E CONDIZIONI", "Per una domanda indiretta con «se» si usa «ob» o «wenn»? E quando si usa «wenn»?", "ob per «se» nelle domande indirette; wenn per «se» nelle condizioni e «quando».", "Esempio: «Ich weiß nicht, ob er kommt» (non so se viene); «Wenn er kommt, ruf mich an» (se/quando viene, chiamami)."]
+]);
+
+addGrammarQuestions([
+  ["l28-relative-welch-rule", "PRONOME RELATIVO WELCH-", "Quando si può usare welch- al posto di der/die/das come pronome relativo?", "Quando evita la ripetizione della stessa forma davanti all'articolo seguente: per esempio «der der» → «welcher der».", "Welch- si declina secondo genere, numero e caso del pronome relativo. È una variante utile per evitare sequenze come «der der»."],
+  ["l28-relative-welch-example", "COMPLETA IL PRONOME RELATIVO", "Der Mann, ___ der Frau Blumen geschenkt hat, ist sehr nett.", "welcher", "Il relativo è maschile nominativo e precede l'articolo der: welcher evita la sequenza «der der»."],
+  ["l28-relative-wo", "RELATIVO DI LUOGO", "«Das ist die Stadt, in der ich geboren bin.» Come si può sostituire «in der»?", "wo", "Wo può introdurre una relativa di luogo: «Das ist die Stadt, wo ich geboren bin»."],
+  ["l28-relative-wohin", "RELATIVO DI LUOGO", "«Die kleine Stadt, in die ich umgezogen bin...» Come si può sostituire «in die»?", "wohin", "Wohin indica la direzione o la destinazione: «Die kleine Stadt, wohin ich umgezogen bin...»"],
+  ["l28-relative-woher", "RELATIVO DI LUOGO", "«Die Stadt, aus der ich komme, ist Rom.» Come si può sostituire «aus der»?", "woher", "Woher indica la provenienza: «Die Stadt, woher ich komme, ist Rom»."],
+  ["l28-relative-was-rule", "PRONOME RELATIVO WAS", "Quando una relativa che riprende l'intera frase principale è introdotta da was?", "Quando si riferisce a tutta l'azione o all'intera idea espressa nella principale.", "Was non riprende un singolo sostantivo: riprende ciò che è stato detto nella frase principale."],
+  ["l28-relative-was-example", "COMPLETA IL PRONOME RELATIVO", "Meine Freunde gehen oft ans Meer zusammen, ___ mir sehr gefällt.", "was", "Was riprende l'intera situazione descritta nella frase principale."],
+  ["l28-relative-wo-preposition", "RELATIVI CON PREPOSIZIONE", "Se la relativa riprende un'intera idea e contiene un verbo con preposizione, quale forma si usa?", "wo(r) + preposizione: worüber, worauf, ...", "Per riferirsi a un'idea o a una situazione si usa wo(r)- più la preposizione richiesta; per una persona si mantiene preposizione + pronome personale."],
+  ["l28-relative-worauf-example", "COMPLETA IL PRONOME RELATIVO", "Er wird mich morgen besuchen, ___ ich mich sehr freue. (sich freuen auf)", "worauf", "Worauf riprende l'intera visita futura; sich freuen auf regge auf + Akkusativ."],
+  ["l28-relative-worueber-example", "COMPLETA IL PRONOME RELATIVO", "Meine Freunde gehen oft ans Meer zusammen, ___ ich mich ärgere. (sich ärgern über)", "worüber", "Worüber riprende l'intera situazione; sich ärgern über regge über + Akkusativ."]
 ]);
