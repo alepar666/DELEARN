@@ -1,4 +1,4 @@
-const CACHE_NAME = "delearn-shell-v46";
+const CACHE_NAME = "delearn-shell-v47";
 const APP_FILES = [
   "./",
   "./index.html",

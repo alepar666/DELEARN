@@ -1,6 +1,6 @@
 /* Seed vocabulary: Italian, German, German plural (when useful). */
-window.VOCABULARY_UPDATED_AT = "2026-11-24";
-window.VOCABULARY_UPDATED_LESSON = 28;
+window.VOCABULARY_UPDATED_AT = "2026-11-27";
+window.VOCABULARY_UPDATED_LESSON = 29;
 window.VOCABULARY = [];
 const addWords = (category, rows) => {
   for (const [it, de, plural = ""] of rows) {
@@ -1567,4 +1567,20 @@ addGrammarQuestions([
   ["l28-relative-wo-preposition", "RELATIVI CON PREPOSIZIONE", "Se la relativa riprende un'intera idea e contiene un verbo con preposizione, quale forma si usa?", "wo(r) + preposizione: worüber, worauf, ...", "Per riferirsi a un'idea o a una situazione si usa wo(r)- più la preposizione richiesta; per una persona si mantiene preposizione + pronome personale."],
   ["l28-relative-worauf-example", "COMPLETA IL PRONOME RELATIVO", "Er wird mich morgen besuchen, ___ ich mich sehr freue. (sich freuen auf)", "worauf", "Worauf riprende l'intera visita futura; sich freuen auf regge auf + Akkusativ."],
   ["l28-relative-worueber-example", "COMPLETA IL PRONOME RELATIVO", "Meine Freunde gehen oft ans Meer zusammen, ___ ich mich ärgere. (sich ärgern über)", "worüber", "Worüber riprende l'intera situazione; sich ärgern über regge über + Akkusativ."]
+]);
+
+addGrammarQuestions([
+  ["l29-relative-genitive-preposition", "PRONOME RELATIVO AL GENITIVO", "Das ist das Kind, mit ___ Mutter ich befreundet bin.", "dessen", "Dessen concorda con l'antecedente neutro Kind e resta al genitivo. Mit regge il dativo di Mutter, non modifica dessen."],
+  ["l29-relative-was-indefinite", "PRONOME RELATIVO WAS", "Dopo quali pronomi indefiniti si usa was per introdurre una relativa?", "Dopo parole come alles, etwas, manches, vieles e nichts.", "Was riprende un pronome indefinito, invece di concordare con un nome specifico."],
+  ["l29-relative-was-indefinite-example", "COMPLETA IL PRONOME RELATIVO", "Alles, ___ du gesagt hast, ist richtig.", "was", "Dopo alles, la relativa è introdotta da was."],
+  ["l29-relative-was-superlative", "PRONOME RELATIVO WAS", "Quale pronome introduce una relativa dopo un superlativo neutro sostantivato?", "was", "Esempio: «Das Schönste, was ich erlebt habe, war meine Hochzeit»."],
+  ["l29-relative-wor-rule", "FORMA WO(R)+PREPOSIZIONE", "Quando si inserisce la r tra wo e la preposizione?", "Quando la preposizione comincia per vocale: worauf, worüber, woran.", "Con una preposizione che comincia per consonante non si usa r: womit, wovon."],
+  ["l29-relative-wor-indefinite", "COMPLETA IL PRONOME RELATIVO", "Es gibt nichts, ___ ich mich ärgere. (sich ärgern über)", "worüber", "Anche dopo l'indefinito nichts si usa wo(r)+preposizione per riprendere una cosa o un'idea."],
+  ["l29-relative-wer-der", "RELATIVA SENZA ANTECEDENTE", "Wer nicht verliebt ist, ___ kann das nicht verstehen.", "der", "Wer introduce una relativa senza antecedente espresso; der riprende la persona come soggetto della frase principale e può essere omesso perché ha lo stesso caso."],
+  ["l29-relative-wen-den", "RELATIVA SENZA ANTECEDENTE", "Wen ich liebe, ___ vergesse ich nie.", "den", "Wen è accusativo nella relativa; den è accusativo nella principale e riprende la stessa persona."],
+  ["l29-relative-wem-der", "RELATIVA SENZA ANTECEDENTE", "Wem meine Wohnung nicht gefällt, ___ kann nicht zu mir kommen.", "der", "Wem è dativo nella relativa, mentre der è nominativo e soggetto della principale: i casi sono diversi, quindi der non si omette."],
+  ["l29-relative-correlative-omission", "PRONOME DIMOSTRATIVO DI RIPRESA", "Quando si può omettere der/den/dem dopo wer/wen/wem?", "Quando il pronome relativo e quello di ripresa hanno lo stesso caso; se i casi differiscono, quello di ripresa resta.", "Per esempio, in «Wem meine Wohnung nicht gefällt, der kann ...» wem è dativo e der nominativo: der è necessario."],
+  ["l29-relative-derjenige-rule", "DERJENIGE + PROPOSIZIONE RELATIVA", "In «derjenige, der ...», quali parti si declinano?", "Entrambe: der- segue le desinenze dell'articolo; -jenig- prende la declinazione debole. Il pronome relativo ha caso proprio.", "Le forme dipendono dalla funzione di ogni parte nella rispettiva frase."],
+  ["l29-relative-derjenige-example", "ANALIZZA LA RELATIVA", "In «Ich helfe denjenigen, die Hilfe brauchen», quali casi hanno «denjenigen» e «die»?", "denjenigen: Dativ Plural; die: Nominativ Plural", "Denjenigen è il complemento di helfen; die è il soggetto di brauchen. Ogni parte ha il proprio caso."],
+  ["l29-relative-wer-derjenige", "RIFORMULA LA RELATIVA", "Riscrivi con «derjenige»: «Wer nicht verliebt ist, kann das nicht verstehen.»", "Derjenige, der nicht verliebt ist, kann das nicht verstehen.", "Derjenige, der ... esprime lo stesso significato di wer ... der: «colui che ...»." ]
 ]);
